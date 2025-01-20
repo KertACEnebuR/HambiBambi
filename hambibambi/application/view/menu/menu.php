@@ -1,21 +1,22 @@
 <?php
-$logoPath = "./";
-if($_SERVER["REQUEST_URI"] == "/hambibambi/application/view/logreg/loginreg.php") {
-    $logoPath = "../../../";
-}
 
+$current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'login';
 ?>
-<header>
-        <div class="logo">
-            <img src="<?= $logoPath."assets/img/HambiBambi_Logo.png"?>" alt="HambiBambi Étterem Logó">
+
+<?php include("header.php"); ?>
+<?php include("../navbar/navbar.php"); ?>
+    <main>
+        <div class="hamburgers">
+            <legend>Hamburgerek</legend>
+            <div class="card" style="width: 18rem;">
+            <img src="./assets/img/duplaSajtburger.jpg" class="card-img-top" alt="Dupla Sajtburger">
+            <div class="card-body">
+                <h5 class="card-title">Dupla Sajtburger</h5>
+                <p class="card-text">Házikészítésű buci, cheddar sajt, saláta, sajtszósz, dupla marha húspogácsa</p>
+                <a href="#" class="btn btn-primary">Kosárba</a> <p class="ar"></p>
+            </div>
         </div>
-        <nav>
-            <ul class="menu">
-                <li><a href=<?= $logoPath."index.php";?>>Kezdőlap</a></li>
-                <li><a href=<?= $logoPath."etlap.ph";?>>Étlap</a></li>
-                <li><a href=<?= $logoPath."akciok.php";?>>Akciók</a></li>
-                <li><a href=<?= $logoPath."kapcsolat.php";?>>Kapcsolat</a></li>
-                <li><a href=<?= $logoPath."application/view/logreg/loginreg.php";?>>Belépés / Regisztráció</a></li>
-            </ul>
-        </nav>
-    </header>
+        </div>
+   
+    </main>
+<?php include("../footer.php"); ?>

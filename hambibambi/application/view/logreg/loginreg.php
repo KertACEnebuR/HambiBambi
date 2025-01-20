@@ -4,7 +4,7 @@ $current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'login';
 ?>
 
 <?php include("header.php"); ?>
-<?php include("../menu/menu.php"); ?>
+<?php include("../navbar/navbar.php"); ?>
 <?php include("../../controller/loginController.php"); ?>
     <main>
     <div class="container">

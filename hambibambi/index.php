@@ -15,21 +15,19 @@ $kiemelt_ajanlatok = array_rand($akciok, 3);
 <html lang="hu">
 <?php include("./application/view/header.php"); ?>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <?php include("./application/view/navbar/navbar.php"); ?>
     
-    <?php include("./application/view/menu/menu.php"); ?>
-    
-    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+    <div id="carouselExampleAutoplaying" class="carousel slide slider" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-            <img src="..." class="d-block w-100" alt="...">
+            <img src="./assets/img/slide1.jpg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
+            <img src="./assets/img/slide2.jpg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
+            <img src="./assets/img/slide3.jpg" class="d-block w-100" alt="...">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
@@ -67,6 +65,8 @@ $kiemelt_ajanlatok = array_rand($akciok, 3);
 
     <footer>
         <p>HambiBambi Étterem</p>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script> 
     </footer>
 </body>
 </html>
