@@ -1,5 +1,4 @@
 <?php
-
 $current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'login';
 ?>
 

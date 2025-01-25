@@ -1,16 +1,22 @@
 .slider {
     display: flex;
-    overflow: hidden;
-    margin: 20px 0;
-    height: 400px;
-    width: 600px;
-}
-.slider .slide img {
-    align-items: center;
     justify-content: center;
-    width: 100%;
-    height: auto;
+    align-items: center;
+    overflow: hidden;
+    margin: 20px 0 20px 100px;
+    width: 90%;
+    height: 500px;
+    border-radius: 10px;
+    position: relative;
 }
+
+.slider .carousel-item img {
+    border-radius: 10px;
+    object-position: center;
+}
+
+
+
 .kiemelt-ajanlatok {
     padding: 20px;
     background-color: #fff;
@@ -28,7 +34,8 @@
 }
 .ajanlat {
     text-align: center;
-    width: 30%;
+    width: 33%;
+    margin: 5px;
 }
 .ajanlat img {
     width: 100%;
@@ -38,19 +45,22 @@
     margin: 10px 0;
     color: #333;
 }
+
+
+
 .bemutatkozas {
     padding: 20px;
     background-color: #fff;
     width: auto;
-    margin: 20px auto;
+    margin: 10px auto;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 24px;
 }
 .bemutatkozas h2 {
     text-align: center;
     color: #ff5722;
 }
-
 .bemutatkozoDiv{
     text-align: center;
     padding: 20px;

@@ -21,13 +21,13 @@ $kiemelt_ajanlatok = array_rand($akciok, 3);
     <div id="carouselExampleAutoplaying" class="carousel slide slider" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-            <img src="./assets/img/slide1.jpg" class="d-block w-100" alt="">
+            <img src="./assets/img/slide1P.jpg" class="d-block w-100 img-fluid" alt="slide1">
             </div>
             <div class="carousel-item">
-            <img src="./assets/img/slide2.jpg" class="d-block w-100" alt="...">
+            <img src="./assets/img/slide2P.jpg" class="d-block w-100 img-fluid" alt="slide2">
             </div>
             <div class="carousel-item">
-            <img src="./assets/img/slide3.jpg" class="d-block w-100" alt="...">
+            <img src="./assets/img/slide3.jpg" class="d-block w-100 img-fluid" alt="slide3">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
@@ -43,11 +43,11 @@ $kiemelt_ajanlatok = array_rand($akciok, 3);
         <section class="kiemelt-ajanlatok">
             <h2>Kiemelt ajánlataink</h2>
             <div class="ajanlatok">
-                <?php foreach ($kiemelt_ajanlatok as $index): ?>
+                <?php foreach ($kiemelt_ajanlatok as $ajanlat): ?>
                     <div class="ajanlat">
-                        <img src="<?php echo $akciok[$index]['kep']; ?>" alt="<?php echo $akciok[$index]['cim']; ?>">
-                        <h3><?php echo $akciok[$index]['cim']; ?></h3>
-                        <p><?php echo $akciok[$index]['leiras']; ?></p>
+                        <img src="<?php echo $akciok[$ajanlat]['kep']; ?>" alt="<?php echo $akciok[$ajanlat]['cim']; ?>">
+                        <h3><?php echo $akciok[$ajanlat]['cim']; ?></h3>
+                        <p class="ajanlatP"><?php echo $akciok[$ajanlat]['leiras']; ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>
