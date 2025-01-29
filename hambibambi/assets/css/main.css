@@ -6,24 +6,22 @@
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-body {   
+body {
     background-color: #eedbb1f1;
     color: #333;
 }
-
-
 header {
     background-color: #f0a00c;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-
+    align-items: center;        
 }
 .logo img {
     height: 100px;
     border-radius: 10px;
 }
+
 nav ul {
     list-style: none;
     margin: 0;
@@ -43,7 +41,6 @@ nav ul li a:hover {
     text-decoration: none;
     color: #fff;
     font-weight: bold;
-    padding: 20px;
     border-radius: 10px;
     background-color: #d39624;
 }
@@ -55,9 +52,18 @@ main{
 }
 
 footer {
-    text-align: center;
     padding: 10px;
     background-color: #bb3906;
     color: #fff;
-    font-size: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;   
+}
+
+footer nav ul li a:hover{
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 10px;
+    background-color: #df5119;
 }
