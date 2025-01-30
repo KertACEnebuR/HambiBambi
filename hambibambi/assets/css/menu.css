@@ -1,5 +1,78 @@
-.hamburgerek{
+body{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto;
+    row-gap: 10px;
+}
+
+header {
+    grid-column: 1/5;
+    grid-row: 1/2;
+}
+
+.insideNavbar {
+    grid-column: 1/5;
+    grid-row: 2/3; 
+    background-color: #c5641f;
+}
+
+.insideNavbar nav {
     display: flex;
+    justify-content: space-around;
+    align-items: center;  
+    padding: 10px;
+    color: white;
+}
+
+main {
+    flex-wrap: wrap;
+    display: grid;
+}
+
+main .container {
+    display: grid;
+    margin: auto;
+}
+
+main .container .cards{
+    display: flex;
+    flex-direction: row;
+}
+
+.hamburgers {
+    grid-column: 1/5;
+    grid-row: 3/4;
+    padding: 20px;
+    width: 100%;
+}
+
+.product {
     border: 1px solid black;
-    border-radius: 10px
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.soups {
+    grid-column: 1/5;
+    grid-row: 4/5;
+}
+
+.drinks {
+    grid-column: 1/5;
+    grid-row: 5/6;
+}
+
+.salads {
+    grid-column: 1/5;
+    grid-row: 6/7;
+}
+
+.desserts {
+    grid-column: 1/5;
+    grid-row: 6/7;
+}
+
+footer {
+    grid-column: 1/5;
+    grid-row: 7/8;
 }
