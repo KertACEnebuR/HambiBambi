@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-$akciok = [
-    ["cim" => "Hamburger menü 20% kedvezménnyel", "leiras" => "Kóstold meg akciós hamburger menünket!", "kep" => "./assets/img/hamburger_menu.png"],
-    ["cim" => "Kézműves sültkrumpli", "leiras" => "Próbáld ki különleges sültkrumplinkat most olcsóbban!", "kep" => "./assets/img/sultkrumpli.png"],
+$kiemelt_ajanlat = [
+    ["cim" => "Hamburger menü", "leiras" => "Kóstold meg a hamburger menünket!", "kep" => "./assets/img/hamburger_menu.png"],
+    ["cim" => "Kézműves sültkrumpli", "leiras" => "Próbáld ki különleges sültkrumplinkat!", "kep" => "./assets/img/sultkrumpli.png"],
     ["cim" => "Finom levesek", "leiras" => "Kiváló előétel egy burger előtt.", "kep" => "./assets/img/leves.jpg"],
-    ["cim" => "Tavaszi saláta", "leiras" => "Friss és egészséges saláták akcióban!", "kep" => "./assets/img/salata.png"]
+    ["cim" => "Tavaszi saláta", "leiras" => "Friss és egészséges saláták !", "kep" => "./assets/img/salata.png"]
 ];
 
-$kiemelt_ajanlatok = array_rand($akciok, 3);
+$kiemelt_ajanlatok = array_rand($kiemelt_ajanlat, 3);
 ?>
 
 <!DOCTYPE html>
@@ -38,9 +38,9 @@ $kiemelt_ajanlatok = array_rand($akciok, 3);
         <div class="ajanlatok">
             <?php foreach ($kiemelt_ajanlatok as $ajanlat): ?>
                 <div class="ajanlat">
-                    <img src="<?php echo $akciok[$ajanlat]['kep']; ?>" alt="<?php echo $akciok[$ajanlat]['cim']; ?>">
-                    <h3><?php echo $akciok[$ajanlat]['cim']; ?></h3>
-                    <p class="ajanlatP"><?php echo $akciok[$ajanlat]['leiras']; ?></p>
+                    <img src="<?php echo $kiemelt_ajanlat[$ajanlat]['kep']; ?>" alt="<?php echo $kiemelt_ajanlat[$ajanlat]['cim']; ?>">
+                    <h3><?php echo $kiemelt_ajanlat[$ajanlat]['cim']; ?></h3>
+                    <p class="ajanlatP"><?php echo $kiemelt_ajanlat[$ajanlat]['leiras']; ?></p>
                 </div>
             <?php endforeach; ?>
         </div>
