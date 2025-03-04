@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Feb 21. 13:49
--- Kiszolgáló verziója: 10.4.27-MariaDB
--- PHP verzió: 8.0.25
+-- Létrehozás ideje: 2025. Már 04. 10:30
+-- Kiszolgáló verziója: 10.4.28-MariaDB
+-- PHP verzió: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -153,6 +153,50 @@ CREATE TABLE `products` (
   `description` varchar(255) DEFAULT NULL,
   `picture` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `products`
+--
+
+INSERT INTO `products` (`product_id`, `product_category_id`, `quantity_unit_id`, `product_name`, `price`, `description`, `picture`) VALUES
+(1, 1, 2, 'Cézár saláta', 2500, 'Grillezett csirkemell, római saláta, parmezán, kruton, Cézár öntet', 'cezar_salata.jpg'),
+(2, 1, 2, 'Görög saláta', 2300, 'Paradicsom, uborka, feta sajt, olívabogyó, lilahagyma, olívaolaj', 'gorog_salata.jpg'),
+(3, 1, 2, 'Tonhal saláta', 2600, 'Tonhal, saláta, kukorica, lilahagyma, paradicsom, olívaolaj', 'tonhal_salata.jpg'),
+(4, 2, 2, 'Gulyásleves', 2200, 'Marhahús, burgonya, répa, csipetke, pirospaprika', 'gulyasleves.jpg'),
+(5, 2, 2, 'Húsleves', 2000, 'Csirkehús, sárgarépa, zeller, petrezselyem, tészta', 'husleves.jpg'),
+(6, 2, 2, 'Paradicsomleves', 1800, 'Paradicsom, bazsalikom, tejszín, pirított kenyérkocka', 'paradicsomleves.jpg'),
+(7, 2, 2, 'Sajtkrémleves', 1900, 'Különböző sajtok, tejszín, fokhagyma, pirított kenyér', 'sajtkremleves.jpg'),
+(8, 3, 1, 'Dupla sajtburger', 2500, 'Házi buci, marhahús, sajt, uborka, paradicsom, ketchup, mustár', 'dupla_sajtburger.jpg'),
+(9, 3, 1, 'Bacon burger', 2700, 'Házi buci, marhahús, bacon, cheddar sajt, bbq szósz, lilahagyma', 'bacon_burger.jpg'),
+(10, 3, 1, 'Csirkeburger', 2300, 'Házi buci, ropogós csirkemell, saláta, paradicsom, fokhagymás szósz', 'csirkeburger.jpg'),
+(11, 3, 1, 'Chili burger', 2600, 'Házi buci, marhahús, jalapeno, cheddar sajt, saláta, chiliszósz', 'chili_burger.jpg'),
+(12, 3, 1, 'BBQ burger', 2800, 'Házi buci, marhahús, bacon, cheddar sajt, bbq szósz, saláta', 'bbq_burger.jpg'),
+(13, 3, 1, 'Gombás burger', 2500, 'Házi buci, marhahús, pirított gomba, cheddar sajt, saláta, majonéz', 'gombas_burger.jpg'),
+(14, 3, 1, 'Vegetáriánus burger', 2200, 'Házi buci, grillezett zöldségek, avokádókrém, saláta', 'vega_burger.jpg'),
+(15, 3, 1, 'Hawaii burger', 2700, 'Házi buci, marhahús, ananász, cheddar sajt, mézes-mustáros szósz', 'hawaii_burger.jpg'),
+(16, 3, 1, 'Kéksajtos burger', 2900, 'Házi buci, marhahús, kéksajt, dió, rukkola', 'keksajtos_burger.jpg'),
+(17, 3, 1, 'Pikáns csirkeburger', 2500, 'Házi buci, ropogós csirke, jalapeno, cheddar sajt, saláta', 'pikans_csirkeburger.jpg'),
+(18, 3, 1, 'Mexikói burger', 2800, 'Házi buci, marhahús, babpüré, jalapeno, cheddar sajt, salsa szósz', 'mexikoi_burger.jpg'),
+(19, 3, 1, 'Bivaly burger', 3000, 'Házi buci, marhahús, füstölt sajt, bacon, bbq szósz', 'bivaly_burger.jpg'),
+(20, 4, 2, 'Carbonara spagetti', 2700, 'Spagetti, bacon, tojás, parmezán, tejszín', 'carbonara.jpg'),
+(21, 4, 2, 'Bolognai spagetti', 2500, 'Spagetti, darált marhahús, paradicsomszósz, sajt', 'bolognai.jpg'),
+(22, 4, 2, 'Pesto tészta', 2400, 'Penne, bazsalikom pesto, parmezán, fokhagyma', 'pesto_teszta.jpg'),
+(23, 5, 3, 'Sör', 900, 'Hideg csapolt világos sör', 'sor.jpg'),
+(24, 5, 3, 'Vörösbor', 1200, 'Száraz vörösbor, Cabernet Sauvignon', 'vorosbor.jpg'),
+(25, 5, 3, 'Fehérbor', 1200, 'Száraz fehérbor, Chardonnay', 'feherbor.jpg'),
+(26, 5, 3, 'Whiskey', 2500, '12 éves érlelt whiskey, jég nélkül', 'whiskey.jpg'),
+(27, 6, 3, 'Cola', 800, 'Hagyományos szénsavas kóla', 'cola.jpg'),
+(28, 6, 3, 'Narancslé', 1000, 'Frissen facsart narancslé', 'narancsle.jpg'),
+(29, 6, 3, 'Jegeskávé', 1200, 'Presszókávé, tej, jég, vaníliaszirup', 'jegeskave.jpg'),
+(30, 6, 3, 'Limonádé', 1000, 'Citrom, cukor, menta, szóda', 'limonade.jpg'),
+(31, 6, 3, 'Almalé', 1000, '100% természetes almalé', 'almale.jpg'),
+(32, 6, 3, 'Jeges tea', 1100, 'Házi készítésű jeges tea, citrommal', 'jegestea.jpg'),
+(33, 6, 3, 'Szénsavmentes víz', 600, 'Tiszta szénsavmentes ásványvíz', 'viz.jpg'),
+(34, 7, 1, 'Csokoládétorta', 2500, 'Étcsokoládé, kakaópor, tejszín, vaj', 'csokolade_torta.jpg'),
+(35, 7, 1, 'Gesztenyepüré', 2200, 'Gesztenye, tejszínhab, rumaroma, cukor', 'gesztenyepure.jpg'),
+(36, 7, 1, 'Almás pite', 2000, 'Alma, fahéj, cukor, leveles tészta', 'almas_pite.jpg'),
+(37, 7, 1, 'Sajttorta', 2700, 'Tejszín, mascarpone, keksz alap, eperöntet', 'sajttorta.jpg'),
+(38, 7, 1, 'Somlói galuska', 2500, 'Piskóta, csokoládéöntet, tejszínhab, dió', 'somloi_galuska.jpg');
 
 -- --------------------------------------------------------
 
@@ -967,7 +1011,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT a táblához `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT a táblához `product_categories`

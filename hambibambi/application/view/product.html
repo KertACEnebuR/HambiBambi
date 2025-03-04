@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="hu" ng-app="HambiBambiApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termékek</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="http://localhost/hambibambi/assets/css/product.css">
+    
+</head>
+<body ng-controller="ProductController">
+    <header>
+        <h1>Termékek</h1>
+    </header>
+    <main>
+        <div class="product-container">
+            <div class="product" ng-repeat="product in products">
+                <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
+               
+                <h3>{{ product.product_name }}</h3>
+                <p>{{ product.description }}</p>
+                <span>{{ product.price }} Ft</span>
+            </div>
+        </div>
+    </main>
+    <script>
+        let app = angular.module('HambiBambiApp', []);
+        app.controller('ProductController', function($scope, $http) {
+            $http.get('http://localhost/hambibambi/application/controller/api.php')
+            .then(function(response) {
+                $scope.products = response.data;
+            })
+            .catch(function(error) {
+                console.error("Hiba történt az API hívás során:", error);
+            });
+        });
+        
+    </script>
+</body>
+</html>
