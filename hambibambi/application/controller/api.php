@@ -4,6 +4,15 @@ header("Content-Type: application/json");
 
 require "../../connect.php";
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
+    http_response_code(200);
+    exit();
+}
+
 $request_method = $_SERVER["REQUEST_METHOD"];
 
 switch ($request_method) {
@@ -18,16 +27,17 @@ switch ($request_method) {
         addProduct();
         break;
     case 'PUT':
-        parse_str(file_get_contents("php://input"), $_PUT);
-        if (isset($_GET['id'])) {
-            updateProduct($_GET['id'], $_PUT);
+        $data = json_decode(file_get_contents("php://input"), true);
+        if (isset($data['product_id'])) {
+            updateProduct($data['product_id'], $data);
         } else {
             echo json_encode(["error" => "Product ID is required"]);
         }
         break;
     case 'DELETE':
-        if (isset($_GET['id'])) {
-            deleteProduct($_GET['id']);
+        $data = json_decode(file_get_contents("php://input"), true);
+        if (isset($data['id'])) {
+            deleteProduct($data['id']);
         } else {
             echo json_encode(["error" => "Product ID is required"]);
         }
@@ -61,20 +71,40 @@ function getProduct($id) {
 function addProduct() {
     global $conn;
     $data = json_decode(file_get_contents("php://input"), true);
+
+    if (!isset($data['product_category_id'], $data['quantity_unit_id'], $data['product_name'], $data['price'], $data['description'], $data['picture'])) {
+        echo json_encode(["error" => "Missing required fields"]);
+        return;
+    }
+
     $sql = "INSERT INTO products (product_category_id, quantity_unit_id, product_name, price, description, picture) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("iisiss", $data['product_category_id'], $data['quantity_unit_id'], $data['product_name'], $data['price'], $data['description'], $data['picture']);
-    $stmt->execute();
-    echo json_encode(["message" => "Product added successfully", "id" => $conn->insert_id]);
+    
+    if ($stmt->execute()) {
+        echo json_encode(["message" => "Product added successfully", "id" => $conn->insert_id]);
+    } else {
+        echo json_encode(["error" => "Failed to add product"]);
+    }
 }
 
 function updateProduct($id, $data) {
     global $conn;
+
+    if (!isset($data['product_category_id'], $data['quantity_unit_id'], $data['product_name'], $data['price'], $data['description'], $data['picture'])) {
+        echo json_encode(["error" => "Missing required fields"]);
+        return;
+    }
+
     $sql = "UPDATE products SET product_category_id = ?, quantity_unit_id = ?, product_name = ?, price = ?, description = ?, picture = ? WHERE product_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("iisissi", $data['product_category_id'], $data['quantity_unit_id'], $data['product_name'], $data['price'], $data['description'], $data['picture'], $id);
-    $stmt->execute();
-    echo json_encode(["message" => "Product updated successfully"]);
+    
+    if ($stmt->execute()) {
+        echo json_encode(["message" => "Product updated successfully"]);
+    } else {
+        echo json_encode(["error" => "Failed to update product"]);
+    }
 }
 
 function deleteProduct($id) {
@@ -82,8 +112,12 @@ function deleteProduct($id) {
     $sql = "DELETE FROM products WHERE product_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
-    $stmt->execute();
-    echo json_encode(["message" => "Product deleted successfully"]);
+    
+    if ($stmt->execute()) {
+        echo json_encode(["message" => "Product deleted successfully"]);
+    } else {
+        echo json_encode(["error" => "Failed to delete product"]);
+    }
 }
 
 $conn->close();

@@ -14,15 +14,66 @@
     </header>
     <main>
         <div class="product-container">
-            <div class="product" ng-repeat="product in products">
+            <div class="product card cards" style="width: 18rem;"  ng-repeat="product in products">
                 <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
-               
-                <h3>{{ product.product_name }}</h3>
-                <p>{{ product.description }}</p>
-                <span>{{ product.price }} Ft</span>
+                <div class="card-body product">
+                    <h5 class="card-title">{{ product.product_name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="ar">{{ product.price }} Ft</p>
+                    <a href="#" class="btn btn-primary">Kosárba</a> 
+                </div>
+            </div>
+        </div>
+        <div class="hamburgers">
+            <legend>Hamburgerek</legend>
+            <div class="container" id="hamburgers">
+                
+            </div>
+        </div>
+
+        <div class="soups">
+        <legend>Levesek</legend>
+            <div class="container" id="soups">
+                
+            </div>
+        </div>
+
+        <div class="salads">
+            <legend>Saláták</legend>
+            <div class="container" id="salads">
+                
+            </div>
+        </div>
+
+        <div class="pastas">
+            <legend>Tészták</legend>
+            <div class="container" id="pastas">
+                
+            </div>
+        </div>
+
+        <div class="desserts">
+            <legend>Sütik</legend>
+            <div class="container" id="desserts">
+                
+            </div>
+        </div>
+
+        <div class="drinks">
+            <legend>Üdítők</legend>
+            <div class="container" id="drinks">
+                
+            </div>
+        </div>
+
+        <div class="drinks2">
+            <legend>Szeszes italok</legend>
+            <div class="container" id="drinks2">
+                
             </div>
         </div>
     </main>
+
     <script>
         let app = angular.module('HambiBambiApp', []);
         app.controller('ProductController', function($scope, $http) {

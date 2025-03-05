@@ -10,38 +10,16 @@ $current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'login';
             <a class ="nav-link" href="#soups">Levesek</a>
             <a class ="nav-link" href="#drinks">Italok</a>
             <a class ="nav-link" href="#salads">Saláták</a>
-            <a class ="nav-link" href="#desserts">Desszertek</a>
+            <a class ="nav-link" href="#pastas">Tészták</a>
+            <a class ="nav-link" href="#desserts">Sütik</a>
+            <a class ="nav-link" href="#drinks">Üdítők</a>
+            <a class ="nav-link" href="#drinks2">Szeszes italok</a>
         </nav>
     </div>
     <main>
-        <p>
-            <?php require $Path . "application/view/product.html"; ?>
-        </p>
-        <!--<div class="hamburgers">
-            <legend>Hamburgerek</legend>
-            <div class="container" id="hamburgers">
-                
-            </div>
-        </div>
 
-        <div class="soups">
-        <legend>Levesek</legend>
-
-        </div>
-
-        <div class="drinks">
-            <legend>Italok</legend>
-            
-        </div>
-
-        <div class="salads">
-            <legend>Saláták</legend>
-            
-        </div>
-
-        <div class="desserts">
-            
-        </div>-->
+        <?php require $Path . "application/view/product.html"; ?>
+    </p>
    
     </main>
 <?php include("../footer.php"); ?>
