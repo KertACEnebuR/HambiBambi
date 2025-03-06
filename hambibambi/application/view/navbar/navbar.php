@@ -19,7 +19,6 @@ elseif($_SERVER["REQUEST_URI"] == "/hambibambi/application/view/contacts/contact
             <ul class="navbar">
                 <li><a href=<?= $Path."index.php";?>>Kezdőlap</a></li>
                 <li><a href=<?= $Path."application/view/menu/menu.php";?>>Étlap</a></li>
-                <li><a href=<?= $Path."akciok.php";?>>Akciók</a></li>
                 <li><a href=<?= $Path."application/view/contacts/contact.php";?>>Kapcsolat</a></li>
                 <li><a href=<?= $Path."application/view/logreg/loginreg.php";?>>Belépés / Regisztráció</a></li>
             </ul>
