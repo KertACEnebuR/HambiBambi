@@ -1,0 +1,566 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@800&family=Poppins&family=Roboto&family=Ubuntu&display=swap');
+/*Változók használata a színek definiálásához*/
+:root {
+    --mgrey: #4b4c4c;
+    --light: #dfe4e5;
+    --white: #e3e1e1;
+    --grey: #5a5a5a;
+    --black: #171616;
+}
+/*oldal reset*/
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    font-family: 'Nunito', sans-serif;
+}
+/*oldalsó csúszka színezése és szélességének beállítása*/
+body::-webkit-scrollbar{
+    width: 10px;
+    background-color: var(--mgrey);
+}
+
+body::-webkit-scrollbar-track{
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb{
+    background-color: var(--light);
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover{
+    background-color: var(--mgrey);
+}
+/* A menü betűszínének beállítása fehérre */
+.navbar.bg-dark .navbar-nav .nav-link, .navbar-brand {
+        color: var(--light);
+}
+.content{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+.wrapper{
+    background: #fff;
+    width: 450px;
+    border-radius: 16px;
+    box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
+                0 32px 64px -48px rgba(0,0,0,0.5);
+}
+
+.images{
+    width: 2rem;
+}
+/*Névjegyek a főoldalon*/
+/*Névjegykártyák a fő oldalon*/
+main{
+    padding: 2em 5em
+}
+main h1, h3{
+    text-align: center;
+}
+main img{
+    width: 100%;
+}
+main .container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 1fr;
+}
+
+article { 
+    display: grid;
+    grid-template-columns: 1fr 2fr; 
+    margin: 1em;
+    padding: 2em;
+    border-radius: 10px;
+    background-color: grey;
+    border: solid 2px black;
+   
+}
+article section{
+    margin-left:2em
+}
+a {
+    color: rgb(20, 20, 57);
+    text-decoration: none;
+}
+
+a:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+
+/*Regisztrációs űrlap CSS*/
+/*Ez egy osztály kijelölése, amely az űrlap teljes tartalmát formázza. A padding tulajdonság 25px a felső és alsó éleken, valamint 30px a bal és jobb éleken, így teret ad az űrlap körül.*/
+.form{
+    padding: 25px 30px;
+}
+.form header{
+    font-size: 25px;
+    font-weight: 660;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e6e6e6;
+}
+.form form{
+    margin: 20px 0;
+}
+/*A hibaüzeneteket formázza, amelyeket a felhasználóknak jelenít meg, ha valami hibásan lett kitöltve az űrlapon. Beállítja a szövegszínét, háttérszínét, paddingot, szövegközépre igazítást, border-radius-t, és egyéb stílusokat. 
+Alapértelmezetten a display: none; tulajdonság miatt rejtve van.*/
+.form form .error-txt{
+    color:#721c24;
+    background: #f8d7da;
+    padding:8px 10px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom:10px;
+    border:1px solid #f5c6cb;
+    display: none;
+}
+.form form .name-details{
+    display: flex;
+}
+form .name-details .field:first-child{
+    margin-right: 10px;
+}
+form .name-details .field:last-child{
+    margin-left: 10px;
+}
+.form form .field{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.form form .field i{
+    position: absolute;
+    right: 15px;
+    color:#ccc;
+    top:60%;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+/*
+ Ha az ikon aktív, akkor az ikon színét módosítja, és egy speciális ikont is megjelenít. https://astronautweb.co/snippet/font-awesome/
+ fa-eye-slash"\f070"
+*/
+.form form .field i.active::before{
+    color:#333;
+    content:"\f070";
+}
+.form form .field label{
+    margin-bottom: 2px;
+}
+.form form .field input{
+    outline: none;
+}
+.form form .input input{
+    height: 40px;
+    width: 100%;
+    font-size: 16px;
+    padding:0 10px;
+    border:1px solid #ccc;
+    border-radius: 5px;
+}
+.form form .image input{
+    font-size: 17px;
+}
+/*A gombot formázza, amelyet a felhasználók az űrlap elküldéséhez használnak. Beállítja a margót, betűméretet, színét és kurzort a kattintásra.*/
+.form form .button input{
+    margin-top: 13px;
+    height: 45px;
+    border:none;
+    font-size: 17px;
+    font-weight: 500;
+    background: #333;
+    color:#fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.form .link{
+    text-align: center;
+    margin:10px 0;
+    font-size: 17px;
+}
+/*A hivatkozások hover állapotát formázza, amikor a felhasználó az egérrel ráhúzza. Aláhúzást ad a hivatkozásnak.*/
+.form .link a:hover{
+    text-decoration: underline;
+}
+/*---------------------------------------------------*/
+/*user.html formázása*/
+.users{
+    padding:25px 30px;
+}
+.users header,
+.users-list a{
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    justify-content: space-between;
+    border-bottom:1px solid #e6e6e6;
+}
+.wrapper img{
+    object-fit: cover;
+    border-radius: 50%;
+}
+/*zárójel után fontos a szóköz!*/
+:is(.users, .users-list) .content{
+    display: flex;
+    align-items: center;
+}
+.users header .content img{
+    height: 50px;
+    width: 50px;
+}
+:is(.users, .users-list) .details{
+    color:#000;
+    margin-left:15px;
+}
+:is(.users, .users-list) .details span{
+    font-size: 18px;
+    font-weight: 500;
+}
+.users header .logout{
+    color:#fff;
+    font-size: 17px;
+    padding:7px 15px;
+    background: #333;
+    border-radius: 5px;
+}
+.users .search{
+    margin:20px 0;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+}
+.users .search .text {
+    font-size: 18px;
+}
+.users .search input{
+    position: absolute;
+    height: 42px;
+    width: calc(100% - 50px);
+    border:1px solid #ccc;
+    padding:0 13px;
+    font-size: 16px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+/*javascirpttel irányítva*/
+.users .search input.active{
+    opacity: 1;
+    pointer-events: auto;
+}
+.users .search button{
+    width: 47px;
+    height: 42px;
+    border:none;
+    outline: none;
+    color:#333;
+    background: #fff;
+    cursor: pointer;
+    font-size: 17px;
+    border-radius: 0 5px 5px 0;
+    transition: all 0.2s ease;
+}
+/*javascirpttel irányítva*/
+.users .search button.active{
+    color:#fff;
+    background: #333;
+}
+/*ha a users panelen kattintunk a keresésre, akkor x lesz látható
+fa-times"\f00d"
+Forrás: https://astronautweb.co/snippet/font-awesome/*/
+.users .search button.active i::before{
+    content: "\f00d";
+}
+.users-list{
+max-height: 350px;
+overflow-y: auto;
+}
+/*a megjelenő scrollbarra nincs szükség, hiszen görgethető a chat*/
+:is(.users-list, .chat-box)::-webkit-scrollbar{
+    width: 0px;
+}
+.users-list a{
+    margin-bottom: 15px;
+    padding-right: 15px;
+    border-bottom-color: #f1f1f1;
+}
+.users-list a:last-child{
+    border:none;
+    margin-bottom: 0px;
+}
+.users-list a .content img{
+    height: 40px;
+    width: 40px;
+}
+.users-list a .content p{
+    color:#67676a;
+}
+.users-list a .status-dot{
+    font-size: 12px;
+    color:#468669;
+}
+/*ezt az osztályt a PHP-ben használjuk az offline állapothoz*/
+.users-list a .status-dot.offline{
+    color:#ccc;
+}
+
+/*Chat-area.html*/
+.chat-area header{
+    display: flex;
+    align-items: center;
+    padding: 18px 30px;
+}
+.chat-area header .back-icon{
+    font-size: 18px;
+    color:#333;
+}
+.chat-area header img{
+    height: 45px;
+    width: 45px;
+    margin: 0 15px
+}
+.chat-area header span{
+    font-size: 17px;
+    font-weight: 500;
+}
+.chat-box{
+    height: 500px;
+    overflow-y: auto;
+    background: #f7f7f7;
+    padding: 10px 30px 20px 30px;
+    box-shadow: inset 0 32px 32px -32px rgb(0 0 0 / 5%),
+                inset 0 -32px 32px -32px rgb(0 0 0 / 5%);
+}
+.chat-box .chat{
+    margin:15px 0;
+}
+.chat-box .chat p{
+    word-wrap: break-word;
+    padding:8px 16px;
+    box-shadow: 0 0 32px 32px rgb(0 0 0 / 8%),
+                0 16px 16px -16px rgb(0 0 0 / 10%);
+}
+.chat-box .outgoing{
+    display: flex;
+}
+.outgoing .details{
+    margin-left: auto;
+    min-width: calc(100% - 130px);
+}
+.outgoing .details p{
+    background: #333;
+    color:#fff;
+    border-radius: 18px 18px 0 18px;
+}
+.chat-box .incoming{
+    display: flex;
+    align-items: flex-end;
+}
+.chat-box .incoming{
+    display: flex;
+    align-items: flex-end;
+}
+
+.chat-box img{
+    height: 35px;
+    width: 35px;
+}
+.incoming .details{
+    margin-left: 10px;
+    margin-right: auto;
+    min-width: calc(100% - 130px);
+}
+.incoming .details p{
+    background: #fff;
+    color: #333;
+    border-radius: 18px 18px 18px 0;
+}
+.chat-area .typing-area{
+    padding: 18px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.typing-area input{
+    height: 45px;
+    width: calc(100% - 58px);
+    font-size: 17px;
+    border: 1px solid #ccc;
+    padding: 0 13px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+.typing-area button{
+    width: 55px;
+    border:none;
+    outline: none;
+    background: #333;
+    color: #fff;
+    font-size: 19px;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+}
+
+/*Saját profil oldalának elrendezése*/
+.profile_container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 5rem;
+    margin:2rem
+}
+.profil_image .images img{
+    width: 20rem;
+}
+.profile_image{
+grid-column:1/2;
+}
+.user_details{
+grid-column:2/3;
+}
+.user_details th, td{
+padding: 1rem
+}
+.user_details a{
+    padding: .5rem;
+    border:1px solid black;
+    border-radius: 10px;
+
+}
+.user_details .update{
+    background-color: green;
+}
+.user_details .delete{
+    background-color: red;
+}
+
+/*fotó ikon*/
+.photo-icon {
+    cursor: pointer;
+    font-size: 30px;
+    margin: 0 5px;
+}
+
+.photo-icon i {
+    color: #777575;
+}
+
+.photo-icon:hover i {
+    color: #cdc9c9;
+}
+/**/
+.chat .chat-image {
+    width: 100% !important; /* A kép szélessége a rendelkezésre álló helyet kitölti */
+    max-width: 200px !important; /* Maximális szélesség beállítása */
+    height: auto !important; /* Automatikusan tartsa meg az arányokat */
+    max-height: 200px !important; /* Maximális magasság, hogy ne legyen túl magas */
+    border-radius: 10px !important;
+    margin-top: 5px;
+    object-fit: cover; /* A kép illeszkedjen a befoglaló elemhez, de ne torzuljon */
+}
+
+/*üzenőfal*/
+.users-posts{
+    display: flex;
+    justify-content: center;
+}
+.post-section {
+    padding: 20px;
+}
+
+.create-post textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.post {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.post img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+}
+
+.post-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+
+/*Média lekérdezések, a főoldal és a profil oldal reszponzív megjelenéséhez, hogy a fotó ne csússzon a táblázat alá*/
+ @media only screen and (min-width: 300px) and (max-width: 798px) {
+    .profile_container{
+        display: grid;
+        justify-items: center;
+        grid-template-columns: 1fr;
+        
+    }
+  
+    .profil_image .images img{
+        width: 20rem;
+    }
+    .profile_image{
+        grid-column:1/2;
+        }
+    .user_details{
+        grid-column:1/2;
+        }
+    main .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr;
+            justify-items: center;
+        }
+
+    article { 
+            display: grid;
+            grid-template-columns: 1fr; 
+            margin: 1em;
+            padding: 2em;
+            width: 300px;
+        }
+    article section{
+            margin-left:0
+        }
+    
+ }
+ @media only screen and (min-width: 750px) and (max-width: 1100px) {
+    main .container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto 1fr;
+    }
+    article { 
+        display: grid;
+        grid-template-columns: 1fr 2fr; 
+        margin: 1em;
+        padding: 2em;
+        width: 300px;
+    }
+ }
+
