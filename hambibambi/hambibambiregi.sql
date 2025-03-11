@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 11. 19:32
--- Kiszolgáló verziója: 10.4.27-MariaDB
--- PHP verzió: 8.0.25
+-- Létrehozás ideje: 2025. Már 04. 10:30
+-- Kiszolgáló verziója: 10.4.28-MariaDB
+-- PHP verzió: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Adatbázis: `hambibambi`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `addresses`
+--
+
+CREATE TABLE `addresses` (
+  `address_id` int(11) NOT NULL,
+  `settlement_id` int(11) DEFAULT NULL,
+  `street_name` varchar(255) DEFAULT NULL,
+  `house_number` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -42,10 +55,9 @@ CREATE TABLE `admin` (
 CREATE TABLE `baskets` (
   `basket_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `payment_id` int(11) DEFAULT NULL,
-  `order_status_id` int(11) DEFAULT NULL,
-  `order_date` datetime DEFAULT NULL,
-  `delivery_date` datetime DEFAULT NULL
+  `order_id` int(11) DEFAULT NULL,
+  `designation` varchar(255) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -65,8 +77,8 @@ CREATE TABLE `counties` (
 
 INSERT INTO `counties` (`county_id`, `county_name`) VALUES
 (1, 'Nógrád'),
-(2, 'Heves'),
-(3, 'Pest'),
+(2, 'Pest'),
+(3, 'Heves'),
 (4, 'Komárom-Esztergom');
 
 -- --------------------------------------------------------
@@ -78,8 +90,11 @@ INSERT INTO `counties` (`county_id`, `county_name`) VALUES
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
-  `basket_id` int(11) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  `payment_id` int(11) DEFAULT NULL,
+  `order_status_id` int(11) DEFAULT NULL,
+  `order_date` datetime DEFAULT NULL,
+  `delivery_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -144,44 +159,44 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `product_category_id`, `quantity_unit_id`, `product_name`, `price`, `description`, `picture`) VALUES
-(39, 1, 2, 'Cézár saláta', 2500, 'Grillezett csirkemell, római saláta, parmezán, kruton, Cézár öntet', 'cezar_salata.jpg'),
-(40, 1, 2, 'Görög saláta', 2300, 'Paradicsom, uborka, feta sajt, olívabogyó, lilahagyma, olívaolaj', 'gorog_salata.jpg'),
-(41, 1, 2, 'Tonhal saláta', 2600, 'Tonhal, saláta, kukorica, lilahagyma, paradicsom, olívaolaj', 'tonhal_salata.jpg'),
-(42, 2, 2, 'Gulyásleves', 2200, 'Marhahús, burgonya, répa, csipetke, pirospaprika', 'gulyasleves.jpg'),
-(43, 2, 2, 'Húsleves', 2000, 'Csirkehús, sárgarépa, zeller, petrezselyem, tészta', 'husleves.jpg'),
-(44, 2, 2, 'Paradicsomleves', 1800, 'Paradicsom, bazsalikom, tejszín, pirított kenyérkocka', 'paradicsomleves.jpg'),
-(45, 2, 2, 'Sajtkrémleves', 1900, 'Különböző sajtok, tejszín, fokhagyma, pirított kenyér', 'sajtkremleves.jpg'),
-(46, 3, 1, 'Dupla sajtburger', 2500, 'Házi buci, marhahús, sajt, uborka, paradicsom, ketchup, mustár', 'dupla_sajtburger.jpg'),
-(47, 3, 1, 'Bacon burger', 2700, 'Házi buci, marhahús, bacon, cheddar sajt, bbq szósz, lilahagyma', 'bacon_burger.jpg'),
-(48, 3, 1, 'Csirkeburger', 2300, 'Házi buci, ropogós csirkemell, saláta, paradicsom, fokhagymás szósz', 'csirkeburger.jpg'),
-(49, 3, 1, 'Chili burger', 2600, 'Házi buci, marhahús, jalapeno, cheddar sajt, saláta, chiliszósz', 'chili_burger.jpg'),
-(50, 3, 1, 'BBQ burger', 2800, 'Házi buci, marhahús, bacon, cheddar sajt, bbq szósz, saláta', 'bbq_burger.jpg'),
-(51, 3, 1, 'Gombás burger', 2500, 'Házi buci, marhahús, pirított gomba, cheddar sajt, saláta, majonéz', 'gombas_burger.jpg'),
-(52, 3, 1, 'Vegetáriánus burger', 2200, 'Házi buci, grillezett zöldségek, avokádókrém, saláta', 'vega_burger.jpg'),
-(53, 3, 1, 'Hawaii burger', 2700, 'Házi buci, marhahús, ananász, cheddar sajt, mézes-mustáros szósz', 'hawaii_burger.jpg'),
-(54, 3, 1, 'Kéksajtos burger', 2900, 'Házi buci, marhahús, kéksajt, dió, rukkola', 'keksajtos_burger.jpg'),
-(55, 3, 1, 'Pikáns csirkeburger', 2500, 'Házi buci, ropogós csirke, jalapeno, cheddar sajt, saláta', 'pikans_csirkeburger.jpg'),
-(56, 3, 1, 'Mexikói burger', 2800, 'Házi buci, marhahús, babpüré, jalapeno, cheddar sajt, salsa szósz', 'mexikoi_burger.jpg'),
-(57, 3, 1, 'Bivaly burger', 3000, 'Házi buci, marhahús, füstölt sajt, bacon, bbq szósz', 'bivaly_burger.jpg'),
-(58, 4, 2, 'Carbonara spagetti', 2700, 'Spagetti, bacon, tojás, parmezán, tejszín', 'carbonara.jpg'),
-(59, 4, 2, 'Bolognai spagetti', 2500, 'Spagetti, darált marhahús, paradicsomszósz, sajt', 'bolognai.jpg'),
-(60, 4, 2, 'Pesto tészta', 2400, 'Penne, bazsalikom pesto, parmezán, fokhagyma', 'pesto_teszta.jpg'),
-(61, 5, 3, 'Sör', 900, 'Hideg csapolt világos sör', 'sor.jpg'),
-(62, 5, 3, 'Vörösbor', 1200, 'Száraz vörösbor, Cabernet Sauvignon', 'vorosbor.jpg'),
-(63, 5, 3, 'Fehérbor', 1200, 'Száraz fehérbor, Chardonnay', 'feherbor.jpg'),
-(64, 5, 3, 'Whiskey', 2500, '12 éves érlelt whiskey, jég nélkül', 'whiskey.jpg'),
-(65, 6, 3, 'Cola', 800, 'Hagyományos szénsavas kóla', 'cola.jpg'),
-(66, 6, 3, 'Narancslé', 1000, 'Frissen facsart narancslé', 'narancsle.jpg'),
-(67, 6, 3, 'Jegeskávé', 1200, 'Presszókávé, tej, jég, vaníliaszirup', 'jegeskave.jpg'),
-(68, 6, 3, 'Limonádé', 1000, 'Citrom, cukor, menta, szóda', 'limonade.jpg'),
-(69, 6, 3, 'Almalé', 1000, '100% természetes almalé', 'almale.jpg'),
-(70, 6, 3, 'Jeges tea', 1100, 'Házi készítésű jeges tea, citrommal', 'jegestea.jpg'),
-(71, 6, 3, 'Szénsavmentes víz', 600, 'Tiszta szénsavmentes ásványvíz', 'viz.jpg'),
-(72, 7, 1, 'Csokoládétorta', 2500, 'Étcsokoládé, kakaópor, tejszín, vaj', 'csokolade_torta.jpg'),
-(73, 7, 1, 'Gesztenyepüré', 2200, 'Gesztenye, tejszínhab, rumaroma, cukor', 'gesztenyepure.jpg'),
-(74, 7, 1, 'Almás pite', 2000, 'Alma, fahéj, cukor, leveles tészta', 'almas_pite.jpg'),
-(75, 7, 1, 'Sajttorta', 2700, 'Tejszín, mascarpone, keksz alap, eperöntet', 'sajttorta.jpg'),
-(76, 7, 1, 'Somlói galuska', 2500, 'Piskóta, csokoládéöntet, tejszínhab, dió', 'somloi_galuska.jpg');
+(1, 1, 2, 'Cézár saláta', 2500, 'Grillezett csirkemell, római saláta, parmezán, kruton, Cézár öntet', 'cezar_salata.jpg'),
+(2, 1, 2, 'Görög saláta', 2300, 'Paradicsom, uborka, feta sajt, olívabogyó, lilahagyma, olívaolaj', 'gorog_salata.jpg'),
+(3, 1, 2, 'Tonhal saláta', 2600, 'Tonhal, saláta, kukorica, lilahagyma, paradicsom, olívaolaj', 'tonhal_salata.jpg'),
+(4, 2, 2, 'Gulyásleves', 2200, 'Marhahús, burgonya, répa, csipetke, pirospaprika', 'gulyasleves.jpg'),
+(5, 2, 2, 'Húsleves', 2000, 'Csirkehús, sárgarépa, zeller, petrezselyem, tészta', 'husleves.jpg'),
+(6, 2, 2, 'Paradicsomleves', 1800, 'Paradicsom, bazsalikom, tejszín, pirított kenyérkocka', 'paradicsomleves.jpg'),
+(7, 2, 2, 'Sajtkrémleves', 1900, 'Különböző sajtok, tejszín, fokhagyma, pirított kenyér', 'sajtkremleves.jpg'),
+(8, 3, 1, 'Dupla sajtburger', 2500, 'Házi buci, marhahús, sajt, uborka, paradicsom, ketchup, mustár', 'dupla_sajtburger.jpg'),
+(9, 3, 1, 'Bacon burger', 2700, 'Házi buci, marhahús, bacon, cheddar sajt, bbq szósz, lilahagyma', 'bacon_burger.jpg'),
+(10, 3, 1, 'Csirkeburger', 2300, 'Házi buci, ropogós csirkemell, saláta, paradicsom, fokhagymás szósz', 'csirkeburger.jpg'),
+(11, 3, 1, 'Chili burger', 2600, 'Házi buci, marhahús, jalapeno, cheddar sajt, saláta, chiliszósz', 'chili_burger.jpg'),
+(12, 3, 1, 'BBQ burger', 2800, 'Házi buci, marhahús, bacon, cheddar sajt, bbq szósz, saláta', 'bbq_burger.jpg'),
+(13, 3, 1, 'Gombás burger', 2500, 'Házi buci, marhahús, pirított gomba, cheddar sajt, saláta, majonéz', 'gombas_burger.jpg'),
+(14, 3, 1, 'Vegetáriánus burger', 2200, 'Házi buci, grillezett zöldségek, avokádókrém, saláta', 'vega_burger.jpg'),
+(15, 3, 1, 'Hawaii burger', 2700, 'Házi buci, marhahús, ananász, cheddar sajt, mézes-mustáros szósz', 'hawaii_burger.jpg'),
+(16, 3, 1, 'Kéksajtos burger', 2900, 'Házi buci, marhahús, kéksajt, dió, rukkola', 'keksajtos_burger.jpg'),
+(17, 3, 1, 'Pikáns csirkeburger', 2500, 'Házi buci, ropogós csirke, jalapeno, cheddar sajt, saláta', 'pikans_csirkeburger.jpg'),
+(18, 3, 1, 'Mexikói burger', 2800, 'Házi buci, marhahús, babpüré, jalapeno, cheddar sajt, salsa szósz', 'mexikoi_burger.jpg'),
+(19, 3, 1, 'Bivaly burger', 3000, 'Házi buci, marhahús, füstölt sajt, bacon, bbq szósz', 'bivaly_burger.jpg'),
+(20, 4, 2, 'Carbonara spagetti', 2700, 'Spagetti, bacon, tojás, parmezán, tejszín', 'carbonara.jpg'),
+(21, 4, 2, 'Bolognai spagetti', 2500, 'Spagetti, darált marhahús, paradicsomszósz, sajt', 'bolognai.jpg'),
+(22, 4, 2, 'Pesto tészta', 2400, 'Penne, bazsalikom pesto, parmezán, fokhagyma', 'pesto_teszta.jpg'),
+(23, 5, 3, 'Sör', 900, 'Hideg csapolt világos sör', 'sor.jpg'),
+(24, 5, 3, 'Vörösbor', 1200, 'Száraz vörösbor, Cabernet Sauvignon', 'vorosbor.jpg'),
+(25, 5, 3, 'Fehérbor', 1200, 'Száraz fehérbor, Chardonnay', 'feherbor.jpg'),
+(26, 5, 3, 'Whiskey', 2500, '12 éves érlelt whiskey, jég nélkül', 'whiskey.jpg'),
+(27, 6, 3, 'Cola', 800, 'Hagyományos szénsavas kóla', 'cola.jpg'),
+(28, 6, 3, 'Narancslé', 1000, 'Frissen facsart narancslé', 'narancsle.jpg'),
+(29, 6, 3, 'Jegeskávé', 1200, 'Presszókávé, tej, jég, vaníliaszirup', 'jegeskave.jpg'),
+(30, 6, 3, 'Limonádé', 1000, 'Citrom, cukor, menta, szóda', 'limonade.jpg'),
+(31, 6, 3, 'Almalé', 1000, '100% természetes almalé', 'almale.jpg'),
+(32, 6, 3, 'Jeges tea', 1100, 'Házi készítésű jeges tea, citrommal', 'jegestea.jpg'),
+(33, 6, 3, 'Szénsavmentes víz', 600, 'Tiszta szénsavmentes ásványvíz', 'viz.jpg'),
+(34, 7, 1, 'Csokoládétorta', 2500, 'Étcsokoládé, kakaópor, tejszín, vaj', 'csokolade_torta.jpg'),
+(35, 7, 1, 'Gesztenyepüré', 2200, 'Gesztenye, tejszínhab, rumaroma, cukor', 'gesztenyepure.jpg'),
+(36, 7, 1, 'Almás pite', 2000, 'Alma, fahéj, cukor, leveles tészta', 'almas_pite.jpg'),
+(37, 7, 1, 'Sajttorta', 2700, 'Tejszín, mascarpone, keksz alap, eperöntet', 'sajttorta.jpg'),
+(38, 7, 1, 'Somlói galuska', 2500, 'Piskóta, csokoládéöntet, tejszínhab, dió', 'somloi_galuska.jpg');
 
 -- --------------------------------------------------------
 
@@ -206,7 +221,7 @@ INSERT INTO `product_categories` (`product_category_id`, `product_group_id`, `pr
 (4, 2, 'Tészták'),
 (5, 4, 'Alkoholos italok'),
 (6, 4, 'Üdítők'),
-(7, 3, 'Sütemények');
+(7, 3, 'Sütik');
 
 -- --------------------------------------------------------
 
@@ -258,7 +273,7 @@ INSERT INTO `quantity_units` (`quantity_unit_id`, `quantity_unit_value`) VALUES
 CREATE TABLE `reviews` (
   `review_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `review_value` double DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `review_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -380,151 +395,151 @@ INSERT INTO `settlements` (`settlement_id`, `county_id`, `settlement_name`, `pos
 (97, 2, 'Budajenő', 2093),
 (98, 2, 'Budakalász', 2011),
 (99, 2, 'Budakeszi', 2092),
-(100, 2, 'Budaörs', 2040),
-(101, 2, 'Budapest', 1011),
-(102, 2, 'Budapest', 1012),
-(103, 2, 'Budapest', 1013),
-(104, 2, 'Budapest', 1014),
-(105, 2, 'Budapest', 1015),
-(106, 2, 'Budapest', 1016),
-(107, 2, 'Budapest', 1021),
-(108, 2, 'Budapest', 1022),
-(109, 2, 'Budapest', 1023),
-(110, 2, 'Budapest', 1024),
-(111, 2, 'Budapest', 1025),
-(112, 2, 'Budapest', 1026),
-(113, 2, 'Budapest', 1027),
-(114, 2, 'Budapest', 1028),
-(115, 2, 'Budapest', 1029),
-(116, 2, 'Budapest', 1031),
-(117, 2, 'Budapest', 1032),
-(118, 2, 'Budapest', 1033),
-(119, 2, 'Budapest', 1034),
-(120, 2, 'Budapest', 1035),
-(121, 2, 'Budapest', 1036),
-(122, 2, 'Budapest', 1037),
-(123, 2, 'Budapest', 1038),
-(124, 2, 'Budapest', 1039),
-(125, 2, 'Budapest', 1041),
-(126, 2, 'Budapest', 1042),
-(127, 2, 'Budapest', 1043),
-(128, 2, 'Budapest', 1044),
-(129, 2, 'Budapest', 1045),
-(130, 2, 'Budapest', 1046),
-(131, 2, 'Budapest', 1047),
-(132, 2, 'Budapest', 1048),
-(133, 2, 'Budapest', 1051),
-(134, 2, 'Budapest', 1052),
-(135, 2, 'Budapest', 1053),
-(136, 2, 'Budapest', 1054),
-(137, 2, 'Budapest', 1055),
-(138, 2, 'Budapest', 1056),
-(139, 2, 'Budapest', 1061),
-(140, 2, 'Budapest', 1062),
-(141, 2, 'Budapest', 1063),
-(142, 2, 'Budapest', 1064),
-(143, 2, 'Budapest', 1065),
-(144, 2, 'Budapest', 1066),
-(145, 2, 'Budapest', 1067),
-(146, 2, 'Budapest', 1068),
-(147, 2, 'Budapest', 1069),
-(148, 2, 'Budapest', 1071),
-(149, 2, 'Budapest', 1072),
-(150, 2, 'Budapest', 1073),
-(151, 2, 'Budapest', 1074),
-(152, 2, 'Budapest', 1075),
-(153, 2, 'Budapest', 1076),
-(154, 2, 'Budapest', 1077),
-(155, 2, 'Budapest', 1078),
-(156, 2, 'Budapest', 1081),
-(157, 2, 'Budapest', 1082),
-(158, 2, 'Budapest', 1083),
-(159, 2, 'Budapest', 1084),
-(160, 2, 'Budapest', 1085),
-(161, 2, 'Budapest', 1086),
-(162, 2, 'Budapest', 1087),
-(163, 2, 'Budapest', 1088),
-(164, 2, 'Budapest', 1089),
-(165, 2, 'Budapest', 1091),
-(166, 2, 'Budapest', 1092),
-(167, 2, 'Budapest', 1093),
-(168, 2, 'Budapest', 1094),
-(169, 2, 'Budapest', 1095),
-(170, 2, 'Budapest', 1096),
-(171, 2, 'Budapest', 1097),
-(172, 2, 'Budapest', 1098),
-(173, 2, 'Budapest', 1101),
-(174, 2, 'Budapest', 1102),
-(175, 2, 'Budapest', 1103),
-(176, 2, 'Budapest', 1104),
-(177, 2, 'Budapest', 1105),
-(178, 2, 'Budapest', 1106),
-(179, 2, 'Budapest', 1107),
-(180, 2, 'Budapest', 1108),
-(181, 2, 'Budapest', 1111),
-(182, 2, 'Budapest', 1112),
-(183, 2, 'Budapest', 1113),
-(184, 2, 'Budapest', 1114),
-(185, 2, 'Budapest', 1115),
-(186, 2, 'Budapest', 1116),
-(187, 2, 'Budapest', 1117),
-(188, 2, 'Budapest', 1118),
-(189, 2, 'Budapest', 1119),
-(190, 2, 'Budapest', 1121),
-(191, 2, 'Budapest', 1122),
-(192, 2, 'Budapest', 1123),
-(193, 2, 'Budapest', 1124),
-(194, 2, 'Budapest', 1125),
-(195, 2, 'Budapest', 1126),
-(196, 2, 'Budapest', 1131),
-(197, 2, 'Budapest', 1132),
-(198, 2, 'Budapest', 1133),
-(199, 2, 'Budapest', 1134),
-(200, 2, 'Budapest', 1135),
-(201, 2, 'Budapest', 1136),
-(202, 2, 'Budapest', 1137),
-(203, 2, 'Budapest', 1138),
-(204, 2, 'Budapest', 1139),
-(205, 2, 'Budapest', 1141),
-(206, 2, 'Budapest', 1142),
-(207, 2, 'Budapest', 1143),
-(208, 2, 'Budapest', 1144),
-(209, 2, 'Budapest', 1145),
-(210, 2, 'Budapest', 1146),
-(211, 2, 'Budapest', 1147),
-(212, 2, 'Budapest', 1148),
-(213, 2, 'Budapest', 1149),
-(214, 2, 'Budapest', 1151),
-(215, 2, 'Budapest', 1152),
-(216, 2, 'Budapest', 1153),
-(217, 2, 'Budapest', 1154),
-(218, 2, 'Budapest', 1155),
-(219, 2, 'Budapest', 1156),
-(220, 2, 'Budapest', 1157),
-(221, 2, 'Budapest', 1158),
-(222, 2, 'Budapest', 1161),
-(223, 2, 'Budapest', 1162),
-(224, 2, 'Budapest', 1163),
-(225, 2, 'Budapest', 1164),
-(226, 2, 'Budapest', 1165),
-(227, 2, 'Budapest', 1171),
-(228, 2, 'Budapest', 1172),
-(229, 2, 'Budapest', 1173),
-(230, 2, 'Budapest', 1174),
-(231, 2, 'Budapest', 1181),
-(232, 2, 'Budapest', 1182),
-(233, 2, 'Budapest', 1183),
-(234, 2, 'Budapest', 1184),
-(235, 2, 'Budapest', 1185),
-(236, 2, 'Budapest', 1186),
-(237, 2, 'Budapest', 1188),
-(238, 2, 'Budapest', 1191),
-(239, 2, 'Budapest', 1192),
-(240, 2, 'Budapest', 1193),
-(241, 2, 'Budapest', 1194),
-(242, 2, 'Budapest', 1195),
-(243, 2, 'Budapest', 1196),
-(244, 2, 'Budapest', 1201),
+(100, 2, 'Budapest', 1011),
+(101, 2, 'Budapest', 1012),
+(102, 2, 'Budapest', 1013),
+(103, 2, 'Budapest', 1014),
+(104, 2, 'Budapest', 1015),
+(105, 2, 'Budapest', 1016),
+(106, 2, 'Budapest', 1021),
+(107, 2, 'Budapest', 1022),
+(108, 2, 'Budapest', 1023),
+(109, 2, 'Budapest', 1024),
+(110, 2, 'Budapest', 1025),
+(111, 2, 'Budapest', 1026),
+(112, 2, 'Budapest', 1027),
+(113, 2, 'Budapest', 1028),
+(114, 2, 'Budapest', 1029),
+(115, 2, 'Budapest', 1031),
+(116, 2, 'Budapest', 1032),
+(117, 2, 'Budapest', 1033),
+(118, 2, 'Budapest', 1034),
+(119, 2, 'Budapest', 1035),
+(120, 2, 'Budapest', 1036),
+(121, 2, 'Budapest', 1037),
+(122, 2, 'Budapest', 1038),
+(123, 2, 'Budapest', 1039),
+(124, 2, 'Budapest', 1041),
+(125, 2, 'Budapest', 1042),
+(126, 2, 'Budapest', 1043),
+(127, 2, 'Budapest', 1044),
+(128, 2, 'Budapest', 1045),
+(129, 2, 'Budapest', 1046),
+(130, 2, 'Budapest', 1047),
+(131, 2, 'Budapest', 1048),
+(132, 2, 'Budapest', 1051),
+(133, 2, 'Budapest', 1052),
+(134, 2, 'Budapest', 1053),
+(135, 2, 'Budapest', 1054),
+(136, 2, 'Budapest', 1055),
+(137, 2, 'Budapest', 1056),
+(138, 2, 'Budapest', 1061),
+(139, 2, 'Budapest', 1062),
+(140, 2, 'Budapest', 1063),
+(141, 2, 'Budapest', 1064),
+(142, 2, 'Budapest', 1065),
+(143, 2, 'Budapest', 1066),
+(144, 2, 'Budapest', 1067),
+(145, 2, 'Budapest', 1068),
+(146, 2, 'Budapest', 1069),
+(147, 2, 'Budapest', 1071),
+(148, 2, 'Budapest', 1072),
+(149, 2, 'Budapest', 1073),
+(150, 2, 'Budapest', 1074),
+(151, 2, 'Budapest', 1075),
+(152, 2, 'Budapest', 1076),
+(153, 2, 'Budapest', 1077),
+(154, 2, 'Budapest', 1078),
+(155, 2, 'Budapest', 1081),
+(156, 2, 'Budapest', 1082),
+(157, 2, 'Budapest', 1083),
+(158, 2, 'Budapest', 1084),
+(159, 2, 'Budapest', 1085),
+(160, 2, 'Budapest', 1086),
+(161, 2, 'Budapest', 1087),
+(162, 2, 'Budapest', 1088),
+(163, 2, 'Budapest', 1089),
+(164, 2, 'Budapest', 1091),
+(165, 2, 'Budapest', 1092),
+(166, 2, 'Budapest', 1093),
+(167, 2, 'Budapest', 1094),
+(168, 2, 'Budapest', 1095),
+(169, 2, 'Budapest', 1096),
+(170, 2, 'Budapest', 1097),
+(171, 2, 'Budapest', 1098),
+(172, 2, 'Budapest', 1101),
+(173, 2, 'Budapest', 1102),
+(174, 2, 'Budapest', 1103),
+(175, 2, 'Budapest', 1104),
+(176, 2, 'Budapest', 1105),
+(177, 2, 'Budapest', 1106),
+(178, 2, 'Budapest', 1107),
+(179, 2, 'Budapest', 1108),
+(180, 2, 'Budapest', 1111),
+(181, 2, 'Budapest', 1112),
+(182, 2, 'Budapest', 1113),
+(183, 2, 'Budapest', 1114),
+(184, 2, 'Budapest', 1115),
+(185, 2, 'Budapest', 1116),
+(186, 2, 'Budapest', 1117),
+(187, 2, 'Budapest', 1118),
+(188, 2, 'Budapest', 1119),
+(189, 2, 'Budapest', 1121),
+(190, 2, 'Budapest', 1122),
+(191, 2, 'Budapest', 1123),
+(192, 2, 'Budapest', 1124),
+(193, 2, 'Budapest', 1125),
+(194, 2, 'Budapest', 1126),
+(195, 2, 'Budapest', 1131),
+(196, 2, 'Budapest', 1132),
+(197, 2, 'Budapest', 1133),
+(198, 2, 'Budapest', 1134),
+(199, 2, 'Budapest', 1135),
+(200, 2, 'Budapest', 1136),
+(201, 2, 'Budapest', 1137),
+(202, 2, 'Budapest', 1138),
+(203, 2, 'Budapest', 1139),
+(204, 2, 'Budapest', 1141),
+(205, 2, 'Budapest', 1142),
+(206, 2, 'Budapest', 1143),
+(207, 2, 'Budapest', 1144),
+(208, 2, 'Budapest', 1145),
+(209, 2, 'Budapest', 1146),
+(210, 2, 'Budapest', 1147),
+(211, 2, 'Budapest', 1148),
+(212, 2, 'Budapest', 1149),
+(213, 2, 'Budapest', 1151),
+(214, 2, 'Budapest', 1152),
+(215, 2, 'Budapest', 1153),
+(216, 2, 'Budapest', 1154),
+(217, 2, 'Budapest', 1155),
+(218, 2, 'Budapest', 1156),
+(219, 2, 'Budapest', 1157),
+(220, 2, 'Budapest', 1158),
+(221, 2, 'Budapest', 1161),
+(222, 2, 'Budapest', 1162),
+(223, 2, 'Budapest', 1163),
+(224, 2, 'Budapest', 1164),
+(225, 2, 'Budapest', 1165),
+(226, 2, 'Budapest', 1171),
+(227, 2, 'Budapest', 1172),
+(228, 2, 'Budapest', 1173),
+(229, 2, 'Budapest', 1174),
+(230, 2, 'Budapest', 1181),
+(231, 2, 'Budapest', 1182),
+(232, 2, 'Budapest', 1183),
+(233, 2, 'Budapest', 1184),
+(234, 2, 'Budapest', 1185),
+(235, 2, 'Budapest', 1186),
+(236, 2, 'Budapest', 1188),
+(237, 2, 'Budapest', 1191),
+(238, 2, 'Budapest', 1192),
+(239, 2, 'Budapest', 1193),
+(240, 2, 'Budapest', 1194),
+(241, 2, 'Budapest', 1195),
+(242, 2, 'Budapest', 1196),
+(243, 2, 'Budapest', 1201),
+(244, 2, 'Budaörs', 2040),
 (245, 2, 'Bugyi', 2347),
 (246, 2, 'Cegléd', 2700),
 (247, 2, 'Cegléd', 2738),
@@ -745,96 +760,88 @@ INSERT INTO `settlements` (`settlement_id`, `county_id`, `settlement_name`, `pos
 (462, 3, 'Tófalu', 9964),
 (463, 3, 'Újlőrincfalva', 27623),
 (464, 3, 'Vámosgyörk', 14580),
-(465, 3, 'Váraszó', 27012),
-(466, 3, 'Vécs', 5759),
-(467, 3, 'Verpelét', 24147),
-(468, 3, 'Visonta', 31246),
-(469, 3, 'Visonta', 31246),
-(470, 3, 'Visznek', 3513),
-(471, 3, 'Zagyvaszántó', 21722),
-(472, 3, 'Zaránk', 23445),
-(473, 4, 'Ács', 4428),
-(474, 4, 'Ácsteszér', 18139),
-(475, 4, 'Aka', 6682),
-(476, 4, 'Almásfüzitő', 32346),
-(477, 4, 'Annavölgy', 34227),
-(478, 4, 'Ászár', 23852),
-(479, 4, 'Bábolna', 19363),
-(480, 4, 'Baj', 29212),
-(481, 4, 'Bajna', 16744),
-(482, 4, 'Bajót', 29355),
-(483, 4, 'Bakonybánk', 24244),
-(484, 4, 'Bakonysárkány', 25229),
-(485, 4, 'Bakonyszombathely', 22381),
-(486, 4, 'Bana', 31422),
-(487, 4, 'Bársonyos', 8624),
-(488, 4, 'Bokod', 7311),
-(489, 4, 'Császár', 16416),
-(490, 4, 'Csatka', 33109),
-(491, 4, 'Csém', 33640),
-(492, 4, 'Csép', 18272),
-(493, 4, 'Csolnok', 18926),
-(494, 4, 'Dad', 33163),
-(495, 4, 'Dág', 22910),
-(496, 4, 'Dömös', 6594),
-(497, 4, 'Dorog', 10490),
-(498, 4, 'Dunaalmás', 33835),
-(499, 4, 'Dunaszentmiklós', 24101),
-(500, 4, 'Epöl', 29638),
-(501, 4, 'Esztergom', 25131),
-(502, 4, 'Esztergom', 25131),
-(503, 4, 'Ete', 6664),
-(504, 4, 'Gyermely', 6521),
-(505, 4, 'Héreg', 11891),
-(506, 4, 'Kecskéd', 4525),
-(507, 4, 'Kerékteleki', 10995),
-(508, 4, 'Kesztölc', 29577),
-(509, 4, 'Kisbér', 17330),
-(510, 4, 'Kisbér', 17330),
-(511, 4, 'Kisigmánd', 20923),
-(512, 4, 'Kocs', 2510),
-(513, 4, 'Komárom', 5449),
-(514, 4, 'Komárom', 5449),
-(515, 4, 'Komárom', 5449),
-(516, 4, 'Kömlőd', 7630),
-(517, 4, 'Környe', 30553),
-(518, 4, 'Lábatlan', 15255),
-(519, 4, 'Leányvár', 25487),
-(520, 4, 'Máriahalom', 22637),
-(521, 4, 'Mocsa', 26930),
-(522, 4, 'Mogyorósbánya', 28255),
-(523, 4, 'Nagyigmánd', 22372),
-(524, 4, 'Nagysáp', 27076),
-(525, 4, 'Naszály', 20163),
-(526, 4, 'Neszmély', 33826),
-(527, 4, 'Nyergesújfalu', 15352),
-(528, 4, 'Nyergesújfalu', 15352),
-(529, 4, 'Oroszlány', 30766),
-(530, 4, 'Piliscsév', 21874),
-(531, 4, 'Pilismarót', 14669),
-(532, 4, 'Réde', 30012),
-(533, 4, 'Sárisáp', 26903),
-(534, 4, 'Súr', 31990),
-(535, 4, 'Süttő', 8688),
-(536, 4, 'Szákszend', 33516),
-(537, 4, 'Szárliget', 33491),
-(538, 4, 'Szomód', 22619),
-(539, 4, 'Szomor', 21421),
-(540, 4, 'Tardos', 30225),
-(541, 4, 'Tarján', 18935),
-(542, 4, 'Tárkány', 20987),
-(543, 4, 'Tát', 8758),
-(544, 4, 'Tata', 20127),
-(545, 4, 'Tata', 20127),
-(546, 4, 'Tatabánya', 18157),
-(547, 4, 'Tokod', 14155),
-(548, 4, 'Tokodaltáró', 34023),
-(549, 4, 'Úny', 27632),
-(550, 4, 'Várgesztes', 17251),
-(551, 4, 'Vérteskethely', 32586),
-(552, 4, 'Vértessomló', 15282),
-(553, 4, 'Vértesszőlős', 31264),
-(554, 4, 'Vértestolna', 29629);
+(465, 4, 'Ács', 4428),
+(466, 4, 'Ácsteszér', 18139),
+(467, 4, 'Aka', 6682),
+(468, 4, 'Almásfüzitő', 32346),
+(469, 4, 'Annavölgy', 34227),
+(470, 4, 'Ászár', 23852),
+(471, 4, 'Bábolna', 19363),
+(472, 4, 'Baj', 29212),
+(473, 4, 'Bajna', 16744),
+(474, 4, 'Bajót', 29355),
+(475, 4, 'Bakonybánk', 24244),
+(476, 4, 'Bakonysárkány', 25229),
+(477, 4, 'Bakonyszombathely', 22381),
+(478, 4, 'Bana', 31422),
+(479, 4, 'Bársonyos', 8624),
+(480, 4, 'Bokod', 7311),
+(481, 4, 'Császár', 16416),
+(482, 4, 'Csatka', 33109),
+(483, 4, 'Csém', 33640),
+(484, 4, 'Csép', 18272),
+(485, 4, 'Csolnok', 18926),
+(486, 4, 'Dad', 33163),
+(487, 4, 'Dág', 22910),
+(488, 4, 'Dömös', 6594),
+(489, 4, 'Dorog', 10490),
+(490, 4, 'Dunaalmás', 33835),
+(491, 4, 'Dunaszentmiklós', 24101),
+(492, 4, 'Epöl', 29638),
+(493, 4, 'Esztergom', 25131),
+(494, 4, 'Esztergom', 25131),
+(495, 4, 'Ete', 6664),
+(496, 4, 'Gyermely', 6521),
+(497, 4, 'Héreg', 11891),
+(498, 4, 'Kecskéd', 4525),
+(499, 4, 'Kerékteleki', 10995),
+(500, 4, 'Kesztölc', 29577),
+(501, 4, 'Kisbér', 17330),
+(502, 4, 'Kisbér', 17330),
+(503, 4, 'Kisigmánd', 20923),
+(504, 4, 'Kocs', 2510),
+(505, 4, 'Komárom', 5449),
+(506, 4, 'Komárom', 5449),
+(507, 4, 'Komárom', 5449),
+(508, 4, 'Kömlőd', 7630),
+(509, 4, 'Környe', 30553),
+(510, 4, 'Lábatlan', 15255),
+(511, 4, 'Leányvár', 25487),
+(512, 4, 'Máriahalom', 22637),
+(513, 4, 'Mocsa', 26930),
+(514, 4, 'Mogyorósbánya', 28255),
+(515, 4, 'Nagyigmánd', 22372),
+(516, 4, 'Nagysáp', 27076),
+(517, 4, 'Naszály', 20163),
+(518, 4, 'Neszmély', 33826),
+(519, 4, 'Nyergesújfalu', 15352),
+(520, 4, 'Nyergesújfalu', 15352),
+(521, 4, 'Oroszlány', 30766),
+(522, 4, 'Piliscsév', 21874),
+(523, 4, 'Pilismarót', 14669),
+(524, 4, 'Réde', 30012),
+(525, 4, 'Sárisáp', 26903),
+(526, 4, 'Súr', 31990),
+(527, 4, 'Süttő', 8688),
+(528, 4, 'Szákszend', 33516),
+(529, 4, 'Szárliget', 33491),
+(530, 4, 'Szomód', 22619),
+(531, 4, 'Szomor', 21421),
+(532, 4, 'Tardos', 30225),
+(533, 4, 'Tarján', 18935),
+(534, 4, 'Tárkány', 20987),
+(535, 4, 'Tát', 8758),
+(536, 4, 'Tata', 20127),
+(537, 4, 'Tata', 20127),
+(538, 4, 'Tatabánya', 18157),
+(539, 4, 'Tokod', 14155),
+(540, 4, 'Tokodaltáró', 34023),
+(541, 4, 'Úny', 27632),
+(542, 4, 'Várgesztes', 17251),
+(543, 4, 'Vérteskethely', 32586),
+(544, 4, 'Vértessomló', 15282),
+(545, 4, 'Vértesszőlős', 31264),
+(546, 4, 'Vértestolna', 29629);
 
 -- --------------------------------------------------------
 
@@ -844,18 +851,24 @@ INSERT INTO `settlements` (`settlement_id`, `county_id`, `settlement_name`, `pos
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
-  `settlement_id` int(11) DEFAULT NULL,
+  `address_id` int(11) DEFAULT NULL,
   `full_name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `phone_number` varchar(255) DEFAULT NULL,
-  `registration_date` date DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL
+  `regitration_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexek a kiírt táblákhoz
 --
+
+--
+-- A tábla indexei `addresses`
+--
+ALTER TABLE `addresses`
+  ADD PRIMARY KEY (`address_id`),
+  ADD KEY `settlement_id` (`settlement_id`);
 
 --
 -- A tábla indexei `admin`
@@ -868,9 +881,8 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `baskets`
   ADD PRIMARY KEY (`basket_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `payment_id` (`payment_id`),
-  ADD KEY `order_status_id` (`order_status_id`);
+  ADD UNIQUE KEY `order_id` (`order_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- A tábla indexei `counties`
@@ -884,7 +896,9 @@ ALTER TABLE `counties`
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
   ADD KEY `product_id` (`product_id`),
-  ADD KEY `basket_id` (`basket_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `payment_id` (`payment_id`),
+  ADD KEY `order_status_id` (`order_status_id`);
 
 --
 -- A tábla indexei `order_statuses`
@@ -930,7 +944,8 @@ ALTER TABLE `quantity_units`
 --
 ALTER TABLE `reviews`
   ADD PRIMARY KEY (`review_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- A tábla indexei `settlements`
@@ -944,11 +959,17 @@ ALTER TABLE `settlements`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
-  ADD KEY `settlement_id` (`settlement_id`);
+  ADD KEY `address_id` (`address_id`);
 
 --
 -- A kiírt táblák AUTO_INCREMENT értéke
 --
+
+--
+-- AUTO_INCREMENT a táblához `addresses`
+--
+ALTER TABLE `addresses`
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `admin`
@@ -990,7 +1011,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT a táblához `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT a táblához `product_categories`
@@ -1020,7 +1041,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT a táblához `settlements`
 --
 ALTER TABLE `settlements`
-  MODIFY `settlement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=555;
+  MODIFY `settlement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=547;
 
 --
 -- AUTO_INCREMENT a táblához `users`
@@ -1033,19 +1054,26 @@ ALTER TABLE `users`
 --
 
 --
+-- Megkötések a táblához `addresses`
+--
+ALTER TABLE `addresses`
+  ADD CONSTRAINT `addresses_ibfk_1` FOREIGN KEY (`settlement_id`) REFERENCES `settlements` (`settlement_id`);
+
+--
 -- Megkötések a táblához `baskets`
 --
 ALTER TABLE `baskets`
-  ADD CONSTRAINT `baskets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `baskets_ibfk_2` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`payment_id`),
-  ADD CONSTRAINT `baskets_ibfk_3` FOREIGN KEY (`order_status_id`) REFERENCES `order_statuses` (`order_status_id`);
+  ADD CONSTRAINT `baskets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
 -- Megkötések a táblához `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`basket_id`) REFERENCES `baskets` (`basket_id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `baskets` (`order_id`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
+  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `orders_ibfk_4` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`payment_id`),
+  ADD CONSTRAINT `orders_ibfk_5` FOREIGN KEY (`order_status_id`) REFERENCES `order_statuses` (`order_status_id`);
 
 --
 -- Megkötések a táblához `products`
@@ -1064,7 +1092,8 @@ ALTER TABLE `product_categories`
 -- Megkötések a táblához `reviews`
 --
 ALTER TABLE `reviews`
-  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
 --
 -- Megkötések a táblához `settlements`
@@ -1076,7 +1105,7 @@ ALTER TABLE `settlements`
 -- Megkötések a táblához `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`settlement_id`) REFERENCES `settlements` (`settlement_id`);
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`address_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
