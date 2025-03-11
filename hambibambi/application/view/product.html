@@ -13,13 +13,14 @@
         <div class="hamburgers">
             <legend>Hamburgerek</legend>
             <div class="container" id="hamburgers">
-                <div class="product card cards" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 3}">
+                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 3}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
-                        <a href="#" class="btn btn-primary">Kosárba</a> 
+                        <input type='number' id='quantity' name='quantity' min='1' max='9' value='1'>
+                        <button type='submit' class='kosarhoz'>Kosárba</button>
                     </div>
                 </div>
             </div>
@@ -28,13 +29,14 @@
         <div class="soups">
         <legend>Levesek</legend>
             <div class="container" id="soups">
-                <div class="product card cards" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 2}">
+                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 2}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
-                        <a href="#" class="btn btn-primary">Kosárba</a> 
+                        <input type='number' id='quantity' name='quantity' min='1' max='9' value='1'>
+                        <button type='submit' class='kosarhoz'>Kosárba</button>
                     </div>
                 </div>
             </div>
@@ -43,13 +45,14 @@
         <div class="salads">
             <legend>Saláták</legend>
             <div class="container" id="salads">
-                <div class="product card cards" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 1}">
+                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 1}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
-                        <a href="#" class="btn btn-primary">Kosárba</a> 
+                        <input type='number' id='quantity' name='quantity' min='1' max='9' value='1'>
+                        <button type='submit' class='kosarhoz'>Kosárba</button>
                     </div>
                 </div>
             </div>
@@ -58,28 +61,30 @@
         <div class="pastas">
             <legend>Tészták</legend>
             <div class="container" id="pastas">
-                <div class="product card cards" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 4}">
+                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 4}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
-                        <a href="#" class="btn btn-primary">Kosárba</a> 
+                        <input type='number' id='quantity' name='quantity' min='1' max='9' value='1'>
+                        <button type='submit' class='kosarhoz'>Kosárba</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="desserts">
-            <legend>Sütik</legend>
+            <legend>Sütemények</legend>
             <div class="container" id="desserts">
-                <div class="product card cards" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 7}">
+                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 7}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
-                        <a href="#" class="btn btn-primary">Kosárba</a> 
+                        <input type='number' id='quantity' name='quantity' min='1' max='9' value='1'>
+                        <button type='submit' class='kosarhoz'>Kosárba</button>
                     </div>
                 </div>
             </div>
@@ -88,13 +93,14 @@
         <div class="drinks">
             <legend>Üdítők</legend>
             <div class="container" id="drinks">
-                <div class="product card cards" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 6}">
+                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 6}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
-                        <a href="#" class="btn btn-primary">Kosárba</a> 
+                        <input type='number' id='quantity' name='quantity' min='1' max='9' value='1'>
+                        <button type='submit' class='kosarhoz'>Kosárba</button>
                     </div>
                 </div>
             </div>
@@ -103,13 +109,14 @@
         <div class="drinks2">
             <legend>Aloholos italok</legend>
             <div class="container" id="drinks2">
-                <div class="product card cards" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 5}">
+                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 5}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
-                        <a href="#" class="btn btn-primary">Kosárba</a> 
+                        <input type='number' id='quantity' name='quantity' min='1' max='9' value='1'>
+                        <button type='submit' class='kosarhoz'>Kosárba</button>
                     </div>
                 </div>
             </div>

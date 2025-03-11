@@ -22,7 +22,7 @@
     <h2>Kiemelt ajánlataink</h2>
     <div class="ajanlatok">
         <?php
-        $sql = "SELECT product_name, description FROM products ORDER BY RAND() LIMIT 3"; // 3 véletlenszerű termék
+        $sql = "SELECT product_name, picture FROM products ORDER BY RAND() LIMIT 3"; // 3 véletlenszerű termék
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0): 
@@ -30,7 +30,6 @@
                 <div class="ajanlat">
                     <img src="./assets/img/<?php echo htmlspecialchars($row['picture']); ?>" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
                     <h3><?php echo htmlspecialchars($row['product_name']); ?></h3>
-                    <p><?php echo htmlspecialchars($row['description']); ?> </p>
                 </div>
             <?php endwhile; 
         else: ?>
