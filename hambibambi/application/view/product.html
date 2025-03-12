@@ -13,13 +13,13 @@
         <div class="hamburgers">
             <legend>Hamburgerek</legend>
             <div class="container" id="hamburgers">
-                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 3}">
+                <div class="product" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 3}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
-                    <div class="card-body product">
+                    <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
-                        <input type='number' id='quantity' name='quantity' min='1' max='9' value='1'>
+                        <input type='number' id='quantity' class="quantity" name='quantity' min='1' max='9' value='1'>
                         <button type='submit' class='kosarhoz'>Kosárba</button>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
             <div class="container" id="soups">
                 <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 2}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
-                    <div class="card-body product">
+                    <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
@@ -47,7 +47,7 @@
             <div class="container" id="salads">
                 <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 1}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
-                    <div class="card-body product">
+                    <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
@@ -61,9 +61,9 @@
         <div class="pastas">
             <legend>Tészták</legend>
             <div class="container" id="pastas">
-                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 4}">
+                <div class="product" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 4}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
-                    <div class="card-body product">
+                    <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
@@ -79,7 +79,7 @@
             <div class="container" id="desserts">
                 <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 7}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
-                    <div class="card-body product">
+                    <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
@@ -95,7 +95,7 @@
             <div class="container" id="drinks">
                 <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 6}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
-                    <div class="card-body product">
+                    <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
@@ -111,7 +111,7 @@
             <div class="container" id="drinks2">
                 <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 5}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
-                    <div class="card-body product">
+                    <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>

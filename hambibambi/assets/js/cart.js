@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Kosár ikon
+    // Kosár ikon, bezáró gomb és kosár doboz
     const cartIcon = document.querySelector('.kosarikon');
-    // Kosár bezáró gomb a felugró ablakban
     const cartCloseBtn = document.querySelector('.fa-close');
-    // Kosár felugró ablak doboz
     const cartBox = document.querySelector('.cartBox');
 
     // Kosár megjelenítése
@@ -20,94 +18,108 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Kosárhoz hozzáadott gombok
-    const addToCartButtons = document.getElementsByClassName('kosarhoz');
-    let cartItems = [];
-
-    // Hozzáadás a kosárhoz
-    for (let i = 0; i < addToCartButtons.length; i++) {
-        addToCartButtons[i].addEventListener("click", function(e) {
+    // Kosárba rakás (AngularJS termékkártyák figyelése)
+    document.querySelectorAll('.kosarhoz').forEach(button => {
+        button.addEventListener("click", function(e) {
             if (typeof(Storage) !== 'undefined') {
-                let item = {               
-                    id: i + 1,
-                    name: e.target.parentElement.children[0].innerHTML,
-                    price: parseInt(e.target.parentElement.children[1].innerHTML),
-                    quantity: parseInt(e.target.parentElement.children[2].value)
+                //let productCard = e.target.closest('.product');
+                let productName = productCard.querySelector('.card-title').innerText;
+                let productPrice = parseInt(productCard.querySelector('.ar').innerText);
+                let productQuantity = parseInt(productCard.querySelector('.quantity').value);
+                let productImage = productCard.querySelector('img').src;
+
+                let item = {
+                    id: productName + "-" + productPrice, // Egyedi azonosító
+                    name: productName,
+                    price: productPrice,
+                    quantity: productQuantity,
+                    image: productImage
                 };
 
-                let storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-                let existingItem = storedItems.find(data => data.id === item.id);
+                // Ha már benne van a termék, akkor csak a mennyiséget növeljük
+                let existingItem = cartItems.find(data => data.id === item.id);
                 if (existingItem) {
                     existingItem.quantity += item.quantity;
                 } else {
-                    storedItems.push(item);
+                    cartItems.push(item);
                 }
 
-                localStorage.setItem("cartItems", JSON.stringify(storedItems));
-                window.location.reload();
+                localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                updateCartCounter();
+                updateCartBox();
             } else {
                 alert('A helyi tárolás nem támogatott az Ön böngészőjében!');
             }
         });
-    }
-
-    // Kosár ikon számláló frissítése
-    const cartIconCounter = document.querySelector('.kosarikon p');
-    let totalQuantity = 0;
-    const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-    storedCartItems.forEach(data => {
-        totalQuantity += data.quantity;
     });
 
-    if (cartIconCounter) {
-        cartIconCounter.innerHTML = totalQuantity;
-    }
-
-    // Kosár tartalmának frissítése a felugró ablakban
-    if (cartBox) {
-        const cartBoxTable = cartBox.querySelector('table');
-        if (cartBoxTable) {
-            let tableData = '<tr><th>Termék ID</th><th>Termék Név</th><th>Mennyiség</th><th>Ár</th><th></th></tr>';
-
-            if (storedCartItems.length === 0) {
-                tableData += '<tr><td colspan="5">A kosár üres</td></tr>';
-            } else {
-                storedCartItems.forEach(data => { 
-                    let totalPrice = data.price * data.quantity;
-                    tableData += `<tr>
-                        <td>${data.id}</td>
-                        <td>${data.name}</td>
-                        <td>${data.quantity}</td>
-                        <td class="prices">${totalPrice}</td>
-                        <td><a href="#" onclick="Delete(${data.id});">Törlés</a></td>
-                    </tr>`;            
-                });
-            }
-
-            let totalSum = storedCartItems.reduce((sum, data) => sum + data.price * data.quantity, 0);
-            tableData += `<tr>
-                <th colspan="3"><a href="megrendeles.html">Megrendelés</a></th>
-                <th>${totalSum}</th>
-                <th><a href="#" onclick="clearAll();">Minden törlése</a></th>
-            </tr>`;
-
-            cartBoxTable.innerHTML = tableData;
+    // Kosár ikon számláló frissítése
+    function updateCartCounter() {
+        const cartIconCounter = document.querySelector('.kosarikon p');
+        let totalQuantity = 0;
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        cartItems.forEach(data => {
+            totalQuantity += data.quantity;
+        });
+        if (cartIconCounter) {
+            cartIconCounter.innerText = totalQuantity;
         }
     }
+
+    // Kosár tartalmának frissítése
+    function updateCartBox() {
+        if (cartBox) {
+            const cartBoxTable = cartBox.querySelector('table');
+            if (cartBoxTable) {
+                let tableData = '<tr><th>Termék</th><th>Név</th><th>Mennyiség</th><th>Ár</th><th></th></tr>';
+                let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+                if (cartItems.length === 0) {
+                    tableData += '<tr><td colspan="5">A kosár üres</td></tr>';
+                } else {
+                    cartItems.forEach(data => { 
+                        let totalPrice = data.price * data.quantity;
+                        tableData += `<tr>
+                            <td><img src="${data.image}" width="50"></td>
+                            <td>${data.name}</td>
+                            <td>${data.quantity}</td>
+                            <td class="prices">${totalPrice} Ft</td>
+                            <td><a href="#" onclick="Delete('${data.id}');">Törlés</a></td>
+                        </tr>`;            
+                    });
+                }
+
+                let totalSum = cartItems.reduce((sum, data) => sum + data.price * data.quantity, 0);
+                tableData += `<tr>
+                    <th colspan="3"><a href="megrendeles.html">Megrendelés</a></th>
+                    <th>${totalSum} Ft</th>
+                    <th><a href="#" onclick="clearAll();">Minden törlése</a></th>
+                </tr>`;
+
+                cartBoxTable.innerHTML = tableData;
+            }
+        }
+    }
+
+    // Elemet törlő függvény
+    window.Delete = function(itemId) {
+        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        cartItems = cartItems.filter(data => data.id !== itemId);
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        updateCartCounter();
+        updateCartBox();
+    };
+
+    // Kosár teljes törlése
+    window.clearAll = function() {
+        localStorage.removeItem('cartItems');
+        updateCartCounter();
+        updateCartBox();
+    };
+
+    // Indításkor frissítjük az adatokat
+    updateCartCounter();
+    updateCartBox();
 });
-
-// Törlés egy adott termékre
-function Delete(itemId) {
-    let storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    storedItems = storedItems.filter(data => data.id !== itemId);
-    localStorage.setItem('cartItems', JSON.stringify(storedItems));
-    window.location.reload();
-}
-
-// Kosár teljes törlése
-function clearAll() {
-    localStorage.removeItem('cartItems');
-    window.location.reload();
-}

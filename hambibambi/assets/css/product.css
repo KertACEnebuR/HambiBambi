@@ -7,13 +7,16 @@
     justify-content: center;
 }
 
-.product {
+.product{
+    transition: transform 0.5s;
+}
+
+.product, .product-body{
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
-    padding: 15px;
-    transition: transform 0.2s;
+    padding: 15px;   
 }
 
 .product:hover {
@@ -23,8 +26,8 @@
 .product img {
     width: 100%;
     border-radius: 10px;
-    max-height: 200px;
-    object-fit: cover;
+    height: 200px;
+    object-fit: contain;
 }
 
 .product h3 {
@@ -43,6 +46,44 @@
     display: block;
     margin-top: 10px;
 }
+/* Termékek */
+/*.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.product {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    max-width: 250px;
+    border-radius: 10px;
+}
+
+.product h3 {
+    margin: 10px 0;
+    color: #333;
+}
+
+.product p {
+    font-size: 14px;
+    color: #555;
+}
+
+.product span {
+    font-weight: bold;
+    color: #ff5722;
+}*/
+
 
 /* Reszponzív beállítások */
 @media (min-width: 1024px) {
