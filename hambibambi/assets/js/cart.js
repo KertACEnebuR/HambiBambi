@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let totalSum = cartItems.reduce((sum, data) => sum + data.price * data.quantity, 0);
         tableData += `<tr>
-            <th colspan="3"><a href="megrendeles.html">Megrendelés</a></th>
+            <th colspan="3"><a href="../checkout/checkout.php">Megrendelés</a></th>
             <th>${totalSum} Ft</th>
             <th><a href="#" onclick="clearAll();">Minden törlése</a></th>
         </tr>`;

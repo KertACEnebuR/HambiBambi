@@ -85,7 +85,7 @@ input{
     color: #173350;
 }
 /*felugró ablak táblázatához kell*/
-th {
+table, tr, th, td {
     border: 1px solid black;
     padding: 10px
 }

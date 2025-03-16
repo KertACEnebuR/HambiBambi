@@ -4,7 +4,6 @@ body {
     grid-template-rows: repeat(6, auto);
     row-gap: 20px;
     column-gap: 20px;
-    padding: 20px;
 }
 
 /* Header */

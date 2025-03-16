@@ -29,7 +29,7 @@
             while ($row = $result->fetch_assoc()): ?>
                 <div class="ajanlat">
                     <img src="./assets/img/<?php echo htmlspecialchars($row['picture']); ?>" alt="<?php echo htmlspecialchars($row['product_name']); ?>">
-                    <h3><?php echo htmlspecialchars($row['product_name']); ?></h3>
+                    <h3><?php echo htmlspecialchars(string: $row['product_name']); ?></h3>
                 </div>
             <?php endwhile; 
         else: ?>
@@ -42,6 +42,7 @@
     <div class="bemutatkozas">
         <h2>Rólunk</h2>
         <div class="bemutatkozoDiv">
+            <h5>Már egész Heves, Pest, valamint Komárom-Esztergom vármegyébe is kiszállítunk!</h5>
             <p>Üdvözlünk a HambiBambi Étteremben! Büszkék vagyunk arra, hogy mindig friss alapanyagokból készítjük ételeinket. Legyen szó egy finom hamburger menüről, könnyű salátákról vagy finom levesről, nálunk mindenki megtalálja a kedvencét. Látogass el hozzánk és tapasztald meg a minőséget és a vendégszeretetet!</p>
         </div>
     </div>
