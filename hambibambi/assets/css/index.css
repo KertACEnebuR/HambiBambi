@@ -60,7 +60,7 @@ header {
 
 /* Kiemelt ajánlatok */
 .kiemelt-ajanlatok {
-    grid-column: 1 / -1;
+    grid-column: 1/ 6;
     grid-row: 4 / 5;
     padding: 20px;
     background-color: #fff;
@@ -82,24 +82,25 @@ header {
 
 .ajanlat {
     flex: 1 1 calc(33.33% - 30px);
-    border: 1px solid black;
     border-radius: 10px;
     text-align: center;
     width: 300px;
-    margin: 0 auto;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .ajanlat img {
     width: 80%;
-    height: 300px;
+    height: auto;
+    border: 1px solid black;
     border-radius: 10px;
     object-fit: fill;
 }
 
 .ajanlat h3 {
-    margin: 10px 0;
+    margin-top: 20px;
     color: #333;
+    align-items: end;
 }
 
 /* Fő tartalom */

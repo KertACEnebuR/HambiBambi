@@ -10,6 +10,8 @@
 </head>
 <body ng-controller="ProductController">
     <main>
+        <div class="product-container">
+        <button onclick="toTheTop()" id="top" title="Go to top">↑</button>
         <div class="hamburgers">
             <legend>Hamburgerek</legend>
             <div class="container" id="hamburgers">
@@ -121,8 +123,7 @@
                 </div>
             </div>
         </div>
-
-        <button onclick="toTheTop()" id="top" title="Go to top">↑</button>
+    </div>
     </main>
 
     <script>
@@ -139,21 +140,18 @@
         
         let mybutton = document.getElementById("top");
 
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {scrollFunction()};
+        // Ha a felhasználó lejjebb görget 100px-et, a gomb megjelenik
+        window.onscroll = function () {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        };
 
-        function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            mybutton.style.display = "block";
-        } else {
-            mybutton.style.display = "none";
-        }
-        }
-
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
+        // Visszagörgetés a tetejére
+        function toTheTop() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
         }
     </script>
 </body>
