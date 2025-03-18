@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 18. 09:18
--- Kiszolgáló verziója: 10.4.28-MariaDB
--- PHP verzió: 8.2.4
+-- Létrehozás ideje: 2025. Már 11. 19:32
+-- Kiszolgáló verziója: 10.4.27-MariaDB
+-- PHP verzió: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,13 +33,6 @@ CREATE TABLE `admin` (
   `password` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- A tábla adatainak kiíratása `admin`
---
-
-INSERT INTO `admin` (`admin_id`, `username`, `password`) VALUES
-(1, 'admin', '123');
-
 -- --------------------------------------------------------
 
 --
@@ -48,9 +41,11 @@ INSERT INTO `admin` (`admin_id`, `username`, `password`) VALUES
 
 CREATE TABLE `baskets` (
   `basket_id` int(11) NOT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `order_id` int(11) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  `payment_id` int(11) DEFAULT NULL,
+  `order_status_id` int(11) DEFAULT NULL,
+  `order_date` datetime DEFAULT NULL,
+  `delivery_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -82,11 +77,9 @@ INSERT INTO `counties` (`county_id`, `county_name`) VALUES
 
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `payment_id` int(11) DEFAULT NULL,
-  `order_status_id` int(11) DEFAULT NULL,
-  `order_date` datetime DEFAULT NULL,
-  `delivery_date` datetime DEFAULT NULL
+  `product_id` int(11) DEFAULT NULL,
+  `basket_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -875,8 +868,9 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `baskets`
   ADD PRIMARY KEY (`basket_id`),
-  ADD KEY `product_id` (`product_id`),
-  ADD KEY `basket_id` (`order_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `payment_id` (`payment_id`),
+  ADD KEY `order_status_id` (`order_status_id`);
 
 --
 -- A tábla indexei `counties`
@@ -889,9 +883,8 @@ ALTER TABLE `counties`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `payment_id` (`payment_id`),
-  ADD KEY `order_status_id` (`order_status_id`);
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `basket_id` (`basket_id`);
 
 --
 -- A tábla indexei `order_statuses`
@@ -961,7 +954,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT a táblához `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `baskets`
@@ -1043,16 +1036,16 @@ ALTER TABLE `users`
 -- Megkötések a táblához `baskets`
 --
 ALTER TABLE `baskets`
-  ADD CONSTRAINT `baskets_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
-  ADD CONSTRAINT `baskets_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
+  ADD CONSTRAINT `baskets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `baskets_ibfk_2` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`payment_id`),
+  ADD CONSTRAINT `baskets_ibfk_3` FOREIGN KEY (`order_status_id`) REFERENCES `order_statuses` (`order_status_id`);
 
 --
 -- Megkötések a táblához `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`payment_id`),
-  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`order_status_id`) REFERENCES `order_statuses` (`order_status_id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`basket_id`) REFERENCES `baskets` (`basket_id`);
 
 --
 -- Megkötések a táblához `products`
