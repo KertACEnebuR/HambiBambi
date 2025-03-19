@@ -60,22 +60,22 @@ legend {
     grid-row: 4/5;
 }
 
-.drinks {
+.salads {
     grid-column: 1/5;
     grid-row: 5/6;
 }
 
-.salads {
+.pastas {
     grid-column: 1/5;
     grid-row: 6/7;
 }
 
-.pastas {
+.desserts {
     grid-column: 1/5;
     grid-row: 7/8;
 }
 
-.desserts {
+.drinks {
     grid-column: 1/5;
     grid-row: 8/9;
 }

@@ -6,12 +6,14 @@ document.addEventListener("DOMContentLoaded", function() {
     if (cartIcon) {
         cartIcon.addEventListener("click", function() {
             cartBox.classList.add('active');
+            document.body.style.overflow = 'hidden'; //tiltott görgetés
         });
     }
 
     if (cartCloseBtn) {
         cartCloseBtn.addEventListener("click", function() {
             cartBox.classList.remove('active');
+            document.body.style.overflow = ''; //alapértelmezett görgetés
         });
     }
 
@@ -80,16 +82,16 @@ document.addEventListener("DOMContentLoaded", function() {
                     <td>${data.name}</td>
                     <td>${data.quantity}</td>
                     <td class="prices">${totalPrice} Ft</td>
-                    <td><a href="#" onclick="Delete('${data.id}');">Törlés</a></td>
+                    <td><a href="#" class="termekTorlese" onclick="Delete('${data.id}');">Termék törlése</a></td>
                 </tr>`;            
             });
         }
 
         let totalSum = cartItems.reduce((sum, data) => sum + data.price * data.quantity, 0);
         tableData += `<tr>
-            <th colspan="3"><a href="application/view/checkout/checkout.php">Megrendelés</a></th>
-            <th>${totalSum} Ft</th>
-            <th><a href="#" onclick="clearAll();">Minden törlése</a></th>
+            <th colspan="3"><a href="/hambibambi/application/view/checkout/checkout.html">Megrendelés</a></th>
+            <th>Végösszeg: ${totalSum} Ft</th>
+            <th><a href="#" onclick="clearAll();">Minden termék törlése</a></th>
         </tr>`;
 
         cartBoxTable.innerHTML = tableData;

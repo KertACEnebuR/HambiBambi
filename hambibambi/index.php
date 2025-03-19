@@ -42,8 +42,9 @@
     <div class="bemutatkozas">
         <h2>Rólunk</h2>
         <div class="bemutatkozoDiv">
-            <h5>Már egész Nógrád, Heves, Pest, valamint Komárom-Esztergom vármegyébe is kiszállítunk!</h5>
-            <p>Üdvözlünk a HambiBambi Étteremben! Büszkék vagyunk arra, hogy mindig friss alapanyagokból készítjük ételeinket. Legyen szó egy finom hamburger menüről, könnyű salátákról vagy finom levesről, nálunk mindenki megtalálja a kedvencét. Látogass el hozzánk és tapasztald meg a minőséget és a vendégszeretetet!</p>
+            <h3>Már egész Nógrád, Heves, Pest, valamint Komárom-Esztergom vármegyébe is kiszállítunk!</h3>
+            <h5>Már SZÉP-kártyával is lehet fizetni!</h5>
+            <strong>Üdvözlünk a HambiBambi Étteremben! Büszkék vagyunk arra, hogy mindig friss alapanyagokból készítjük ételeinket. Legyen szó egy finom hamburger menüről, könnyű salátákról vagy finom levesről, nálunk mindenki megtalálja a kedvencét. Látogass el hozzánk és tapasztald meg a minőséget és a vendégszeretetet!</strong>
         </div>
     </div>
 </main>

@@ -8,8 +8,10 @@
 
 body {
     background-image: url(../../assets/img/lightbg.jpg);
-    object-fit: scale-down;
-    color: #333;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 header {
     background-color: #f0a00c;
