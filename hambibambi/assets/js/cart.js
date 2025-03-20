@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let totalSum = cartItems.reduce((sum, data) => sum + data.price * data.quantity, 0);
         tableData += `<tr>
-            <th colspan="3"><a href="/hambibambi/application/view/checkout/checkout.html">Megrendelés</a></th>
+            <th colspan="3"><a href="/hambibambi/application/view/checkout/checkout.php">Megrendelés</a></th>
             <th>Végösszeg: ${totalSum} Ft</th>
             <th><a href="#" onclick="clearAll();">Minden termék törlése</a></th>
         </tr>`;
