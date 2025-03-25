@@ -64,12 +64,8 @@ $conn->close();
                     <h2>Számlázási adatok</h2>
                     <form>
                         <div class="form-group">
-                            <label for="firstName">Vezetéknév</label>
-                            <input type="text" id="firstName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Keresztnév</label>
-                            <input type="text" id="lastName" required>
+                            <label for="fullName">Teljesnév</label>
+                            <input type="text" id="fullName" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>

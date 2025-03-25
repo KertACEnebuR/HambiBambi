@@ -1,3 +1,3 @@
 <?php
-$hashed_password = password_hash("123", PASSWORD_DEFAULT);
+$hashed_password = password_hash("adminPass", PASSWORD_DEFAULT);
 echo $hashed_password;

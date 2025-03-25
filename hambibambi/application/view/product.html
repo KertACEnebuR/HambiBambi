@@ -6,12 +6,11 @@
     <title>Termékek</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <link rel="stylesheet" href="http://localhost/hambibambi/assets/css/product.css">
-    
 </head>
 <body ng-controller="ProductController">
     <main>
         <div class="product-container">
-        <button onclick="toTheTop()" id="top" title="Go to top">↑</button>
+        <button onclick="toTheTop()" id="top" title="Visszagörgetés">↑</button>
         <div class="hamburgers">
             <legend>Hamburgerek</legend>
             <div class="container" id="hamburgers">
@@ -148,7 +147,7 @@
                 mybutton.style.display = "none";
             }
         };
-
+        
         // Visszagörgetés a tetejére
         function toTheTop() {
             window.scrollTo({ top: 0, behavior: "smooth" });

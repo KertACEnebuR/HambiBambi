@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $Path = "./";
 if($_SERVER["REQUEST_URI"] == "/hambibambi/application/view/logreg/loginreg.php") {
     $Path = "../../../";

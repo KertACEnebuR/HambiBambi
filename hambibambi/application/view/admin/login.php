@@ -49,11 +49,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../assets/css/adminlogin.css">
+    <link rel="stylesheet" href="../../../assets/css/main.css">
     <title>Admin Bejelentkezés</title>
 </head>
 <body>
-    <h2>Admin Bejelentkezés</h2>
+    <h1>Admin Bejelentkezés</h1>
     <?php if (!empty($error)) echo "<p style='color: red;'>$error</p>"; ?>
+    <div class="container">
     <form method="post">
         <label>Felhasználónév:</label>
         <input type="text" name="username" required>
@@ -63,5 +66,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <br>
         <button type="submit">Bejelentkezés</button>
     </form>
+    </div>
 </body>
 </html>
