@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="../../../assets/css/checkout.css">
+</head>
+<body>
+    <div class="container">
+        <header class="text-center">
+            <h1>Rendelés véglegesítése</h1>
+        </header>
+        <main>
+            <div class="checkout-grid">
+                <!-- Kosár tartalma -->
+                <div class="cart-summary">
+                    <h2>Kosár tartalma</h2>
+                    <ul class="cart-items">
+                        <li>
+                            <div>
+                                <h3>Termék neve</h3>
+                                <p>Rövid leírás</p>
+                            </div>
+                            <span>12 000 Ft</span>
+                        </li>
+                        <li>
+                            <div>
+                                <h3>Második termék</h3>
+                                <p>Rövid leírás</p>
+                            </div>
+                            <span>8 000 Ft</span>
+                        </li>
+                        <li>
+                            <div>
+                                <h3>Harmadik termék</h3>
+                                <p>Rövid leírás</p>
+                            </div>
+                            <span>5 000 Ft</span>
+                        </li>
+                        <li class="total">
+                            <span>Végösszeg:</span>
+                            <strong>25 000 Ft</strong>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Számlázási adatok -->
+                <div class="billing-form">
+                    <h2>Számlázási adatok</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="firstName">Vezetéknév</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Keresztnév</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="minta@gmail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tel">Telefonszám</label>
+                            <input type="tel" id="tel" placeholder="+01234567890" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Lakcím</label>
+                            <input type="text" id="address" placeholder="Rákóczi út 24." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="county">Vármegye</label>
+                            <select id="county" required>
+                                <option value="">Válasszon</option>
+                                <option>Nógrád</option>
+                                <option>Heves</option>
+                                <option>Pest</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Település</label>
+                            <input type="text" id="city" required>
+                        </div>
+                        <h3>Fizetési mód</h3>
+                        <div class="form-group">
+                            <label><input type="radio" name="payment" value="cash" required> Készpénz</label>
+                            <label><input type="radio" name="payment" value="card" required> Bankkártya</label>
+                            <label><input type="radio" name="payment" value="szep" required> SZÉP-kártya</label>
+                        </div>
+                        <button type="submit" class="submit-btn">Rendelés véglegesítése</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../../../assets/js/checkout.js"></script>
+</body>
+</html>
