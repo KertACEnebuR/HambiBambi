@@ -1,0 +1,23 @@
+.profile_container{
+    justify-items: center;
+    gap: 5rem;
+    margin:2rem
+}
+.profil_image .images img{
+    width: 20rem;
+}
+.user_details th, td{
+padding: 1rem
+}
+.user_details a{
+    padding: .5rem;
+    border:1px solid black;
+    border-radius: 10px;
+
+}
+.user_details .update{
+    background-color: green;
+}
+.user_details .delete{
+    background-color: red;
+}
