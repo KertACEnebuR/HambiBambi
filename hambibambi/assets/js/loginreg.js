@@ -1,29 +1,3 @@
-const LOGIN_TAB        = document.querySelector(".login-tab");
-const REGISTRATION_TAB = document.querySelector(".registration-tab");
-
-const LOGIN_FORM        = document.querySelector(".login-form");
-const REGISTRATION_FORM = document.querySelector(".registration-form");
-
-function changeTab(e) {
-    if (LOGIN_TAB.classList.contains("active")) {
-
-        LOGIN_TAB.classList.remove('active');
-        REGISTRATION_TAB.classList.add('active');
-        
-        LOGIN_FORM.classList.remove('active');
-        REGISTRATION_FORM.classList.add('active');
-
-    } else {
-
-        LOGIN_TAB.classList.add('active');
-        REGISTRATION_TAB.classList.remove('active');
-
-        LOGIN_FORM.classList.add('active');
-        REGISTRATION_FORM.classList.remove('active');
-
-    }
-}
-
 function sendLogin (e) {
   console.log(e);
   //e.preventDefault();
@@ -71,3 +45,23 @@ function sendLogin (e) {
     console.error('Fetch error:', error);
   });    
 }
+
+
+function updateSettlements() {
+  const countySelect = document.getElementById('county');
+  const settlementSelect = document.getElementById('settlement');
+  const selectedCounty = countySelect.value;
+
+  // Töröljük a meglévő településeket
+  settlementSelect.innerHTML = '<option value="">Válasszon</option>';
+
+  // Hozzáadjuk az új településeket
+  if (counties[selectedCounty]) {
+      counties[selectedCounty].forEach(settlement => {
+          const option = document.createElement('option');
+          option.value = settlement;
+          option.textContent = settlement;
+          settlementSelect.appendChild(option);
+      });
+  }
+  }

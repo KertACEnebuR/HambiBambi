@@ -1,22 +1,37 @@
 <?php
-session_start();
 
-$host = 'localhost';
-$dbname = 'hambibambi';
-$username = 'root';
-$password = '';
-
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
-}
+include "../../../connect.php";
 
 // Ellenőrzi, hogy a felhasználó már be van-e jelentkezve
 if (isset($_SESSION['user_id'])) {
     header("Location: ./../loginreg.php");
     exit();
+}
+
+$sql = "SELECT counties.county_id, counties.county_name, settlements.settlement_name, settlements.settlement_id 
+        FROM counties 
+        LEFT JOIN settlements 
+        ON counties.county_id = settlements.county_id
+        ORDER BY county_name, settlement_name";
+
+$result = $conn->query($sql);
+
+$counties = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $countyName = $row['county_name'];
+        $settlementName = $row['settlement_name'];
+
+        // Ellenőrizzük, hogy a vármegye már létezik-e a tömbben
+        if (!isset($counties[$countyName])) {
+            $counties[$countyName] = [];
+        }
+
+        // Hozzáadjuk a települést a vármegyéhez
+        if (!empty($settlementName)) { // Csak akkor adjuk hozzá, ha a település neve nem üres
+            $counties[$countyName][] = $settlementName;
+        }
+    }
 }
 
 // Regisztrációs adatok kezelése
@@ -74,6 +89,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'], $_POST['passw
     }
 }
 
+
+$conn->close();
 ?>
 <?php include("header.php"); ?>
 <?php include("../navbar/navbar.php"); ?>
@@ -83,8 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'], $_POST['passw
         <h2>Regisztráció</h2>
         <form action="" method="POST">
             <div class="field input">
-                <label for="full_name">Felhasználónév:</label>
-                <input type="text" name="full_name" placeholder="Felhasználónév" required>
+                <label for="full_name">Teljesnév:</label>
+                <input type="text" name="full_name" placeholder="Teljesnév" required>
             </div>
             <div class="field input">
                 <label for="email">Email:</label>
@@ -99,11 +116,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'], $_POST['passw
                 <input type="text" name="phone_number" placeholder="+23563324591" required>
             </div>
             <div class="field input">
+                <label for="address">Vármegye:</label>
+                <select id="county" required onchange="updateSettlements()">
+                    <option id="county" value="">Válasszon</option>
+                    <?php foreach ($counties as $county => $settlements): ?>
+                        <option id="county" value="<?= htmlspecialchars($county) ?>"><?= htmlspecialchars($county) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="field input">
+                <label for="address">Település:</label>
+                <select id="settlement" required>
+                    <option id="settlement" value="">Válasszon</option>
+                </select>
+            </div>
+            <div class="field input">
                 <label for="address">Cím:</label>
                 <input type="text" name="address" placeholder="Lakcím" required>
             </div>
             <button type="submit">Regisztráció</button>
-            <button style="margin-top: 5px" type="button" onclick="window.location.href='loginregLogin.php'">Bejelentkezés</button>
+            <div class="link">Ha már van regisztrációja, lépjen be: <a href="loginregLogin.php">Belépés</a></div>
         </form>
 </div>
 </div>

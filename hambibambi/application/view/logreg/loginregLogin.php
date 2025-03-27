@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'], $_POST['passw
             <input type="password" name="password" placeholder="Jelszó" required>
         </div>
         <button type="submit">Bejelentkezés</button>
+        <div class="link">Ha még nincs regisztrációja: <a href="loginreg.php">Regisztráció</a></div>
     </form>
 </div>
 </div>

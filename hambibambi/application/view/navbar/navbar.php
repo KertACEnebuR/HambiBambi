@@ -14,6 +14,9 @@ elseif($_SERVER["REQUEST_URI"] == "/hambibambi/application/view/menu/menu.php") 
 elseif($_SERVER["REQUEST_URI"] == "/hambibambi/application/view/contacts/contact.php") {
     $Path = "../../../";
 }
+elseif($_SERVER["REQUEST_URI"] == "/hambibambi/application/view/profile/profile.php") {
+    $Path = "../../../";
+}
 require $Path . "application/view/cart.html";
 ?>
 <header>

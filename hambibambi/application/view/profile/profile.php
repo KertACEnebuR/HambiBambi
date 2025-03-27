@@ -20,7 +20,7 @@ if (!$result) {
 if (mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
 
-    $fullname = $row['fullname'];
+    $full_name = $row['full_name'];
     $email = $row['email'];
     $phone_number = $row['phone_number'];
     $address = $row['address'];
@@ -44,11 +44,11 @@ if (mysqli_num_rows($result) > 0) {
                 <table>
                     <tr>
                         <th>Teljesnév:</th>
-                        <td>{$fullname}</td>
+                        <td>{$full_name}</td>
                     </tr>
                     <tr>
                         <th>Telefonszám: </th>
-                        <td>{$phone_number}</td>
+                        <td>+{$phone_number}</td>
                     </tr>
                     <tr>
                         <th>E-mail:</th>
@@ -67,8 +67,8 @@ if (mysqli_num_rows($result) > 0) {
                         <td>{$address}</td>
                     </tr>
                     <tr>
-                        <td><a class=\"update\"href=\"../profileUpdate.php\">Adatok módosítása</a></td>
-                    
+                        <td><a class=\"update\"href=\"profileUpdate.php\">📦 Adatok módosítása</a></td>
+                        <td><a class=\"logout\"<a href=\"profileLogout.php\">🚪 Kijelentkezés</a></td>
                     </tr>
                     </table>
                     </div>
@@ -87,7 +87,7 @@ if (mysqli_num_rows($result) > 0) {
 </head>
 <body>
   <!-- Menu -->
-  <?php include_once "../../../application/view/navbar/navbar.php"; ?>
+  <?php include_once "../navbar/navbar.php"; ?>
   <?php echo $output; ?>
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0sG1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
