@@ -72,11 +72,26 @@
     transform: scale(1.1);
 }
 
+/* Alapértelmezett stílusok */
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Négy oszlop alapértelmezés szerint */
+    gap: 20px; /* Távolság az elemek között */
+    justify-items: center;
+}
 
 /* Reszponzív beállítások */
 @media (min-width: 768px) and (max-width: 1023px) {
     .product-container {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablet nézet (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr); /* Két oszlopos elrendezés tableten */
+        gap: 15px; /* Távolság az elemek között */
     }
 }
 
@@ -92,5 +107,13 @@
 
     .kosarhoz {
         font-size: 0.9rem;
+    }
+}
+
+/* Mobil nézet (max-width: 768px) */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr; /* Egy oszlopos elrendezés telefonon */
+        gap: 10px; /* Kisebb távolság az elemek között */
     }
 }

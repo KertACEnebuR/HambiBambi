@@ -138,5 +138,60 @@ input{
 .kosar a:hover {
     color: #8d320f;
 }
+@media (max-width: 1024px) {
+    .cart {
+        width: 100%; /* Teljes szélesség */
+        margin: 0; /* Margók eltávolítása */
+        border-radius: 0; /* Sarka lekerekítésének eltávolítása */
+    }
 
-/* Gombok */
+    body {
+        font-size: 16px; /* Csökkentett betűméret */
+    }
+
+    header {
+        flex-direction: column; /* Fejléc elemek egymás alá kerülnek */
+        text-align: center;
+    }
+
+    .logo img {
+        height: 80px; /* Kisebb logó méret */
+    }
+
+    nav ul {
+        flex-direction: column; /* Menü elemek egymás alá kerülnek */
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 5px 0; /* Kisebb margó */
+    }
+
+    main {
+        flex-direction: column; /* Tartalom középre igazítása */
+        padding: 20px;
+    }
+
+    footer {
+        flex-direction: column; /* Lábjegyzet elemek egymás alá kerülnek */
+        text-align: center;
+    }
+}
+
+/* Tablet eszközökre (max. 1024px szélesség) */
+@media (max-width: 768px) {
+    .cart {
+        width: 100%; /* Teljes szélesség mobilon */
+        margin: 0; /* Margók eltávolítása */
+        border-radius: 0; /* Sarka lekerekítésének eltávolítása */
+    }
+}
+
+/* Tablet eszközökre (max. 1024px szélesség) */
+@media (max-width: 1024px) {
+    .cart {
+        width: 100%; /* Teljes szélesség tableten */
+        margin: 0; /* Margók eltávolítása */
+        border-radius: 0; /* Sarka lekerekítésének eltávolítása */
+    }
+}

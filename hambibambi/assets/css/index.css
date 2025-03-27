@@ -11,13 +11,6 @@ header {
     grid-column: 1 / -1;
 }
 
-/* Képek */
-.containerKep1, .containerKep2 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .containerKep1 {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
@@ -147,36 +140,39 @@ footer {
 /* Tablet nézet (max-width: 1024px) */
 @media screen and (max-width: 1024px) {
     body {
-        grid-template-columns: 1fr 1fr; /* Két oszlopos elrendezés */
+        grid-template-columns: 1fr; /* Egy oszlopos elrendezés */
     }
 
-    .containerKep1, .containerKep2 {
-        grid-column: 1 / -1; /* Teljes szélesség */
-    }
-
-    .containerSzoveg1, .containerSzoveg2 {
-        grid-column: 1 / -1; /* Teljes szélesség */
-    }
-
-    .kiemelt-ajanlatok {
+    header,
+    .containerKep1,
+    .containerKep2,
+    .containerSzoveg1,
+    .containerSzoveg2,
+    .kiemelt-ajanlatok,
+    main,
+    footer {
         grid-column: 1 / -1; /* Teljes szélesség */
     }
 
     .ajanlatok {
-        grid-template-columns: repeat(2, 1fr); /* Két oszlopos rács */
+        grid-template-columns: 1fr; /* Egy oszlopos rács az ajánlatokhoz */
+    }
+
+    .ajanlat img {
+        height: auto; /* Képek magasságának automatikus igazítása */
     }
 
     .bemutatkozoDiv {
-        padding: 10px;
-        max-width: 100%; /* Teljes szélesség kis mobilon */
+        padding: 15px;
+        max-width: 100%; /* Teljes szélesség */
     }
 
     .bemutatkozas h2 {
-        font-size: 1.2rem; /* Még kisebb betűméret */
+        font-size: 1.5rem; /* Kisebb betűméret */
     }
 
     .bemutatkozoDiv p {
-        font-size: 0.9rem; /* Még kisebb szövegméret */
+        font-size: 1rem; /* Kisebb szövegméret */
     }
 }
 
@@ -186,35 +182,35 @@ footer {
         grid-template-columns: 1fr; /* Egy oszlopos elrendezés */
     }
 
-    .containerKep1, .containerKep2 {
-        grid-column: 1 / -1; /* Teljes szélesség */
-    }
-
-    .containerSzoveg1, .containerSzoveg2 {
-        grid-column: 1 / -1; /* Teljes szélesség */
-    }
-
-    .kiemelt-ajanlatok {
+    header,
+    .containerKep1,
+    .containerKep2,
+    .containerSzoveg1,
+    .containerSzoveg2,
+    .kiemelt-ajanlatok,
+    main,
+    footer {
         grid-column: 1 / -1; /* Teljes szélesség */
     }
 
     .ajanlatok {
-        grid-template-columns: 1fr; /* Egy oszlopos rács */
+        grid-template-columns: 1fr; /* Egy oszlopos rács az ajánlatokhoz */
     }
 
     .ajanlat img {
-        height: 200px; /* Kisebb képméret mobilon */
+        height: auto; /* Képek magasságának automatikus igazítása */
     }
+
     .bemutatkozoDiv {
         padding: 15px;
-        max-width: 90%; /* Szélesség csökkentése mobilon */
+        max-width: 100%; /* Teljes szélesség */
     }
 
     .bemutatkozas h2 {
-        font-size: 1.5rem; /* Kisebb betűméret */
+        font-size: 1.2rem; /* Még kisebb betűméret */
     }
 
     .bemutatkozoDiv p {
-        font-size: 1rem; /* Kisebb szövegméret */
+        font-size: 0.9rem; /* Még kisebb szövegméret */
     }
 }
