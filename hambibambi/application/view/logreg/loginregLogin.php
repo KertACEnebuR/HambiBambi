@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once "../../../connect.php"
+include "../../../connect.php";
 
 // Ellenőrzi, hogy a felhasználó már be van-e jelentkezve
 if (isset($_SESSION['user_id'])) {
@@ -16,17 +16,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'], $_POST['passw
     $password = $_POST['password'];
 
     // Ellenőrizzük, hogy az email szerepel-e az adatbázisban
-    $stmt = $pdo->prepare("SELECT user_id, password FROM users WHERE email = :email");
-    $stmt->execute(['email' => $email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $conn->prepare("SELECT user_id, password FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
 
-    if ($user && password_verify($password, $user['password'])) {
-        // Bejelentkezés sikeres, munkamenet beállítása
-        $_SESSION['user_id'] = $user['user_id'];
-        header("Location: ../../../index.php"); // Átirányítás a főoldalra
-        exit();
+    // Debugging: Check if user exists and password hash
+    if (!$user) {
+        $error = "A felhasználó nem található!";
     } else {
-        $error = "Hibás email vagy jelszó!";
+        // Debugging: Output the hashed password
+        error_log("Hashed password from DB: " . $user['password']);
+        error_log("Entered password: " . $password);
+
+        if (password_verify($password, $user['password'])) {
+            // Bejelentkezés sikeres, munkamenet beállítása
+            $_SESSION['user_id'] = $user['user_id'];
+            header("Location: ../../../index.php"); // Átirányítás a főoldalra
+            exit();
+        } else {
+            $error = "Hibás email vagy jelszó!";
+        }
     }
 }
 

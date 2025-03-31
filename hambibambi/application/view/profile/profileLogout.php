@@ -8,5 +8,5 @@ $_SESSION = [];
 session_destroy();
 
 // Visszairányítás a bejelentkezési oldalra
-header("Location: ../logreg/loginreg.php");
+header("Location: ../../../index.php");
 exit;

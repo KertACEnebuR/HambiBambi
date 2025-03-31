@@ -1,41 +1,85 @@
 <?php 
 session_start();
-/*
-if(!isset($_SESSION['user_id'])){//ha a user nincs van lépve
-    header("location:index.php");
-}*/
-
 include_once "../../../connect.php";
-//űrlap adatok beolvasása
-$user_id = $_SESSION['user_id'];
 
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    echo "Hozzáférés megtagadva!";
+    exit();
+}
 
-    $sql = "SELECT * FROM users WHERE user_id LIKE '{$user_id}'";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user_id = $_SESSION['user_id'];
+
+    // Sanitize and validate inputs
+    $full_name = mysqli_real_escape_string($conn, $_POST['fullname']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $phone_number = mysqli_real_escape_string($conn, $_POST['phone_number']);
+    $address = mysqli_real_escape_string($conn, $_POST['address']);
+    $county_name = mysqli_real_escape_string($conn, $_POST['county_name']);
+    $settlement_name = mysqli_real_escape_string($conn, $_POST['settlement_name']);
+    $password = $_POST['password'];
+
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Érvénytelen e-mail cím formátum.";
+        exit();
+    }
+
+    // Verify the password
+    $sql = "SELECT password FROM users WHERE user_id = '$user_id'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+    if (!password_verify($password, $row['password'])) {
+        echo "Hibás jelszó!";
+        exit();
+    }
+
+    // Update the user's data
+    $update_query = "
+        UPDATE users 
+        SET 
+            full_name = '$full_name', 
+            email = '$email', 
+            phone_number = '$phone_number', 
+            address = '$address', 
+            settlement_id = (
+                SELECT settlement_id 
+                FROM settlements 
+                WHERE settlement_name = '$settlement_name'
+            )
+        WHERE user_id = '$user_id'
+    ";
+
+    if (mysqli_query($conn, $update_query)) {
+        echo "success";
+    } else {
+        echo "Hiba történt az adatok frissítése során: " . mysqli_error($conn);
+    }
+} else {
+    //űrlap adatok beolvasása
+    $user_id = $_SESSION['user_id'];
+
+    $sql = "SELECT * FROM users
+            LEFT JOIN settlements 
+            ON users.settlement_id = settlements.settlement_id
+            LEFT JOIN counties 
+            ON settlements.county_id = counties.county_id  
+            WHERE user_id = {$user_id}";
     $result = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-    
-        $full_name = $row['full_name'];
-        $email = $row['email'];
-        $phone_number = $row['phone_number'];
-        $address = $row['address'];
-        $settlementName = $row['settlement_name'];
-        $countyName = $row['county_name'];
-        $hash = $row['password']; //a titkosított jelszó beolvasása
-        $writtenpass = "";
-    } else {
-        // Ha nincs eredmény, állíts be alapértelmezett értékeket
-        $fullname = "Nincs adat";
-        $email = "Nincs adat";
-        $phone_number = "Nincs adat";
-        $address = "Nincs adat";
-        $settlementName = "Nincs adat";
-        $countyName = "Nincs adat";
-        $hash = "Nincs adat";
-    };
+    $row = mysqli_fetch_assoc($result);
 
-
+    $full_name = $row['full_name'] ?? "Nincs adat";
+    $email = $row['email'] ?? "Nincs adat";
+    $phone_number = $row['phone_number'] ?? "Nincs adat";
+    $address = $row['address'] ?? "Nincs adat";
+    $settlementName = $row['settlement_name'] ?? "Nincs adat";
+    $countyName = $row['county_name'] ?? "Nincs adat";
+    $hash = $row['password'] ?? "Nincs adat"; //a titkosított jelszó beolvasása
+    $writtenpass = "" ?? "Nincs adat";
+}
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -52,7 +96,7 @@ $user_id = $_SESSION['user_id'];
     <div class="wrapper">
         <section class="form signup">
             <header>
-                Adatok módosítása
+                <h1>Adatok módosítása</h1>
             </header>
             <form action="#" enctype="multipart/form-data" autocomplete="off">
                 <div class="error-txt"></div>
@@ -70,16 +114,16 @@ $user_id = $_SESSION['user_id'];
                     <input type="text" placeholder="Telefonszám" name="phone_number" value="<?php echo $phone_number; ?>" required>
                 </div>
                 <div class="field input">
-                    <label>Lakcím:</label>
-                    <input type="text" placeholder="Lakcím" name="address" value="<?php echo $address; ?>" required>
+                    <label>Megye:</label>
+                    <input type="text" placeholder="Megye" name="county_name" value="<?php echo $countyName; ?>" required>
                 </div>
                 <div class="field input">
                     <label>Település:</label>
                     <input type="text" placeholder="Település" name="settlement_name" value="<?php echo $settlementName; ?>" required>
                 </div>
                 <div class="field input">
-                    <label>Megye:</label>
-                    <input type="text" placeholder="Megye" name="county_name" value="<?php echo $countyName; ?>" required>
+                    <label>Lakcím:</label>
+                    <input type="text" placeholder="Lakcím" name="address" value="<?php echo $address; ?>" required>
                 </div>
                 <div class="field input">
                         <label>Jelszó:</label>
@@ -93,53 +137,52 @@ $user_id = $_SESSION['user_id'];
     </div>
 </div>
 
-    <script>
-        // Elemek kiválasztása a DOM-ból
-        const form = document.querySelector(".signup form");
-        const continueBtn = form.querySelector(".button input");
-        const errorText = document.querySelector(".error-txt");
+<script>
+    const form = document.querySelector(".signup form");
+    const continueBtn = form.querySelector(".button input");
+    const errorText = document.querySelector(".error-txt");
 
-        form.onsubmit = (e)=>{
-            e.preventDefault();
-        }
+    form.onsubmit = (e) => {
+        e.preventDefault();
+    };
 
-        continueBtn.onclick = ()=>{
-        //Ajax
+    continueBtn.onclick = () => {
+        // AJAX
         let xhr = new XMLHttpRequest();
         xhr.open("POST", "PHP/update.php", true);
-        xhr.onload = ()=>{
-            if(xhr.readyState === XMLHttpRequest.DONE){
-                if(xhr.status === 200){
+        xhr.onload = () => {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
                     let data = xhr.response;
-                    //console.log(data);
-                    if(data == "success"){
-                        location.href = "profile.php"
-                    }else{
+                    if (data === "success") {
+                        location.href = "profile.php";
+                    } else {
                         errorText.textContent = data;
-                        errorText.style.display = "block";               
+                        errorText.style.display = "block";
                     }
                 }
             }
-        }
+        };
 
-        //az adatokat el kell küldenünk az ajaxon keresztül a PHP-nek
+        // Send form data via AJAX
         let formData = new FormData(form);
         xhr.send(formData);
-        }
+    };
 
-        const pswrField = document.querySelector(".form .field input[type='password']"),
-        toggleBtn = document.querySelector(".form .field i");
+    // Password toggle
+    const pswrField = document.querySelector(".form .field input[type='password']");
+    const toggleBtn = document.querySelector(".form .field i");
 
-        toggleBtn.onclick = ()=>{
-            if(pswrField.type == "password"){
-                pswrField.type = "text";
-                toggleBtn.classList.add("active");
-            }else{
-                pswrField.type = "password";
-                toggleBtn.classList.remove("active");
-            }
+    toggleBtn.onclick = () => {
+        if (pswrField.type === "password") {
+            pswrField.type = "text";
+            toggleBtn.classList.add("active");
+        } else {
+            pswrField.type = "password";
+            toggleBtn.classList.remove("active");
         }
-    </script>
+    };
+</script>
 </body>
 
 </html>

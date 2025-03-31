@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 $Path = "./";
 if($_SERVER["REQUEST_URI"] == "/hambibambi/application/view/logreg/loginreg.php") {
@@ -34,12 +36,14 @@ require $Path . "application/view/cart.html";
             <?php else: ?>
                 <!-- Ha a felhasználó nincs bejelentkezve -->
                 <li><a href=<?= $Path . "application/view/logreg/loginreg.php"; ?>>Belépés / Regisztráció</a></li>
-            <?php endif; ?>
+                <?php endif; ?>
+            <?php if($_SERVER["REQUEST_URI"] != "/hambibambi/application/view/logreg/loginreg.php" && $_SERVER["REQUEST_URI"] != "/hambibambi/application/view/logreg/loginregLogin.php"):?>
             <li>
                 <div class="kosarikon">
                     <p>0</p><i class="fa fa-shopping-cart"></i>
                 </div>
             </li>
+            <?php endif; ?>   
         </ul>
     </nav>      
 </header>

@@ -9,31 +9,29 @@
 $user_id = $_SESSION['user_id'];
 
 // Saját profil adatainak lekérdezése
-$sql = "SELECT * FROM users WHERE user_id = {$user_id}" ;
-
+$sql = "SELECT * FROM users
+        LEFT JOIN settlements 
+        ON users.settlement_id = settlements.settlement_id
+        LEFT JOIN counties 
+        ON settlements.county_id = counties.county_id  
+        WHERE user_id = {$user_id}";
 $result = mysqli_query($conn, $sql);
 
-
+// Ellenőrizd a lekérdezés eredményét és hiba esetén kezeld
+if (!$result) {
+    die("Hiba a lekérdezésben: " . mysqli_error($conn));
+}
 
 if (mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
 
-    $full_name = $row['full_name'];
-    $email = $row['email'];
-    $phone_number = $row['phone_number'];
-    $address = $row['address'];
-    $settlementName = $row['settlement_name'];
-    $countyName = $row['county_name'];
-} else {
-    // Ha nincs eredmény, állíts be alapértelmezett értékeket vagy kezeld a hibát
-    $fullname = "Nincs adat";
-    $email = "Nincs adat";
-    $phone_number = "Nincs adat";
-    $address = "Nincs adat";
-    $settlementName = "Nincs adat";
-    $countyName = "Nincs adat";
-}
-        //------------------------
+    $full_name = $row['full_name'] ?? "Nincs adat";
+    $email = $row['email'] ?? "Nincs adat";
+    $phone_number = $row['phone_number'] ?? "Nincs adat";
+    $address = $row['address'] ?? "Nincs adat";
+    $settlementName = $row['settlement_name'] ?? "Nincs adat";
+    $countyName = $row['county_name'] ?? "Nincs adat";
+}   
     
 //Saját profil felületének összeállítása a $output változóba
         $output = "
@@ -72,7 +70,6 @@ if (mysqli_num_rows($result) > 0) {
                     </div>
                     ";                    
 ?>
-
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -87,9 +84,7 @@ if (mysqli_num_rows($result) > 0) {
   <!-- Menu -->
   <?php include_once "../navbar/navbar.php"; ?>
   <?php echo $output; ?>
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0sG1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  <?php include_once "../footer.php"; ?>
+  <script src="../../../assets/js/cart.js"></script>
 </body>
 
 </html>

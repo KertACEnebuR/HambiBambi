@@ -29,18 +29,19 @@ if ($result->num_rows > 0) {
 
         // Hozzáadjuk a települést a vármegyéhez
         if (!empty($settlementName)) { // Csak akkor adjuk hozzá, ha a település neve nem üres
-            $counties[$countyName][] = $settlementName;
+            $counties[$countyName][] = $row;
         }
     }
 }
 
 // Regisztrációs adatok kezelése
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['full_name'], $_POST['email'], $_POST['password'], $_POST['phone_number'], $_POST['address'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['full_name'], $_POST['email'], $_POST['password'], $_POST['phone_number'], $_POST['address'], $_POST['settlement_id'])) {
     $full_name = trim($_POST['full_name']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $phone_number = trim($_POST['phone_number']);
     $address = trim($_POST['address']);
+    $settlement_id = intval($_POST['settlement_id']);
 
     // Ellenőrizzük, hogy az e-mail már létezik-e
     $stmt = $conn->prepare("SELECT user_id FROM users WHERE email = ?");
@@ -55,13 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['full_name'], $_POST['e
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Adatok mentése az adatbázisba
-        $stmt = $conn->prepare("INSERT INTO users (full_name, email, password, phone_number, address, registration_date)
-        VALUES (?, ?, ?, ?, ?, NOW())");
-        $stmt->bind_param("sssss", $full_name, $email, $hashed_password, $phone_number, $address); // A paraméterek típusa: 's' (string)
+        $stmt = $conn->prepare("INSERT INTO users (full_name, email, password, phone_number, address, settlement_id, registration_date) 
+        VALUES (?, ?, ?, ?, ?, ?, NOW())");
+        $stmt->bind_param("sssssi", $full_name, $email, $hashed_password, $phone_number, $address, $settlement_id); // A paraméterek típusa: 's' (string)
         $stmt->execute();
 
         // Sikeres regisztráció után átirányítás
-        header("Location: loginreg.php");
+        header("Location: loginregLogin.php");
         exit();
     }
 }
@@ -113,7 +114,7 @@ $conn->close();
             </div>
             <div class="field input">
                 <label for="phone_number">Telefonszám:</label>
-                <input type="text" name="phone_number" placeholder="+23563324591" required>
+                <input type="text" name="phone_number" placeholder="+23563324591" maxlength="11" required>
             </div>
             <div class="field input">
                 <label for="address">Vármegye:</label>
@@ -126,11 +127,11 @@ $conn->close();
             </div>
             <div class="field input">
                 <label for="address">Település:</label>
-                <select id="settlement" required>
+                <select id="settlement" name="settlement_id" required>
                     <option id="settlement" value="">Válasszon</option>
                 </select>
             </div>
-            <div class="field input">
+            <div class="field input">   
                 <label for="address">Cím:</label>
                 <input type="text" name="address" placeholder="Lakcím" required>
             </div>
@@ -141,3 +142,4 @@ $conn->close();
 </div>
 </div>
 <?php include("footer.php"); ?>
+

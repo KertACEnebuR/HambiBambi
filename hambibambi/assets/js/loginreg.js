@@ -45,23 +45,3 @@ function sendLogin (e) {
     console.error('Fetch error:', error);
   });    
 }
-
-
-function updateSettlements() {
-  const countySelect = document.getElementById('county');
-  const settlementSelect = document.getElementById('settlement');
-  const selectedCounty = countySelect.value;
-
-  // Töröljük a meglévő településeket
-  settlementSelect.innerHTML = '<option value="">Válasszon</option>';
-
-  // Hozzáadjuk az új településeket
-  if (counties[selectedCounty]) {
-      counties[selectedCounty].forEach(settlement => {
-          const option = document.createElement('option');
-          option.value = settlement;
-          option.textContent = settlement;
-          settlementSelect.appendChild(option);
-      });
-  }
-  }
