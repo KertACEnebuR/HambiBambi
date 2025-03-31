@@ -43,25 +43,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['full_name'], $_POST['e
     $address = trim($_POST['address']);
 
     // Ellenőrizzük, hogy az e-mail már létezik-e
-    $stmt = $pdo->prepare("SELECT user_id FROM users WHERE email = :email");
-    $stmt->execute(['email' => $email]);
+    $stmt = $conn->prepare("SELECT user_id FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email); // 's' jelzi, hogy az email egy string típusú paraméter
+    $stmt->execute();
+    $stmt->store_result(); // Ez tárolja az eredményeket
 
-    if ($stmt->rowCount() > 0) {
+    if ($stmt->num_rows > 0) {
         echo "A felhasználó már regisztrálva van ezzel az e-mail címmel.";
     } else {
         // Jelszó titkosítása
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Adatok mentése az adatbázisba
-        $stmt = $pdo->prepare("INSERT INTO users (full_name, email, password, phone_number, address, registration_date) 
-        VALUES (:full_name, :email, :password, :phone_number, :address, NOW())");
-        $stmt->execute([
-            'full_name' => $full_name,
-            'email' => $email,
-            'password' => $hashed_password,
-            'phone_number' => $phone_number,
-            'address' => $address
-        ]);
+        $stmt = $conn->prepare("INSERT INTO users (full_name, email, password, phone_number, address, registration_date)
+        VALUES (?, ?, ?, ?, ?, NOW())");
+        $stmt->bind_param("sssss", $full_name, $email, $hashed_password, $phone_number, $address); // A paraméterek típusa: 's' (string)
+        $stmt->execute();
 
         // Sikeres regisztráció után átirányítás
         header("Location: loginreg.php");
@@ -69,19 +66,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['full_name'], $_POST['e
     }
 }
 
-//Bejelentkezés a weboldalra
+// Bejelentkezés a weboldalra
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'], $_POST['password'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
     // Ellenőrizzük, hogy az email szerepel-e az adatbázisban
-    $stmt = $pdo->prepare("SELECT user_id, password FROM users WHERE email = :email");
-    $stmt->execute(['email' => $email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $conn->prepare("SELECT user_id, password FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email); // 's' jelzi, hogy az email egy string típusú paraméter
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($user_id, $hashed_password); // Az eredmény tárolása és a változókhoz rendelése
+    $stmt->fetch();
 
-    if ($user && password_verify($password, $user['password'])) {
+    if ($user_id && password_verify($password, $hashed_password)) {
         // Bejelentkezés sikeres, munkamenet beállítása
-        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['user_id'] = $user_id;
         header("Location: ../../../index.php"); // Átirányítás a főoldalra
         exit();
     } else {

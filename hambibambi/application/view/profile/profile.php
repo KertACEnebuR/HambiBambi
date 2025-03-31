@@ -9,13 +9,11 @@
 $user_id = $_SESSION['user_id'];
 
 // Saját profil adatainak lekérdezése
-$sql = "SELECT * FROM users WHERE user_id = {$user_id}";
+$sql = "SELECT * FROM users WHERE user_id = {$user_id}" ;
+
 $result = mysqli_query($conn, $sql);
 
-// Ellenőrizd a lekérdezés eredményét és hiba esetén kezeld
-if (!$result) {
-    die("Hiba a lekérdezésben: " . mysqli_error($conn));
-}
+
 
 if (mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
@@ -91,7 +89,7 @@ if (mysqli_num_rows($result) > 0) {
   <?php echo $output; ?>
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0sG1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  <script src="../../../assets/js/cart.js"></script>
+  <?php include_once "../footer.php"; ?>
 </body>
 
 </html>

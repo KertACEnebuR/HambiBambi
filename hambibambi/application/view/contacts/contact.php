@@ -1,7 +1,6 @@
 <?php
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <?php include("header.php"); ?>
@@ -43,37 +42,36 @@
 </svg> <a href="https://www.facebook.com/" style="text-decoration:none"> Facebook</a> <br>
     </p>  
   </div>
-  <div class="area4">
+  
+<div class="area4">
   <div class="contact-container">
     <!--Kapcsolatfelvétel-->
-        <h1 class="kapcsolatfelvetelh1">Kapcsolatfelvétel</h2>
-        <p>Kérdésed van? Vedd fel velünk a kapcsolatot!</p> <br>
-        <p>Kapcsolatfelvételhez kérlek jelentkezz be!</p>
-<!--
-        <form action="#" method="post">
-            <label for="name">Név:</label>
-            <input type="text" id="name" name="name" placeholder="Add meg a neved" required>
+        <?php if (isset($_SESSION['user_id'])): ?>
 
-            <label for="email">E-mail cím:</label>
-            <input type="email" id="email" name="email" placeholder="Add meg az e-mail címed" required>
-
-            <label for="topic">Téma:</label>
-            <select id="topic" name="topic">
-                <option value="general">Általános kérdés</option>
-                <option value="complaint">Panasz / Bejelentés</option>
-            </select>
-
-            <label for="message">Üzenet:</label>
-            <textarea id="message" name="message" rows="5" placeholder="Írd meg az üzeneted..." required></textarea>
-
+          <form action="#" method="post">
+          <h1 class="ertekelesh1">Értékelés</h1>
+          <div class="stars" id="rating">
+        <span class="star" data-value="5">★</span>
+        <span class="star" data-value="4">★</span>
+        <span class="star" data-value="3">★</span>
+        <span class="star" data-value="2">★</span>
+        <span class="star" data-value="1">★</span>
+    </div>
+    <p class="ertekelesertek"><span id="rating-value">0</span>/5</p>
+    <script src="../../../assets/js/csillagertekeles.js"></script>
+            
+            <label for="message" style="text-align:center;">Üzenet:</label>
+            <input type="text" id="message" name="message" class="beviteluzenet"><br>
             <button type="submit">Üzenet küldése</button>
         </form>
--->
+            <?php else: ?>
+                   <h1 class="kapcsolatfelvetelh1">Értékelés</h2>
+        <p>Ha értékelni szeretné szolgáltatásunkat, jelentkezzen be!</p> <br>
+        <p>Az értékeléshez kérem jelentkezzen be!</p>
+            <?php endif; ?>
     </div>
   </div>
 </div>
     <?php include("../footer.php"); ?>
 </body>
 </html>
-
-
