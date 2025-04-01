@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="../../../assets/css/profileUpdate.css">
     <link rel="stylesheet" href="../../../assets/css/main.css">
     <title>Chat</title>
 </head>
@@ -94,12 +94,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="content">
     <div class="wrapper">
+        <h1>Adatok módosítása</h1>
         <section class="form signup">
-            <header>
-                <h1>Adatok módosítása</h1>
-            </header>
             <form action="#" enctype="multipart/form-data" autocomplete="off">
-                <div class="error-txt"></div>
+                <div class="error-txt" hidden></div>
                 <input type="hidden" id="user_id" name="user_id" value="<?php echo $user_id; ?>">
                 <div class="field input">
                     <label>Teljes név:</label>
@@ -127,10 +125,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="field input">
                         <label>Jelszó:</label>
-                        <input type="password" placeholder="Jelszó" name="password" value="<?php print $password; ?>" required><i class="fas fa-eye"></i>
+                        <input type="password" placeholder="Jelszó" name="password" value="<?php print $password; ?>" required>
                     </div>
                 <div class="field button">
-                    <input type="submit" value="Módosítások mentése">
+                    <input type="submit" class="mentes" value="Módosítások mentése">
                 </div>
             </form>
         </section>

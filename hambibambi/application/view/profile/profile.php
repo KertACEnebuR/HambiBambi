@@ -38,33 +38,33 @@ if (mysqli_num_rows($result) > 0) {
         <div class=\"profile_container\">
             <div class=\"user_details\">
                 <table>
-                    <tr>
+                    <tr class=\"profile_data\">
                         <th>Teljesnév:</th>
                         <td>{$full_name}</td>
                     </tr>
-                    <tr>
+                    <tr class=\"profile_data\">
                         <th>Telefonszám: </th>
                         <td>+{$phone_number}</td>
                     </tr>
-                    <tr>
+                    <tr class=\"profile_data\">
                         <th>E-mail:</th>
                         <td>{$email}</td>
                     </tr>
-                    <tr>
+                    <tr class=\"profile_data\">
                         <th>Megye: </th>
                         <td>{$countyName}</td>
                     </tr>
-                    <tr>
+                    <tr class=\"profile_data\">
                         <th>Település: </th>
                         <td>{$settlementName}</td>
                     </tr>
-                    <tr>
+                    <tr class=\"profile_data\">
                         <th>Lakcím:</th>
                         <td>{$address}</td>
                     </tr>
-                    <tr>
-                        <td><a class=\"update\"href=\"profileUpdate.php\">📦 Adatok módosítása</a></td>
+                    <tr class=\"profile_buttons\">
                         <td><a class=\"logout\"<a href=\"profileLogout.php\">🚪 Kijelentkezés</a></td>
+                        <td><a class=\"update\"href=\"profileUpdate.php\">📦 Adatok módosítása</a></td>
                     </tr>
                     </table>
                     </div>
@@ -83,6 +83,7 @@ if (mysqli_num_rows($result) > 0) {
 <body>
   <!-- Menu -->
   <?php include_once "../navbar/navbar.php"; ?>
+  <h1>Felhasználó adatai</h1>
   <?php echo $output; ?>
   <script src="../../../assets/js/cart.js"></script>
 </body>
