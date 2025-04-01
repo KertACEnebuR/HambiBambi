@@ -8,17 +8,45 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Megyék és települések lekérdezése
+$sql = "SELECT counties.county_id, counties.county_name, settlements.settlement_name, settlements.settlement_id 
+        FROM counties 
+        LEFT JOIN settlements 
+        ON counties.county_id = settlements.county_id
+        ORDER BY county_name, settlement_name";
+
+$result = $conn->query($sql);
+
+$counties = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $countyName = $row['county_name'];
+        $settlementName = $row['settlement_name'];
+
+        // Ellenőrizzük, hogy a vármegye már létezik-e a tömbben
+        if (!isset($counties[$countyName])) {
+            $counties[$countyName] = [];
+        }
+
+        // Hozzáadjuk a települést a vármegyéhez
+        if (!empty($settlementName)) { // Csak akkor adjuk hozzá, ha a település neve nem üres
+            $counties[$countyName][] = $row;
+        }
+    }
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['user_id'];
 
-    // Sanitize and validate inputs
-    $full_name = mysqli_real_escape_string($conn, $_POST['fullname']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $phone_number = mysqli_real_escape_string($conn, $_POST['phone_number']);
-    $address = mysqli_real_escape_string($conn, $_POST['address']);
-    $county_name = mysqli_real_escape_string($conn, $_POST['county_name']);
-    $settlement_name = mysqli_real_escape_string($conn, $_POST['settlement_name']);
-    $password = $_POST['password'];
+    // Ellenőrizzük, hogy a szükséges mezők léteznek-e
+    $full_name = isset($_POST['fullname']) ? mysqli_real_escape_string($conn, $_POST['fullname']) : '';
+    $email = isset($_POST['email']) ? mysqli_real_escape_string($conn, $_POST['email']) : '';
+    $phone_number = isset($_POST['phone_number']) ? mysqli_real_escape_string($conn, $_POST['phone_number']) : '';
+    $address = isset($_POST['address']) ? mysqli_real_escape_string($conn, $_POST['address']) : '';
+    $county_name = isset($_POST['county_name']) ? mysqli_real_escape_string($conn, $_POST['county_name']) : '';
+    $settlement_id = isset($_POST['settlement_id']) ? mysqli_real_escape_string($conn, $_POST['settlement_id']) : '';
+    $password = isset($_POST['password']) ? $_POST['password'] : '';
+    $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : '';
+    $confirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : '';
 
     // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -26,14 +54,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Verify the password
+    // Verify the current password
     $sql = "SELECT password FROM users WHERE user_id = '$user_id'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
 
-    if (!password_verify($password, $row['password'])) {
+    if (!$row || !password_verify($password, $row['password'])) {
         echo "Hibás jelszó!";
         exit();
+    }
+
+    // Check if new password is provided and matches confirmation
+    if (!empty($new_password)) {
+        if ($new_password !== $confirm_password) {
+            echo "Az új jelszavak nem egyeznek!";
+            exit();
+        }
+
+        // Hash the new password
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+    } else {
+        $hashed_password = $row['password']; // Keep the old password if no new password is provided
     }
 
     // Update the user's data
@@ -44,16 +85,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             email = '$email', 
             phone_number = '$phone_number', 
             address = '$address', 
-            settlement_id = (
-                SELECT settlement_id 
-                FROM settlements 
-                WHERE settlement_name = '$settlement_name'
-            )
+            settlement_id = '$settlement_id',
+            password = '$hashed_password'
         WHERE user_id = '$user_id'
     ";
 
     if (mysqli_query($conn, $update_query)) {
-        echo "success";
+        // Redirect to profile page after successful update
+        header("Location: profile.php");
+        exit();
     } else {
         echo "Hiba történt az adatok frissítése során: " . mysqli_error($conn);
     }
@@ -96,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="wrapper">
         <h1>Adatok módosítása</h1>
         <section class="form signup">
-            <form action="#" enctype="multipart/form-data" autocomplete="off">
+            <form action="profileUpdate.php" method="POST" enctype="multipart/form-data" autocomplete="off">
                 <div class="error-txt" hidden></div>
                 <input type="hidden" id="user_id" name="user_id" value="<?php echo $user_id; ?>">
                 <div class="field input">
@@ -109,24 +149,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="field input">
                     <label>Telefonszám:</label>
-                    <input type="text" placeholder="Telefonszám" name="phone_number" value="<?php echo $phone_number; ?>" required>
+                    <input type="text" placeholder="Telefonszám" maxlength="11" name="phone_number" value="<?php echo $phone_number; ?>" required>
                 </div>
                 <div class="field input">
-                    <label>Megye:</label>
-                    <input type="text" placeholder="Megye" name="county_name" value="<?php echo $countyName; ?>" required>
+                    <label for="county">Vármegye:</label>
+                    <select id="county" name="county_name" required onchange="updateSettlements()">
+                        <option value="">Válasszon</option>
+                        <?php foreach ($counties as $county => $settlements): ?>
+                            <option value="<?= htmlspecialchars($county) ?>" <?= $county === $countyName ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($county) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="field input">
-                    <label>Település:</label>
-                    <input type="text" placeholder="Település" name="settlement_name" value="<?php echo $settlementName; ?>" required>
+                    <label for="address">Település:</label>
+                    <select id="settlement" name="settlement_id" required>
+                        <option id="settlement">Válasszon</option>
+                    </select>
                 </div>
                 <div class="field input">
                     <label>Lakcím:</label>
                     <input type="text" placeholder="Lakcím" name="address" value="<?php echo $address; ?>" required>
                 </div>
                 <div class="field input">
-                        <label>Jelszó:</label>
-                        <input type="password" placeholder="Jelszó" name="password" value="<?php print $password; ?>" required>
-                    </div>
+                    <label for="password">Jelszó:</label>
+                    <input type="password" placeholder="Jelenlegi jelszó" name="password" required>
+                </div>
+                <div class="field input">
+                    <label>Új jelszó (opcionális):</label>
+                    <input type="password" placeholder="Új jelszó" name="new_password">
+                </div>
+                <div class="field input">
+                    <label>Új jelszó megerősítése:</label>
+                    <input type="password" placeholder="Új jelszó megerősítése" name="confirm_password">
+                </div>
                 <div class="field button">
                     <input type="submit" class="mentes" value="Módosítások mentése">
                 </div>
@@ -136,51 +193,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <script>
-    const form = document.querySelector(".signup form");
-    const continueBtn = form.querySelector(".button input");
-    const errorText = document.querySelector(".error-txt");
+    var counties = <?= json_encode($counties, JSON_UNESCAPED_UNICODE); ?>;
+    function updateSettlements() {
+        const county = document.getElementById('county').value;
+        const settlementDropdown = document.getElementById('settlement');
 
-    form.onsubmit = (e) => {
-        e.preventDefault();
-    };
+        settlementDropdown.innerHTML = '<option value="">Válasszon</option>';
 
-    continueBtn.onclick = () => {
-        // AJAX
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "PHP/update.php", true);
-        xhr.onload = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    let data = xhr.response;
-                    if (data === "success") {
-                        location.href = "profile.php";
-                    } else {
-                        errorText.textContent = data;
-                        errorText.style.display = "block";
-                    }
-                }
+        <?php foreach ($counties as $county => $settlements): ?>
+            if (county === <?= json_encode($county) ?>) {
+                <?php foreach ($settlements as $settlement): ?>
+                    settlementDropdown.innerHTML += `<option value="<?= htmlspecialchars($settlement['settlement_id']) ?>"><?= htmlspecialchars($settlement['settlement_name']) ?></option>`;
+                <?php endforeach; ?>
             }
-        };
-
-        // Send form data via AJAX
-        let formData = new FormData(form);
-        xhr.send(formData);
-    };
-
-    // Password toggle
-    const pswrField = document.querySelector(".form .field input[type='password']");
-    const toggleBtn = document.querySelector(".form .field i");
-
-    toggleBtn.onclick = () => {
-        if (pswrField.type === "password") {
-            pswrField.type = "text";
-            toggleBtn.classList.add("active");
-        } else {
-            pswrField.type = "password";
-            toggleBtn.classList.remove("active");
-        }
-    };
+        <?php endforeach; ?>
+    }
 </script>
 </body>
 
-</html>
+</html> 

@@ -16,7 +16,6 @@
 
         <script>
             var counties = <?= json_encode($counties, JSON_UNESCAPED_UNICODE); ?>;
-            
             function updateSettlements() {
                 const county = document.getElementById('county').value;
                 const settlementDropdown = document.getElementById('settlement');

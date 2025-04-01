@@ -9,7 +9,6 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
-
 //Bejelentkezés a weboldalra
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'], $_POST['password'])) {
     $email = $_POST['email'];
@@ -22,11 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'], $_POST['passw
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    // Debugging: Check if user exists and password hash
     if (!$user) {
         $error = "A felhasználó nem található!";
     } else {
-        // Debugging: Output the hashed password
         error_log("Hashed password from DB: " . $user['password']);
         error_log("Entered password: " . $password);
 

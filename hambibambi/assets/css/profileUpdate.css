@@ -55,6 +55,7 @@ form div {
     border: 1px solid black;
     border-radius: 10px;
     background-color: #eedab5;
+    flex-direction: column;
 }
 
 form div input {
@@ -71,6 +72,7 @@ form div input {
     color: #555;
     display: block;
     padding: 10px;
+    text-align: center;
 }
 
 .field input {
