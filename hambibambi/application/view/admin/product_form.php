@@ -14,8 +14,8 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Új termék felvitele</title>
+    <link rel="stylesheet" href="../../../assets/css/productform.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-
 </head>
 
 <body ng-controller="ProductController">
@@ -39,7 +39,8 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
         <label>Mennyiségi egység ID:</label>
         <input type="number" ng-model="product.quantity_unit_id" required>
 
-        <button type="submit">Hozzáadás</button>
+        <button type="submit">➕ Hozzáadás</button>
+        <button type="button" onclick="window.location.href='dashboard.php'" class="dashboard-button">くくくVissza</button>
     </form>
 
     <p ng-if="message">{{ message }}</p>

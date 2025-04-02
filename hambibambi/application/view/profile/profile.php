@@ -70,22 +70,22 @@ if (mysqli_num_rows($result) > 0) {
                     </div>
                     ";                    
 ?>
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profil</title>
-  <link rel="stylesheet" href="../../../assets/css/main.css">
-  <link rel="stylesheet" href="../../../assets/css/profile.css">
-  <link rel="stylesheet" href="../../../assets/css/cart.css">
-</head>
-<body>
-  <!-- Menu -->
-  <?php include_once "../navbar/navbar.php"; ?>
-  <h1>Felhasználó adatai</h1>
-  <?php echo $output; ?>
-  <script src="../../../assets/js/cart.js"></script>
-</body>
-
-</html>
+    <!DOCTYPE html>
+    <html lang="hu">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil</title>    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../assets/css/main.css">
+    <link rel="stylesheet" href="../../../assets/css/profile.css">
+    <link rel="stylesheet" href="../../../assets/css/cart.css">
+    </head>
+    <body>
+    <!-- Menu -->
+    <?php include_once "../navbar/navbar.php"; ?>
+    <h1>Felhasználó adatai</h1>
+    <?php echo $output; ?>
+    <script src="<?= $Path."assets/js/cart.js";?>"></script>
+    </body>
+    </html>

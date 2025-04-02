@@ -11,6 +11,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terméklista</title>
+    <link rel="stylesheet" href="../../../assets/css/productlist.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <style>
         table {
@@ -43,7 +44,9 @@ session_start();
 <body ng-app="productApp" ng-controller="ProductController">
 
     <h2>Terméklista</h2>
-    <button ng-click="addNewProduct()">Új termék felvitele</button>
+    
+    <button type="button" onclick="window.location.href='dashboard.php'" class="dashboard-button">くくくVissza</button>
+
 <h3>A termékek id, név és ár szerint rendezhetőek, kattintson a fejlécre!</h3>
     <table>
         <tr>
@@ -60,15 +63,15 @@ session_start();
             <th>Kép</th>
             <th>Műveletek</th>
         </tr>
-        <tr ng-repeat="product in products | orderBy:sortColumn:reverseSort">
+        <tr class="product" ng-repeat="product in products | orderBy:sortColumn:reverseSort">
             <td>{{ product.product_id }}</td>
             <td>{{ product.product_name }}</td>
             <td>{{ product.price }} Ft</td>
             <td>{{ product.description }}</td>
-            <td><img ng-src="{{ product.picture }}" alt="Kép" width="50"></td>
+            <td> <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}" width="50"></td>
             <td>
-                <button ng-click="editProduct(product.product_id)">Módosítás</button>
-                <button ng-click="deleteProduct(product.product_id)">Törlés</button>
+                <button ng-click="editProduct(product.product_id)">⚙️ Módosítás</button>
+                <button ng-click="deleteProduct(product.product_id)">🗑️ Törlés</button>
             </td>
         </tr>
     </table>

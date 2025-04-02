@@ -1,13 +1,13 @@
 <?php
-$current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'login';
+
+include("header.php");
+
+include("../navbar/navbar.php");
+
+include("insideNavbar.php");
+
+require $Path . "application/view/product.html";
+
+include("footer.php");
+
 ?>
-
-<?php include("header.php"); ?>
-
-<?php include("../navbar/navbar.php"); ?>
-
-<?php include("insideNavbar.php"); ?>
-
-<?php require $Path . "application/view/product.html"; ?> 
-
-<?php include("../footer.php"); ?>

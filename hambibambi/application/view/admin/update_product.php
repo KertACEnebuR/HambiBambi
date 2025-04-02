@@ -22,6 +22,7 @@ $product_id = intval($_GET['id']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Termék módosítása</title>
+    <link rel="stylesheet" href="../../../assets/css/updateprod.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 </head>
 
@@ -46,7 +47,8 @@ $product_id = intval($_GET['id']);
         <label>Mennyiségi egység ID:</label>
         <input type="number" ng-model="product.quantity_unit_id" required>
 
-        <button type="submit">Módosítás</button>
+        <button type="submit">⚙️ Módosítás</button>
+        <button type="button" onclick="window.location.href='product_list.php'" class="dashboard-button">くくくVissza</button>
     </form>
 
     <p ng-if="message">{{ message }}</p>
