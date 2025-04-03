@@ -6,7 +6,7 @@ include("../navbar/navbar.php");
 
 include("insideNavbar.php");
 
-require $Path . "application/view/product.html";
+require $Path . "application/view/product.php";
 
 include("footer.php");
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HambiBambi Étterem - Login / Regisztráció</title>
+    <title>Étlap</title>
     <link rel="shortcut icon" href="../../../assets/img/HambiBambi_Logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../../../assets/css/main.css">
     <link rel="stylesheet" href="../../../assets/css/menu.css">

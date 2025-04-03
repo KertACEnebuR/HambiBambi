@@ -83,7 +83,7 @@ if (mysqli_num_rows($result) > 0) {
     </head>
     <body>
     <!-- Menu -->
-    <?php include_once "../navbar/navbar.php"; ?>
+    <?php include "../navbar/navbar.php"; ?>
     <h1>Felhasználó adatai</h1>
     <?php echo $output; ?>
     <script src="<?= $Path."assets/js/cart.js";?>"></script>
