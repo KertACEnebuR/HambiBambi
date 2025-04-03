@@ -140,59 +140,40 @@ input{
     color: #8d320f;
 }
 @media (max-width: 1024px) {
-    .cart {
-        width: 100%; /* Teljes szélesség */
-        margin: 0; /* Margók eltávolítása */
-        border-radius: 0; /* Sarka lekerekítésének eltávolítása */
+    .cartBox .cart {
+        width: 70%; /* Szélesebb kosár tableten */
     }
 
-    body {
-        font-size: 16px; /* Csökkentett betűméret */
+    .kosar {
+        flex-direction: column; /* Sorok egymás alá kerülnek */
     }
 
-    header {
-        flex-direction: column; /* Fejléc elemek egymás alá kerülnek */
-        text-align: center;
-    }
-
-    .logo img {
-        height: 80px; /* Kisebb logó méret */
-    }
-
-    nav ul {
-        flex-direction: column; /* Menü elemek egymás alá kerülnek */
-        align-items: center;
-    }
-
-    nav ul li {
-        margin: 5px 0; /* Kisebb margó */
-    }
-
-    main {
-        flex-direction: column; /* Tartalom középre igazítása */
-        padding: 20px;
-    }
-
-    footer {
-        flex-direction: column; /* Lábjegyzet elemek egymás alá kerülnek */
-        text-align: center;
+    .kosar img {
+        width: 80px; /* Kisebb képek tableten */
+        height: 80px;
     }
 }
 
 /* Tablet eszközökre (max. 1024px szélesség) */
-@media (max-width: 768px) {
-    .cart {
+@media (max-width: 767px) {
+    .cartBox .cart {
         width: 100%; /* Teljes szélesség mobilon */
-        margin: 0; /* Margók eltávolítása */
-        border-radius: 0; /* Sarka lekerekítésének eltávolítása */
+        padding: 10px; /* Csökkentett padding */
+        border-radius: 0; /* Lekerekítés eltávolítása */
+    }
+
+    .kosar {
+        flex-direction: column; /* Sorok egymás alá kerülnek */
+    }
+
+    .kosar img {
+        width: 60px; /* Még kisebb képek mobilon */
+        height: 60px;
+    }
+
+    .kosar th,
+    .kosar td {
+        font-size: 14px; /* Kisebb betűméret mobilon */
     }
 }
 
-/* Tablet eszközökre (max. 1024px szélesség) */
-@media (max-width: 1024px) {
-    .cart {
-        width: 100%; /* Teljes szélesség tableten */
-        margin: 0; /* Margók eltávolítása */
-        border-radius: 0; /* Sarka lekerekítésének eltávolítása */
-    }
-}

@@ -1,22 +1,27 @@
 /* Termékek elrendezése */
 .product-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    justify-content: center;
+    display: flex; /* Flexbox elrendezés */
+    flex-wrap: wrap; /* Engedélyezi az elemek törését */
+    justify-content: center; /* Középre igazítja az elemeket */
+    gap: 20px; /* Távolság az elemek között */
+    padding: 20px; /* Belső margó */
+    width: 100%; /* Teljes szélesség */
+    box-sizing: border-box; /* Padding beleszámít a szélességbe */
 }
 
-.product{
-    transition: transform 0.5s;
-}
-
-.product, .product-body{
+.product {
+    flex: 1 1 calc(33.333% - 20px); /* Alapértelmezés szerint 3 oszlop */
+    max-width: calc(33.333% - 20px); /* Maximális szélesség 3 oszlophoz */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
     text-align: center;
-    padding: 15px;   
+    transition: transform 0.3s;
 }
 
 .product:hover {
@@ -32,27 +37,68 @@
 }
 
 .product h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
     margin: 10px 0;
     color: #333;
 }
 
 .product p {
-    font-size: 18px;
+    font-size: 0.9rem;
     color: #666;
 }
 
-.product span {
-    font-weight: bold;
-    color: #ff5722;
-    display: block;
-    margin-top: 10px;
+.product input{
+    width: 50px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 10px 0;
+    text-align: center;
+    font-size: 1rem;
+    color: #333;
 }
+
+.product .ar {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0;
+}
+
+.product .kosarhoz {
+    background-color: #ee9f22;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.product .kosarhoz:hover {
+    background-color: #d98909;
+}
+
+.product-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 100%;
+    text-align: center;
+}
+
 #top {
-    display: none; /* Alapból rejtve */
-    position: fixed; /* Fixált a képernyő jobb alsó sarkában */
+    display: none;
+    position: fixed;
     bottom: 15px;
     right: 15px;
-    z-index: 1000; /* Minden más fölött legyen */
+    z-index: 1000;
     background: #ff5722;
     color: white;
     border: none;
@@ -72,10 +118,40 @@
     transform: scale(1.1);
 }
 
-/* Alapértelmezett stílusok */
-.container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Négy oszlop alapértelmezés szerint */
-    gap: 20px; /* Távolság az elemek között */
-    justify-items: center;
+.insideNavbar nav {
+    display: flex; /* Flexbox elrendezés */
+    justify-content: space-around; /* Alapértelmezett vízszintes elosztás */
+    align-items: center; /* Függőleges középre igazítás */
+    padding: 20px;
+    color: white;
+    flex-wrap: wrap; /* Engedélyezi az elemek törését */
+}
+
+/* Reszponzív beállítások */
+@media (max-width: 1200px) {
+    .product {
+        flex: 1 1 calc(50% - 20px); /* 2 oszlop 1200px alatt */
+        max-width: calc(50% - 20px);
+    }
+    .insideNavbar nav {
+        flex-direction: column; /* Egymás alá helyezi az elemeket */
+        align-items: center; /* Középre igazítja az elemeket függőlegesen */
+        justify-content: center; /* Középre igazítja az elemeket vízszintesen */
+        gap: 10px; /* Távolság az elemek között */
+        text-align: center; /* Szöveg középre igazítása */
+    }
+}
+
+@media (max-width: 767px) {
+    .product {
+        flex: 1 1 100%; /* 1 oszlop tableten és kisebb képernyőkön */
+        max-width: 100%;
+    }
+    .insideNavbar nav {
+        flex-direction: column; /* Egymás alá helyezi az elemeket */
+        align-items: center; /* Középre igazítja az elemeket függőlegesen */
+        justify-content: center; /* Középre igazítja az elemeket vízszintesen */
+        gap: 10px; /* Távolság az elemek között */
+        text-align: center; /* Szöveg középre igazítása */
+    }
 }
