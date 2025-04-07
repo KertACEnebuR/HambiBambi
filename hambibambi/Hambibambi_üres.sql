@@ -41,7 +41,7 @@ CREATE TABLE `Orders` (
   `payment_id` int,
   `order_status_id` int,
   `order_date` datetime,
-  `delivery_date` datetime
+  `delivery_date` date
 );
 
 CREATE TABLE `Baskets` (

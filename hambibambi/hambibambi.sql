@@ -86,7 +86,7 @@ CREATE TABLE `orders` (
   `payment_id` int(11) DEFAULT NULL,
   `order_status_id` int(11) DEFAULT NULL,
   `order_date` datetime DEFAULT NULL,
-  `delivery_date` datetime DEFAULT NULL
+  `delivery_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
