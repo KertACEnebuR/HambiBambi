@@ -1,12 +1,49 @@
 <?php
+session_start();
+include "../../../connect.php"; // Adatbázis kapcsolat
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['rating'], $_POST['message'])) {
+  if (!isset($_SESSION['user_id'])) {
+      die("Hiba: Be kell jelentkezni az értékeléshez.");
+  }
+
+  $user_id = $_SESSION['user_id'];
+  $review_value = intval($_POST['rating']);
+  $description = trim($_POST['message']);
+  $review_date = date('Y-m-d H:i:s');
+
+  // Ellenőrizd, hogy a felhasználó már adott-e értékelést
+  $check_query = "SELECT * FROM reviews WHERE user_id = ?";
+  $stmt_check = $conn->prepare($check_query);
+  $stmt_check->bind_param("i", $user_id);
+  $stmt_check->execute();
+  $result_check = $stmt_check->get_result();
+
+  // Ha már létezik értékelés, nem engedjük újra elmenteni
+  if ($result_check->num_rows > 0) {
+  } else {
+      // SQL beszúrás
+      $stmt = $conn->prepare("INSERT INTO reviews (user_id, review_value, description, review_date) VALUES (?, ?, ?, ?)");
+      $stmt->bind_param("iiss", $user_id, $review_value, $description, $review_date);
+
+      if ($stmt->execute()) {
+          // Redirectálás a jelenlegi oldalra
+          header("Location: " . $_SERVER['PHP_SELF']);
+          exit; // Ne folytassa a kód végrehajtását
+      } else {
+          die("Hiba történt az értékelés mentésekor: " . $stmt->error);
+      }
+  }
+}
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php include("header.php"); ?>
 <body>
     <?php include("../navbar/navbar.php"); ?>
-    <div class="container">
+<div class="container">
   <div class="area1">
     <h1 class="elerhetosegh1">Elérhetőségek</h1>
     <p> Telefonszám: +36 30 123 4567 <br>
@@ -47,30 +84,98 @@
   <div class="contact-container">
     <!--Kapcsolatfelvétel-->
         <?php if (isset($_SESSION['user_id'])): ?>
-
-          <form action="#" method="post">
-          <h1 class="ertekelesh1">Értékelés</h1>
-          <div class="stars" id="rating">
+          <form action="" method="post">
+    <h1 class="ertekelesh1">Értékelés</h1>
+    <div class="stars" id="rating">
         <span class="star" data-value="5">★</span>
         <span class="star" data-value="4">★</span>
         <span class="star" data-value="3">★</span>
         <span class="star" data-value="2">★</span>
         <span class="star" data-value="1">★</span>
     </div>
+    <input type="hidden" id="rating-input" name="rating" value="0">
     <p class="ertekelesertek"><span id="rating-value">0</span>/5</p>
+
+   <!-- Üzenet mező -->
+<label for="message" style="text-align:center;">Üzenet:</label>
+<input type="text" id="message" name="message" class="beviteluzenet"><br>
+
+<!-- Küldés gomb, kezdetben letiltva (disabled) -->
+<button type="submit" class="sendMessage" id="sendButton" disabled>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
+  </svg> Üzenet küldése
+</button>
+<script src="../../../assets/js/contactjs.js"></script>
+</form>
+
+<script>
+document.querySelectorAll('.star').forEach(star => {
+    star.addEventListener('click', function() {
+        let value = this.getAttribute('data-value');
+        document.getElementById('rating-value').innerText = value;
+        document.getElementById('rating-input').value = value; // rejtett input frissítése
+    });
+});
+</script>
     <script src="../../../assets/js/csillagertekeles.js"></script>
-            
-            <label for="message" style="text-align:center;">Üzenet:</label>
-            <input type="text" id="message" name="message" class="beviteluzenet"><br>
-            <button type="submit">Üzenet küldése</button>
         </form>
             <?php else: ?>
                    <h1 class="kapcsolatfelvetelh1">Értékelés</h2>
         <p>Ha értékelni szeretné szolgáltatásunkat, jelentkezzen be!</p> <br>
-        <p>Az értékeléshez kérem jelentkezzen be!</p>
+        <p> <a href="../../view/logreg/loginreg.php" style="text-decoration:none">Belépés</a></p>
             <?php endif; ?>
     </div>
   </div>
+
+
+<?php if (isset($_SESSION['user_id'])): ?>
+                <!-- Ha a felhasználó be van jelentkezve -->
+                <div class="area5">
+    <h1 class="felhertekelesh1">Felhasználói értékelések</h1>
+
+    <?php
+    include "../../../connect.php";
+
+    // SQL lekérdezés: értékelések és a felhasználó neve
+    $sql = "
+    SELECT u.full_name, r.review_value, r.description, r.review_date
+    FROM reviews r
+    JOIN Users u ON r.user_id = u.user_id
+    ORDER BY r.review_date DESC
+";
+
+
+    // Lekérdezés végrehajtása
+    $result = $conn->query($sql);
+
+    // Ellenőrzés, hogy van-e eredmény
+    if ($result->num_rows > 0) {
+        // Táblázat megjelenítése
+        echo '<table border="1" cellpadding="10" cellspacing="0" style="width: 100%; margin-top: 20px;">';
+        echo '<tr><th>Felhasználó</th><th>Értékelés</th><th>Leírás</th><th>Dátum</th></tr>';
+
+        // Eredmények feldolgozása és megjelenítése
+        while($row = $result->fetch_assoc()) {
+            echo '<tr>';
+            echo '<td>' . htmlspecialchars($row['full_name']) . '</td>';
+            echo '<td>' . htmlspecialchars($row['review_value']) . '/5</td>';
+            echo '<td>' . htmlspecialchars($row['description']) . '</td>';
+            echo '<td>' . htmlspecialchars($row['review_date']) . '</td>';
+            echo '</tr>';
+        }
+
+        echo '</table>';
+    } else {
+        // Ha nincs értékelés
+        echo '<p>Nincsenek értékelések.</p>';
+    }
+    ?>
+</div>
+            <?php else: ?>
+                <!-- Ha a felhasználó nincs bejelentkezve -->
+               <h1></h1>
+                <?php endif; ?>
 </div>
     <?php include("../footer.php"); ?>
 </body>
