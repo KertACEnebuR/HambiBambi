@@ -6,7 +6,7 @@ body {
     column-gap: 20px;
 }
 
-/* Header */
+/*Header*/
 header {
     grid-column: 1 / -1;
 }
@@ -29,7 +29,7 @@ header {
     border-radius: 10px;
 }
 
-/* Szövegdobozok */
+/*Szövegdobozok*/
 .containerSzoveg1, .containerSzoveg2 {
     padding: 15px;
     background-color: #fff;
@@ -51,7 +51,7 @@ header {
     grid-row: 3 / 4;
 }
 
-/* Kiemelt ajánlatok */
+/*Kiemelt ajánlatok*/
 .kiemelt-ajanlatok {
     grid-column: 1 / 6;
     grid-row: 4 / 5;
@@ -98,7 +98,7 @@ header {
     font-weight: bold;
 }
 
-/* Fő tartalom */
+/*Fő tartalom*/
 
 main {
     grid-column: 2 / 5;
@@ -128,19 +128,17 @@ main {
     border-radius: 20px;
 }
 
-/* Footer */
+/*Footer*/
 footer {
     grid-column: 1 / -1;
     grid-row: 6 / 7;
 }
 
-/* RESPONSIVE DESIGN */
-/* RESPONSIVE DESIGN */
-
-/* Tablet nézet (max-width: 1024px) */
+/*Reszpinzív stíkus*/
+/*Tablet nézet (max-width: 1024px)*/
 @media screen and (max-width: 1024px) {
     body {
-        grid-template-columns: 1fr; /* Egy oszlopos elrendezés */
+        grid-template-columns: 1fr; /*Egy oszlopos elrendezés*/
     }
 
     header,
@@ -151,35 +149,35 @@ footer {
     .kiemelt-ajanlatok,
     main,
     footer {
-        grid-column: 1 / -1; /* Teljes szélesség */
+        grid-column: 1 / -1; /*Teljes szélesség*/
     }
 
     .ajanlatok {
-        grid-template-columns: 1fr; /* Egy oszlopos rács az ajánlatokhoz */
+        grid-template-columns: 1fr; /*Egy oszlopos rács az ajánlatokhoz*/
     }
 
     .ajanlat img {
-        height: auto; /* Képek magasságának automatikus igazítása */
+        height: auto; /*Képek magasságának automatikus igazítása*/
     }
 
     .bemutatkozoDiv {
         padding: 15px;
-        max-width: 100%; /* Teljes szélesség */
+        max-width: 100%; /*Teljes szélesség*/
     }
 
     .bemutatkozas h2 {
-        font-size: 1.5rem; /* Kisebb betűméret */
+        font-size: 1.5rem; /*Kisebb betűméret*/
     }
 
     .bemutatkozoDiv p {
-        font-size: 1rem; /* Kisebb szövegméret */
+        font-size: 1rem; /*Kisebb szövegméret*/
     }
 }
 
-/* Mobil nézet (max-width: 768px) */
+/*Mobil nézet (max-width: 768px)*/
 @media screen and (max-width: 768px) {
     body {
-        grid-template-columns: 1fr; /* Egy oszlopos elrendezés */
+        grid-template-columns: 1fr; /*Egy oszlopos elrendezés*/
     }
 
     header,
@@ -190,27 +188,27 @@ footer {
     .kiemelt-ajanlatok,
     main,
     footer {
-        grid-column: 1 / -1; /* Teljes szélesség */
+        grid-column: 1 / -1; /*Teljes szélesség*/
     }
 
     .ajanlatok {
-        grid-template-columns: 1fr; /* Egy oszlopos rács az ajánlatokhoz */
+        grid-template-columns: 1fr; /*Egy oszlopos rács az ajánlatokhoz*/
     }
 
     .ajanlat img {
-        height: auto; /* Képek magasságának automatikus igazítása */
+        height: auto; /*Képek magasságának automatikus igazítása*/
     }
 
     .bemutatkozoDiv {
         padding: 15px;
-        max-width: 100%; /* Teljes szélesség */
+        max-width: 100%; /*Teljes szélesség*/
     }
 
     .bemutatkozas h2 {
-        font-size: 1.2rem; /* Még kisebb betűméret */
+        font-size: 1.2rem; /*Még kisebb betűméret*/
     }
 
     .bemutatkozoDiv p {
-        font-size: 0.9rem; /* Még kisebb szövegméret */
+        font-size: 0.9rem; /*Még kisebb szövegméret*/
     }
 }

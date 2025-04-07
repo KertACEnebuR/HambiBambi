@@ -39,15 +39,15 @@ li {
 .checkout-grid {
     display: flex; /* Flexbox elrendezés */
     flex-direction: row; /* Az elemek egymás mellett helyezkednek el */
-    gap: 20px; /* Távolság az elemek között */
+    gap: 20px;
     justify-content: space-between; /* Egyenletes elosztás */
-    align-items: flex-start; /* A tartalom tetején kezdődik */
+    align-items: flex-start;
 }
 
 /* Kosár tartalma */
 .cart-summary {
-    flex: 1; /* Egyenlő arányban osztozik a helyen */
-    background-color: #eedab5; /* Világos háttér */
+    flex: 1;
+    background-color: #eedab5;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -70,30 +70,32 @@ li {
 }
 
 /* Számlázási adatok */
-.billing-form {
-    flex: 1; /* Egyenlő arányban osztozik a helyen */
+.rendeles {
+    flex: 1;
     background-color: #fff;
-    padding: 20px;
+    padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     height: auto;
 }
 
-.billing-form h2 {
+.rendeles h2 {
     margin-bottom: 20px;
 }
 
 .form-group {
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
     font-weight: bold;
 }
 
-input, select {
+.adatok {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -101,7 +103,7 @@ input, select {
 }
 
 .submit-btn {
-    background-color: #f0a00c; /* Narancssárga */
+    background-color: #f0a00c;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -111,18 +113,19 @@ input, select {
 }
 
 .submit-btn:hover {
-    background-color: #d87c00; /* Sötétebb narancssárga */
+    transition: 0.3s;
+    background-color: #d87c00;
 }
 
 /* Reszponzív beállítások tablethez (max. 1024px szélesség) */
 @media (max-width: 1024px) {
     .checkout-grid {
-        flex-direction: column; /* Az elemek egymás alá kerülnek */
-        gap: 20px; /* Távolság az elemek között */
+        flex-direction: column;
+        gap: 20px;
     }
 
     .cart-summary,
-    .billing-form {
+    .rendeles {
         width: 100%; /* Teljes szélesség */
     }
 }
@@ -130,17 +133,17 @@ input, select {
 /* Reszponzív beállítások mobilhoz (max. 768px szélesség) */
 @media (max-width: 768px) {
     .container {
-        padding: 10px; /* Csökkentett padding */
+        padding: 5px;
     }
 
     .cart-summary,
-    .billing-form {
-        padding: 15px; /* Csökkentett padding */
+    .rendeles {
+        padding: 5px;
     }
 
     .form-group input,
     .form-group select {
-        padding: 8px; /* Csökkentett padding */
+        padding: 5px; /* Csökkentett padding */
     }
 
     .submit-btn {

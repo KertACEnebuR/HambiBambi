@@ -24,6 +24,10 @@
     transition: transform 0.3s;
 }
 
+.legends{
+    color: #ff5722;
+}
+
 .product:hover {
     transform: scale(1.05);
 }
