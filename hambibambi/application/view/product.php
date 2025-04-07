@@ -20,7 +20,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         <div class="hamburgers con">
             <legend>Hamburgerek</legend>
             <div class="container" id="hamburgers">
-                <div class="product" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 3}">
+                <div class="product" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 3}" data-id="{{product.product_id}}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
@@ -40,7 +40,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         <div class="soups con">
         <legend>Levesek</legend>
             <div id="soups" class="container">
-                <div class="product" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 2}">
+                <div class="product" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 2}" data-id="{{product.product_id}}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
@@ -60,7 +60,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         <div class="salads con">
             <legend>Saláták</legend>
             <div id="salads" class="container">
-                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 1}">
+                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 1}" data-id="{{product.product_id}}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
@@ -80,7 +80,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         <div class="pastas con">
             <legend>Tészták</legend>
             <div id="pastas" class="container">
-                <div class="product" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 4}">
+                <div class="product" style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 4}" data-id="{{product.product_id}}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
@@ -100,7 +100,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         <div class="desserts con">
             <legend>Sütemények</legend>
             <div id="desserts" class="container">
-                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 7}">
+                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 7}" data-id="{{product.product_id}}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
@@ -120,7 +120,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         <div class="drinks con">
             <legend>Üdítők</legend>
             <div id="drinks" class="container">
-                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 6}">
+                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 6}" data-id="{{product.product_id}}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>
@@ -140,7 +140,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         <div class="drinks2 con">
             <legend>Aloholos italok</legend>
             <div id="drinks2" class="container">
-                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 5}">
+                <div class="product " style="width: 18rem;" ng-repeat="product in products | filter:{product_category_id: 5}" data-id="{{product.product_id}}">
                     <img ng-src="http://localhost/hambibambi/assets/img/{{product.picture}}" alt="{{product.product_name}}">
                     <div class="card-body product-body">
                         <h5 class="card-title">{{ product.product_name }}</h5>

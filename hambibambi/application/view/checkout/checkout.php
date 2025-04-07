@@ -2,9 +2,22 @@
 session_start();
 require("../../../connect.php");
 
-// Ellenőrizzük, hogy be van-e jelentkezve a felhasználó
+// Hibakeresés bekapcsolása
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// JSON adatok feldolgozása
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_POST)) {
+    $json = file_get_contents('php://input');
+    $_POST = json_decode($json, true);
+}
+
+// Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../../../login.php");
+    header('Content-Type: application/json');
+    http_response_code(401);
+    echo json_encode(['success' => false, 'message' => 'Nincs bejelentkezve']);
     exit();
 }
 
@@ -25,24 +38,24 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
 } else {
-    die("Felhasználói adatok nem találhatók.");
+    header('Content-Type: application/json');
+    http_response_code(404);
+    echo json_encode(['success' => false, 'message' => 'Felhasználói adatok nem találhatók']);
+    exit();
 }
 
-// Rendelés feldolgozása, ha elküldték a formot
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment'])) {
-    // Kosár tartalmának lekérése a localStorage-ból (JavaScript segítségével)
-    // Ez a rész a JavaScriptben lesz kezelve, majd AJAX kéréssel elküldve
-    
-    // Mivel a localStorage csak JavaScriptből érhető el, 
-    // AJAX kérést kell használnunk a kosár adatainak elküldéséhez
-    
-    // Ellenőrizzük, hogy van-e kosár tartalom
-    if (empty($_POST['cartItems'])) {
-        die("A kosár üres, nem lehet leadni a rendelést.");
-    }
-    
+// Rendelés feldolgozása
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment']) && isset($_POST['cartItems'])) {
     $cartItems = json_decode($_POST['cartItems'], true);
     $payment_method = (int)$_POST['payment'];
+    
+    // Ellenőrizzük, hogy van-e kosár tartalom
+    if (empty($cartItems)) {
+        header('Content-Type: application/json');
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'A kosár üres, nem lehet leadni a rendelést']);
+        exit();
+    }
     
     // Tranzakció kezdete
     $conn->begin_transaction();
@@ -50,52 +63,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment'])) {
     try {
         // Rendelés létrehozása
         $order_date = date('Y-m-d H:i:s');
-        $delivery_date = date('Y-m-d H:i:s', strtotime('+3 days'));
+        $delivery_date = date('Y-m-d');
         
-        $sql = "INSERT INTO Orders (user_id, payment_id, order_status_id, order_date, delivery_date) 
+        $sql = "INSERT INTO orders (user_id, payment_id, order_status_id, order_date, delivery_date) 
                 VALUES (?, ?, 1, ?, ?)";
         $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            throw new Exception("Prepare failed (Orders): " . $conn->error);
+        }
         $stmt->bind_param("iiss", $user_id, $payment_method, $order_date, $delivery_date);
-        $stmt->execute();
+        if (!$stmt->execute()) {
+            throw new Exception("Execute failed (Orders): " . $stmt->error);
+        }
         
         $order_id = $conn->insert_id;
         
-        // Termékek hozzáadása a kosárhoz (Baskets tábla)
+        // Termékek hozzáadása a kosárhoz
         foreach ($cartItems as $item) {
             $product_id = (int)$item['id'];
             $quantity = (int)$item['quantity'];
             
-            $sql = "INSERT INTO Baskets (product_id, order_id, quantity) 
+            $sql = "INSERT INTO baskets (product_id, order_id, quantity) 
                     VALUES (?, ?, ?)";
             $stmt = $conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Prepare failed (Baskets): " . $conn->error);
+            }
             $stmt->bind_param("iii", $product_id, $order_id, $quantity);
-            $stmt->execute();
-            
-            // Termék készletének csökkentése
-            $sql = "UPDATE Products SET quantity = quantity - ? WHERE product_id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ii", $quantity, $product_id);
-            $stmt->execute();
+            if (!$stmt->execute()) {
+                throw new Exception("Execute failed (Baskets): " . $stmt->error);
+            }
         }
         
         // Tranzakció véglegesítése
         $conn->commit();
         
-        // Kosár ürítése
-        echo "<script>localStorage.removeItem('cartItems');</script>";
-        
-        // Átirányítás a siker oldalra
-        header("Location: order_success.php?order_id=" . $order_id);
+        // Sikeres válasz
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => true,
+            'order_id' => $order_id,
+            'message' => 'Rendelés sikeresen felvéve'
+        ]);
         exit();
         
     } catch (Exception $e) {
-        // Tranzakció visszagörgetése hiba esetén
         $conn->rollback();
-        die("Hiba történt a rendelés feldolgozása során: " . $e->getMessage());
+        header('Content-Type: application/json');
+        http_response_code(400);
+        echo json_encode([
+            'success' => false,
+            'message' => $e->getMessage()
+        ]);
+        exit();
     }
 }
 
-// Megyék és települések lekérése a legördülő listákhoz
+// Megyék lekérése
 $counties = [];
 $sql = "SELECT * FROM Counties ORDER BY county_name";
 $result = $conn->query($sql);
@@ -105,7 +129,6 @@ if ($result->num_rows > 0) {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="hu">
@@ -171,6 +194,7 @@ if ($result->num_rows > 0) {
         </main>
     </div>
     <script src="../../../assets/js/checkout.js"></script>
+    <script src="../../../assets/js/cart.js"></script>
     <script>
         const counties = <?= json_encode($counties) ?>;
     </script>
