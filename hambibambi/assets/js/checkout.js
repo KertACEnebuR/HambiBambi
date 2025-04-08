@@ -72,12 +72,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     const response = JSON.parse(xhr.responseText);
                     if (response.success) {
                         localStorage.removeItem("cartItems");
-                        window.location.href = "order_success.php";
+                        window.location.href = response.redirect; // Átirányítás az URL-re
                     } else {
                         alert("Hiba: " + response.message);
                     }
                 } catch (e) {
                     alert("Hiba történt a válasz feldolgozása során.");
+                    console.error("JSON feldolgozási hiba:", e);
                 }
             } else {
                 alert("Hiba történt a rendelés feldolgozása során: " + xhr.responseText);
