@@ -13,7 +13,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
     <title>Termékek</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 </head>
-<body ng-controller="ProductController">
+<body ng-controller="ProductController" data-is-logged-in="<?= $isLoggedIn ? 'true' : 'false' ?>">
     <main>
         <div class="product-container">
         <button onclick="toTheTop()" id="top" title="Visszagörgetés">↑</button>
@@ -27,11 +27,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
                         <input type='number' id='quantity' name='quantity' min='1' max="9" value='1'>
-                        <?php if ($isLoggedIn): ?>
-                            <button type='submit' class="kosarhoz">Kosárba</button>
-                        <?php else: ?>
-                            <button type='submit' class="kosarhoz" disabled>Kosárba</button>
-                        <?php endif; ?>
+                        <button type='button' class="kosarhoz">Kosárba</button>
                     </div>
                 </div>
             </div>
@@ -47,11 +43,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
                         <input type='number' id='quantity' name='quantity' min='1' max="9" value='1'>
-                        <?php if ($isLoggedIn): ?>
-                            <button type='submit' class="kosarhoz">Kosárba</button>
-                        <?php else: ?>
-                            <button type='submit' class="kosarhoz" disabled>Kosárba</button>
-                        <?php endif; ?>
+                        <button type='button' class="kosarhoz">Kosárba</button>
                     </div>
                 </div>
             </div>
@@ -67,11 +59,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
                         <input type='number' id='quantity' name='quantity' min='1' max="9" value='1'>
-                        <?php if ($isLoggedIn): ?>
-                            <button type='submit' class="kosarhoz">Kosárba</button>
-                        <?php else: ?>
-                            <button type='submit' class="kosarhoz" disabled>Kosárba</button>
-                        <?php endif; ?>
+                        <button type='button' class="kosarhoz">Kosárba</button>
                     </div>
                 </div>
             </div>
@@ -87,11 +75,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
                         <input type='number' id='quantity' name='quantity' min='1' max="9" value='1'>
-                        <?php if ($isLoggedIn): ?>
-                            <button type='submit' class="kosarhoz">Kosárba</button>
-                        <?php else: ?>
-                            <button type='submit' class="kosarhoz" disabled>Kosárba</button>
-                        <?php endif; ?>
+                        <button type='button' class="kosarhoz">Kosárba</button>
                     </div>
                 </div>
             </div>
@@ -107,11 +91,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
                         <input type='number' id='quantity' name='quantity' min='1' max="9" value='1'>
-                        <?php if ($isLoggedIn): ?>
-                            <button type='submit' class="kosarhoz">Kosárba</button>
-                        <?php else: ?>
-                            <button type='submit' class="kosarhoz" disabled>Kosárba</button>
-                        <?php endif; ?>
+                        <button type='button' class="kosarhoz">Kosárba</button>
                     </div>
                 </div>
             </div>
@@ -127,11 +107,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
                         <input type='number' id='quantity' name='quantity' min='1' max="9" value='1'>
-                        <?php if ($isLoggedIn): ?>
-                            <button type='submit' class="kosarhoz">Kosárba</button>
-                        <?php else: ?>
-                            <button type='submit' class="kosarhoz" disabled>Kosárba</button>
-                        <?php endif; ?>
+                        <button type='button' class="kosarhoz">Kosárba</button>
                     </div>
                 </div>
             </div>
@@ -147,11 +123,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         <p class="card-text">{{ product.description }}</p>
                         <p class="ar">{{ product.price }} Ft</p>
                         <input type='number' id='quantity' name='quantity' min='1' max="9" value='1'>
-                        <?php if ($isLoggedIn): ?>
-                            <button type='submit' class="kosarhoz">Kosárba</button>
-                        <?php else: ?>
-                            <button type='submit' class="kosarhoz" disabled>Kosárba</button>
-                        <?php endif; ?>
+                        <button type='button' class="kosarhoz">Kosárba</button>
                     </div>
                 </div>
             </div>
@@ -170,12 +142,6 @@ $isLoggedIn = isset($_SESSION['user_id']);
                 console.error("Hiba történt az API hívás során:", error);
             });
         });
-
-        // Visszagörgetés a tetejére
-        function toTheTop() {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-
     </script>
 </body>
 </html>

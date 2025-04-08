@@ -61,4 +61,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'], $_POST['passw
 </div>
 </div>
 </div>
-<?php include("footer.php"); ?>
+<?php include("../footer.php"); ?>

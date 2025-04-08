@@ -66,6 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check if new password is provided and matches confirmation
     if (!empty($new_password)) {
+        // Ellenőrizzük az új jelszó formátumát
+        if (!preg_match('/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/', $new_password)) {
+            echo "Az új jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell egy nagybetűt és egy számot.";
+            exit();
+        }
+
         if ($new_password !== $confirm_password) {
             echo "Az új jelszavak nem egyeznek!";
             exit();
@@ -165,7 +171,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="field input">
                     <label for="address">Település:</label>
                     <select id="settlement" name="settlement_id" required>
-                        <option id="settlement">Válasszon</option>
+                        <option value="">Válasszon</option>
+                        <?php foreach ($counties[$countyName] as $settlement): ?>
+                            <option value="<?= htmlspecialchars($settlement['settlement_id']) ?>" 
+                                <?= $settlement['settlement_id'] == $row['settlement_id'] ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($settlement['settlement_name']) ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="field input">
@@ -178,7 +190,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="field input">
                     <label>Új jelszó (opcionális):</label>
-                    <input type="password" placeholder="Új jelszó" name="new_password">
+                    <input type="password" placeholder="Új jelszó" name="new_password"
+                           pattern="(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}" 
+                           title="A jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell egy nagybetűt és egy számot.">
                 </div>
                 <div class="field input">
                     <label>Új jelszó megerősítése:</label>
@@ -200,15 +214,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         settlementDropdown.innerHTML = '<option value="">Válasszon</option>';
 
-        <?php foreach ($counties as $county => $settlements): ?>
-            if (county === <?= json_encode($county) ?>) {
-                <?php foreach ($settlements as $settlement): ?>
-                    settlementDropdown.innerHTML += `<option value="<?= htmlspecialchars($settlement['settlement_id']) ?>"><?= htmlspecialchars($settlement['settlement_name']) ?></option>`;
-                <?php endforeach; ?>
-            }
-        <?php endforeach; ?>
+        if (counties[county]) {
+            counties[county].forEach(settlement => {
+                const isSelected = settlement.settlement_id == <?= json_encode($row['settlement_id']); ?>;
+                settlementDropdown.innerHTML += `<option value="${settlement.settlement_id}" ${isSelected ? 'selected' : ''}>${settlement.settlement_name}</option>`;
+            });
+        }
     }
 </script>
 </body>
 
-</html> 
+</html>

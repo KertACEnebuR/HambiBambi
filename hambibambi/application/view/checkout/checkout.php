@@ -99,11 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment']) && isset($
         $conn->commit();
         
         // Sikeres válasz
-        header('Content-Type: application/json');
         echo json_encode([
             'success' => true,
-            'order_id' => $order_id,
-            'message' => 'Rendelés sikeresen felvéve'
+            'redirect' => 'order_success.php?order_id=' . $order_id
         ]);
         exit();
         

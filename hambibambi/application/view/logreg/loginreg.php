@@ -52,6 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['full_name'], $_POST['e
     if ($stmt->num_rows > 0) {
         echo "A felhasználó már regisztrálva van ezzel az e-mail címmel.";
     } else {
+        // Jelszó érvényesítése
+        if (!preg_match('/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/', $password)) {
+            echo "A jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell egy nagybetűt és egy számot.";
+            exit();
+        }
+
         // Jelszó titkosítása
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -110,7 +116,9 @@ $conn->close();
             </div>
             <div class="field input">
                 <label for="password">Jelszó:</label>
-                <input type="password" name="password" placeholder="Jelszó" required>
+                <input type="password" name="password" placeholder="Jelszó" required
+                       pattern="(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}" 
+                       title="A jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell egy nagybetűt és egy számot.">
             </div>
             <div class="field input">
                 <label for="phone_number">Telefonszám:</label>
