@@ -66,6 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check if new password is provided and matches confirmation
     if (!empty($new_password)) {
+        // Ellenőrizzük az új jelszó formátumát
+        if (!preg_match('/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/', $new_password)) {
+            echo "Az új jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell egy nagybetűt és egy számot.";
+            exit();
+        }
+
         if ($new_password !== $confirm_password) {
             echo "Az új jelszavak nem egyeznek!";
             exit();
@@ -184,7 +190,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="field input">
                     <label>Új jelszó (opcionális):</label>
-                    <input type="password" placeholder="Új jelszó" name="new_password">
+                    <input type="password" placeholder="Új jelszó" name="new_password"
+                           pattern="(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}" 
+                           title="A jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell egy nagybetűt és egy számot.">
                 </div>
                 <div class="field input">
                     <label>Új jelszó megerősítése:</label>
