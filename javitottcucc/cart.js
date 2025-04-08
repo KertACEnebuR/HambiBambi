@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const cartIcon = document.querySelector('.kosarikon');
     const cartCloseBtn = document.querySelector('.fa-close');
     const cartBox = document.querySelector('.cartBox');
+    const isLoggedIn = document.body.getAttribute('data-is-logged-in') === 'true'; // Ellenőrizzük a bejelentkezési állapotot
 
     if (cartIcon) {
         cartIcon.addEventListener("click", function() {
@@ -20,6 +21,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // Kosár feltöltése
     document.body.addEventListener("click", function(e) {
         if (e.target.classList.contains("kosarhoz")) {
+            if (!isLoggedIn) {
+                alert("A termék hozzáadásához be kell jelentkeznie!");
+                return; // Ha nincs bejelentkezve, kilépünk
+            }
+
             console.log("Kosárba gomb megnyomva!");
 
             let productCard = e.target.closest('.product');
