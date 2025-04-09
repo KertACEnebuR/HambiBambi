@@ -205,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </section>
     </div>
 </div>
-
+<script src="<?= $Path."assets/js/main.js";?>"></script>
 <script>
     var counties = <?= json_encode($counties, JSON_UNESCAPED_UNICODE); ?>;
     function updateSettlements() {
