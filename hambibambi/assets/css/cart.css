@@ -84,12 +84,12 @@ input{
 }
 
 .cartBox .cart i:hover {
-    background: #ff4d4d; /* Világosabb piros hover állapot */
+    background: #ff4d4d;
 }
 
 .cartBox .cart h1 {
     font-size: 2rem;
-    color: #173350; /* Sötétkék szöveg */
+    color: #173350;
     margin-bottom: 20px;
     text-align: center;
     font-weight: bold;
@@ -141,15 +141,15 @@ input{
 }
 @media (max-width: 1024px) {
     .cartBox .cart {
-        width: 70%; /* Szélesebb kosár tableten */
+        width: 70%;
     }
 
     .kosar {
-        flex-direction: column; /* Sorok egymás alá kerülnek */
+        flex-direction: column;
     }
 
     .kosar img {
-        width: 80px; /* Kisebb képek tableten */
+        width: 80px;
         height: 80px;
     }
 }
@@ -157,23 +157,23 @@ input{
 /* Tablet eszközökre (max. 1024px szélesség) */
 @media (max-width: 767px) {
     .cartBox .cart {
-        width: 100%; /* Teljes szélesség mobilon */
-        padding: 10px; /* Csökkentett padding */
-        border-radius: 0; /* Lekerekítés eltávolítása */
+        width: 100%;
+        padding: 10px;
+        border-radius: 0;
     }
 
     .kosar {
-        flex-direction: column; /* Sorok egymás alá kerülnek */
+        flex-direction: column;
     }
 
     .kosar img {
-        width: 60px; /* Még kisebb képek mobilon */
+        width: 60px;
         height: 60px;
     }
 
     .kosar th,
     .kosar td {
-        font-size: 14px; /* Kisebb betűméret mobilon */
+        font-size: 14px;
     }
 }
 

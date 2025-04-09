@@ -4,18 +4,18 @@
 }
 
 .insideNavbar nav {
-    display: flex; /* Flexbox elrendezés */
-    justify-content: space-around; /* Vízszintes elosztás */
-    align-items: center; /* Függőleges középre igazítás */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     padding: 20px;
     color: white;
-    flex-wrap: wrap; /* Engedélyezi az elemek törését */
+    flex-wrap: wrap;
 }
 
 main {
-    display: flex; /* Flexbox elrendezés */
+    display: flex;
     flex-direction: column; /* A termékfajták egymás alá kerülnek */
-    gap: 40px; /* Távolság a termékfajták között */
+    gap: 40px;
     padding: 20px;
 }
 
@@ -24,11 +24,11 @@ legend {
 }
 
 main .container {
-    display: flex; /* Flexbox elrendezés a termékekhez */
-    flex-wrap: wrap; /* Engedélyezi az elemek törését */
-    justify-content: center; /* Középre igazítja az elemeket */
-    gap: 20px; /* Távolság az elemek között */
-    width: 100%; /* Teljes szélesség */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
 }
 
 main .container .cards {

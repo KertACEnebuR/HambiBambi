@@ -149,7 +149,7 @@ footer {
     .kiemelt-ajanlatok,
     main,
     footer {
-        grid-column: 1 / -1; /*Teljes szélesség*/
+        grid-column: 1 / -1;
     }
 
     .ajanlatok {
@@ -157,27 +157,27 @@ footer {
     }
 
     .ajanlat img {
-        height: auto; /*Képek magasságának automatikus igazítása*/
+        height: auto;
     }
 
     .bemutatkozoDiv {
         padding: 15px;
-        max-width: 100%; /*Teljes szélesség*/
+        max-width: 100%;
     }
 
     .bemutatkozas h2 {
-        font-size: 1.5rem; /*Kisebb betűméret*/
+        font-size: 1.5rem;
     }
 
     .bemutatkozoDiv p {
-        font-size: 1rem; /*Kisebb szövegméret*/
+        font-size: 1rem;
     }
 }
 
 /*Mobil nézet (max-width: 768px)*/
 @media screen and (max-width: 768px) {
     body {
-        grid-template-columns: 1fr; /*Egy oszlopos elrendezés*/
+        grid-template-columns: 1fr;
     }
 
     header,
@@ -188,27 +188,27 @@ footer {
     .kiemelt-ajanlatok,
     main,
     footer {
-        grid-column: 1 / -1; /*Teljes szélesség*/
+        grid-column: 1 / -1;
     }
 
     .ajanlatok {
-        grid-template-columns: 1fr; /*Egy oszlopos rács az ajánlatokhoz*/
+        grid-template-columns: 1fr;
     }
 
     .ajanlat img {
-        height: auto; /*Képek magasságának automatikus igazítása*/
+        height: auto;
     }
 
     .bemutatkozoDiv {
         padding: 15px;
-        max-width: 100%; /*Teljes szélesség*/
+        max-width: 100%;
     }
 
     .bemutatkozas h2 {
-        font-size: 1.2rem; /*Még kisebb betűméret*/
+        font-size: 1.2rem;
     }
 
     .bemutatkozoDiv p {
-        font-size: 0.9rem; /*Még kisebb szövegméret*/
+        font-size: 0.9rem;
     }
 }

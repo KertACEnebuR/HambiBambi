@@ -23,7 +23,7 @@ body {
 }
 
 h1, h2, h3 {
-    color: #173350; /* Sötétkék szöveg */
+    color: #173350;
 }
 
 ul {
@@ -126,7 +126,7 @@ label {
 
     .cart-summary,
     .rendeles {
-        width: 100%; /* Teljes szélesség */
+        width: 100%;
     }
 }
 
@@ -143,11 +143,11 @@ label {
 
     .form-group input,
     .form-group select {
-        padding: 5px; /* Csökkentett padding */
+        padding: 5px;
     }
 
     .submit-btn {
-        font-size: 14px; /* Kisebb betűméret */
-        padding: 8px; /* Csökkentett padding */
+        font-size: 14px;
+        padding: 8px;
     }
 }

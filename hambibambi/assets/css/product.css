@@ -1,12 +1,12 @@
 /* Termékek elrendezése */
 .product-container {
-    display: flex; /* Flexbox elrendezés */
-    flex-wrap: wrap; /* Engedélyezi az elemek törését */
-    justify-content: center; /* Középre igazítja az elemeket */
-    gap: 20px; /* Távolság az elemek között */
-    padding: 20px; /* Belső margó */
-    width: 100%; /* Teljes szélesség */
-    box-sizing: border-box; /* Padding beleszámít a szélességbe */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .product {
@@ -123,12 +123,12 @@
 }
 
 .insideNavbar nav {
-    display: flex; /* Flexbox elrendezés */
-    justify-content: space-around; /* Alapértelmezett vízszintes elosztás */
-    align-items: center; /* Függőleges középre igazítás */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     padding: 20px;
     color: white;
-    flex-wrap: wrap; /* Engedélyezi az elemek törését */
+    flex-wrap: wrap;
 }
 
 /* Reszponzív beállítások */
@@ -138,11 +138,11 @@
         max-width: calc(50% - 20px);
     }
     .insideNavbar nav {
-        flex-direction: column; /* Egymás alá helyezi az elemeket */
-        align-items: center; /* Középre igazítja az elemeket függőlegesen */
-        justify-content: center; /* Középre igazítja az elemeket vízszintesen */
-        gap: 10px; /* Távolság az elemek között */
-        text-align: center; /* Szöveg középre igazítása */
+        flex-direction: column; 
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-align: center;
     }
 }
 
@@ -152,10 +152,10 @@
         max-width: 100%;
     }
     .insideNavbar nav {
-        flex-direction: column; /* Egymás alá helyezi az elemeket */
-        align-items: center; /* Középre igazítja az elemeket függőlegesen */
-        justify-content: center; /* Középre igazítja az elemeket vízszintesen */
-        gap: 10px; /* Távolság az elemek között */
-        text-align: center; /* Szöveg középre igazítása */
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-align: center;
     }
 }

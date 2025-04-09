@@ -59,40 +59,40 @@ h1{
 
 @media (max-width: 1200px) {
     .profile_container {
-        padding: 10px; /* Csökkentett margó */
+        padding: 10px;
     }
 
     .user_details table {
-        width: 100%; /* Teljes szélesség */
-        margin: 50px 0; /* Csökkentett margó */
+        width: 100%;
+        margin: 50px 0;
         scale: 1.2;
     }
 
     .user_details a {
-        width: 100%; /* Gombok teljes szélessége */
-        padding: 8px; /* Csökkentett padding */
-        font-size: 14px; /* Kisebb betűméret */
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
     }
 }
 
 /* Reszponzív beállítások 768px alatt (tablet) */   
 @media (max-width: 767px) {
     h1 {
-        font-size: 30px; /* Még kisebb betűméret */
+        font-size: 30px;
     }
 
     .user_details table {
-        padding: 10px; /* Csökkentett padding */
+        padding: 10px;
         scale: 1.2;
     }
 
     .user_details table .profile_data th,
     .user_details table .profile_data td {
-        font-size: 12px; /* Még kisebb betűméret */
+        font-size: 12px;
     }
 
     .user_details a {
-        font-size: 12px; /* Még kisebb betűméret */
-        padding: 6px; /* Csökkentett padding */
+        font-size: 12px; 
+        padding: 6px;
     }
 }
