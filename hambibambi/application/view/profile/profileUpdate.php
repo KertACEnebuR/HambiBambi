@@ -2,10 +2,11 @@
 session_start();
 include_once "../../../connect.php";
 
-// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    echo "Hozzáférés megtagadva!";
-    exit();
+    echo "<script>
+            alert('Hozzáférés megtagadva!');
+        </script>";
+    exit(); 
 }
 
 // Megyék és települések lekérdezése
@@ -48,42 +49,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : '';
     $confirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : '';
 
-    // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Érvénytelen e-mail cím formátum.";
+        echo "<script>
+                alert('Érvénytelen e-mail cím formátum!');
+                window.location.href = 'profileUpdate.php';
+            </script>";
         exit();
     }
 
-    // Verify the current password
     $sql = "SELECT password FROM users WHERE user_id = '$user_id'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
 
     if (!$row || !password_verify($password, $row['password'])) {
-        echo "Hibás jelszó!";
+        echo "<script>
+                alert('Hibás jelszó!');
+                window.location.href = 'profileUpdate.php';
+              </script>";
         exit();
     }
 
-    // Check if new password is provided and matches confirmation
     if (!empty($new_password)) {
-        // Ellenőrizzük az új jelszó formátumát
         if (!preg_match('/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/', $new_password)) {
-            echo "Az új jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell egy nagybetűt és egy számot.";
+            echo "<script>
+                    alert('Az új jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell egy nagybetűt és egy számot!');
+                    window.location.href = 'profileUpdate.php';
+                </script>";
             exit();
         }
 
         if ($new_password !== $confirm_password) {
-            echo "Az új jelszavak nem egyeznek!";
+            echo "<script>
+                    alert('Az új jelszavak nem egyeznek meg!');
+                    window.location.href = 'profileUpdate.php';
+                </script>";
             exit();
         }
 
-        // Hash the new password
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
     } else {
-        $hashed_password = $row['password']; // Keep the old password if no new password is provided
+        $hashed_password = $row['password'];
     }
 
-    // Update the user's data
     $update_query = "
         UPDATE users 
         SET 
@@ -97,11 +104,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ";
 
     if (mysqli_query($conn, $update_query)) {
-        // Redirect to profile page after successful update
-        header("Location: profile.php");
+        // Sikeres frissítés esetén átirányítás a profil oldalra
+        echo "<script>
+                alert('Sikeres az adatok szerkesztése!');
+                window.location.href = 'profileUpdate.php';
+            </script>";
         exit();
     } else {
-        echo "Hiba történt az adatok frissítése során: " . mysqli_error($conn);
+        echo "<script>
+                alert('Hiba történt az adatok frissítése során!'. mysqli_error($conn));
+                window.location.href = 'profileUpdate.php';
+            </script>";
     }
 } else {
     //űrlap adatok beolvasása
@@ -155,7 +168,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="field input">
                     <label>Telefonszám:</label>
-                    <input type="text" placeholder="Telefonszám" maxlength="11" name="phone_number" value="<?php echo $phone_number; ?>" required>
+                    <input type="text" placeholder="Telefonszám" maxlength="11" name="phone_number" value="<?php echo $phone_number; ?>" required 
+                    pattern="^36\d{9}$"
+                    title="A telefonszámnak 36-tal kell kezdődnie, és pontosan 11 számjegyből kell állnia.">
                 </div>
                 <div class="field input">
                     <label for="county">Vármegye:</label>
@@ -200,6 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="field button">
                     <input type="submit" class="mentes" value="Módosítások mentése">
+                    <input type="submit" class="vissza" onclick="window.location.href='profile.php'" value="くくくVissza">
                 </div>
             </form>
         </section>
@@ -220,6 +236,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 settlementDropdown.innerHTML += `<option value="${settlement.settlement_id}" ${isSelected ? 'selected' : ''}>${settlement.settlement_name}</option>`;
             });
         }
+    }
+
+    if (!preg_match('/^36\d{9}$/', $phone_number)) {
+    alert("A telefonszám formátuma érvénytelen. A telefonszámnak 36-tal kell kezdődnie, és pontosan 11 számjegyből kell állnia.");
+    exit();
     }
 </script>
 </body>

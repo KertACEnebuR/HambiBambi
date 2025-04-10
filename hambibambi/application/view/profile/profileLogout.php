@@ -7,6 +7,10 @@ $_SESSION = [];
 // Munkamenet megsemmisítése
 session_destroy();
 
-// Visszairányítás a bejelentkezési oldalra
-header("Location: ../../../index.php");
+// JavaScript alert üzenet megjelenítése és átirányítás a főoldalra, a kosár tartalmának törlése
+echo "<script>
+    localStorage.removeItem('cartItems'); // Kosár tartalmának törlése
+    alert('Sikeresen kijelentkezett!');
+    window.location.href = '../../../index.php';
+</script>";
 exit;

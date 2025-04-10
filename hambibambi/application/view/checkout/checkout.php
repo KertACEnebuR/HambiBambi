@@ -142,7 +142,7 @@ if ($result->num_rows > 0) {
             <h1>Rendelés véglegesítése</h1>
         </header>
         <main>
-            <div class="checkout-grid">
+            <div class="checkout">
                 <!-- Kosár tartalma -->
                 <div class="cart-summary">
                     <h2>Kosár tartalma</h2>

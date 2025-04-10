@@ -50,11 +50,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['full_name'], $_POST['e
     $stmt->store_result(); // Ez tárolja az eredményeket
 
     if ($stmt->num_rows > 0) {
-        echo "A felhasználó már regisztrálva van ezzel az e-mail címmel.";
+        echo "<script>
+            alert('A felhasználó már regisztrálva van ezzel az e-mail címmel!');
+            window.location.href = 'loginreg.php';
+        </script>";
     } else {
         // Jelszó érvényesítése
         if (!preg_match('/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/', $password)) {
-            echo "A jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell egy nagybetűt és egy számot.";
+            echo "<script>
+                    alert('A jelszónak legalább 8 karakter hosszúnak kell lennie, tartalmaznia kell egy nagybetűt és egy számot!');
+                    window.location.href = 'loginreg.php';
+                </script>";
             exit();
         }
 
