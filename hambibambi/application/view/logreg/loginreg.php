@@ -122,7 +122,9 @@ $conn->close();
             </div>
             <div class="field input">
                 <label for="phone_number">Telefonszám:</label>
-                <input type="text" name="phone_number" placeholder="+23563324591" maxlength="11" required>
+                <input type="text" name="phone_number" placeholder="36301234567" maxlength="11" required
+                    pattern="^36\d{9}$"
+                    title="A telefonszámnak 36-tal kell kezdődnie, és pontosan 11 számjegyből kell állnia.">
             </div>
             <div class="field input">
                 <label for="address">Vármegye:</label>
