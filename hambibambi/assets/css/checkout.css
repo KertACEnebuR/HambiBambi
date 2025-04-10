@@ -36,7 +36,7 @@ li {
 }
 
 /* Flexbox elrendezés */
-.checkout-grid {
+.checkout {
     display: flex; /* Flexbox elrendezés */
     flex-direction: row; /* Az elemek egymás mellett helyezkednek el */
     gap: 20px;
@@ -55,6 +55,7 @@ li {
 
 .cart-summary h2 {
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .cart-items li {
@@ -62,6 +63,10 @@ li {
     justify-content: space-between;
     padding: 10px 0;
     border-bottom: 1px solid #ccc;
+}
+
+.cart-summary span{
+    margin-top: 20px;
 }
 
 .cart-items .total {
@@ -81,6 +86,7 @@ li {
 
 .rendeles h2 {
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .form-group {
@@ -119,7 +125,7 @@ label {
 
 /* Reszponzív beállítások tablethez (max. 1024px szélesség) */
 @media (max-width: 1024px) {
-    .checkout-grid {
+    .checkout {
         flex-direction: column;
         gap: 20px;
     }

@@ -88,6 +88,7 @@ form div input {
     padding: 8px;
     border-radius: 10px;
     background-color: #f0a00c;
+    margin-top: 10px;
 }
 
 .field.button input:hover {
