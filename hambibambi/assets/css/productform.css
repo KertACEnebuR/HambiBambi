@@ -1,4 +1,4 @@
-/* Alapstílusok */
+/*Alapstílusok*/
 body {
     background-image: url(../../assets/img/lightbg.jpg);
     background-repeat: no-repeat;
@@ -13,7 +13,7 @@ body {
     text-align: center;
 }
 
-/* Fejléc */
+/*Fejléc*/
 header {
     background-color: #f0a00c;
     color: #fff;
@@ -30,7 +30,7 @@ header h1 {
     font-size: 24px;
 }
 
-/* Formázás */
+/*Formázás*/
 form {
     max-width: 500px;
     margin: 20px auto;
@@ -60,7 +60,7 @@ textarea {
     resize: vertical;
 }
 
-/* Gombok */
+/*Gombok*/
 button {
     padding: 10px 15px;
     background: #c78812;
@@ -78,7 +78,7 @@ button:hover {
     background: #cf8a09;
 }
 
-/* Lábléc */
+/*Lábléc*/
 footer {
     text-align: center;
     padding: 10px;
@@ -88,4 +88,15 @@ footer {
     display: inline-block;
     width: auto;
     border-radius: 8px;
+}
+
+/*Legördülő menü stílus*/
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
 }
