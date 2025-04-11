@@ -13,32 +13,7 @@ session_start();
     <title>Terméklista</title>
     <link rel="stylesheet" href="../../../assets/css/productlist.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
 
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            cursor: pointer;
-        }
-
-        th:hover {
-            background-color: #ddd;
-        }
-
-        button {
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body ng-app="productApp" ng-controller="ProductController">

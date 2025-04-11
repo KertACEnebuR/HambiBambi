@@ -128,9 +128,6 @@ document.querySelectorAll('.star').forEach(star => {
     </div>
   </div>
 
-
-<?php if (isset($_SESSION['user_id'])): ?>
-                <!-- Ha a felhasználó be van jelentkezve -->
                 <div class="area5">
     <h1 class="felhertekelesh1">Felhasználói értékelések</h1>
 
@@ -172,10 +169,7 @@ document.querySelectorAll('.star').forEach(star => {
     }
     ?>
 </div>
-            <?php else: ?>
-                <!-- Ha a felhasználó nincs bejelentkezve -->
                <h1></h1>
-                <?php endif; ?>
 </div>
     <?php include("../footer.php"); ?>
 </body>

@@ -25,7 +25,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
         <input type="text" ng-model="product.product_name" required>
 
         <label>Ár:</label>
-        <input type="number" ng-model="product.price" required>
+        <input type="number" ng-model="product.price" min="0" required>
 
         <label>Leírás:</label>
         <textarea ng-model="product.description" required></textarea>
@@ -33,11 +33,25 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
         <label>Kép neve (pl. cezar_salata.jpg):</label>
         <input type="text" ng-model="product.picture" required>
 
-        <label>Kategória ID:</label>
-        <input type="number" ng-model="product.product_category_id" required>
+        <label>Kategória név</label>
+<select ng-model="product.product_category_id" required>
+  <option value="">Válassz kategóriát</option>
+  <option value="1">Saláta</option>
+  <option value="2">Levesek</option>
+  <option value="3">Hamburgerek</option>
+  <option value="4">Tészták</option>
+  <option value="5">Alkoholos italok</option>
+  <option value="6">Üdítők</option>
+  <option value="7">Sütemények</option>
+</select>
 
-        <label>Mennyiségi egység ID:</label>
-        <input type="number" ng-model="product.quantity_unit_id" required>
+<label>Mennyiségi egység</label>
+<select ng-model="product.quantity_unit_id" required>
+  <option value="">Válassz mennyiségi egységet</option>
+  <option value="1">darab</option>
+  <option value="2">adag</option>
+  <option value="3">liter</option>
+</select>
 
         <button type="submit">➕ Hozzáadás</button>
         <button type="button" onclick="window.location.href='dashboard.php'" class="dashboard-button">くくくVissza</button>
@@ -53,7 +67,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
                 price: "",
                 description: "",
                 picture: "",
-                product_category_id: "",
+                product_category_name: "",
                 quantity_unit_id: ""
             };
 
